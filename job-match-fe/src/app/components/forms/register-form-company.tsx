@@ -8,7 +8,6 @@ import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
 
-
 // form data type
 type IFormData = {
   username: string;
@@ -38,47 +37,46 @@ const resolver: Resolver<IFormData> = async (values) => {
     values: values.username ? values : {},
     errors: !values.username
       ? {
-        username: {
-          type: "required",
-          message: "Username is required.",
-        },
-        email: {
-          type: "required",
-          message: "Email is required.",
-        },
-        password: {
-          type: "required",
-          message: "Password is required.",
-        },
-        name: {
-          type: "required",
-          message: "Company name is required.",
-        },
-        description: {
-          type: "required",
-          message: "Description is required.",
-        },
-        address_line: {
-          type: "required",
-          message: "Address line is required.",
-        },
-        city: {
-          type: "required",
-          message: "City is required.",
-        },
-        phone_number: {
-          type: "required",
-          message: "Phone number is required.",
+          username: {
+            type: "required",
+            message: "Username is required.",
+          },
+          email: {
+            type: "required",
+            message: "Email is required.",
+          },
+          password: {
+            type: "required",
+            message: "Password is required.",
+          },
+          name: {
+            type: "required",
+            message: "Company name is required.",
+          },
+          description: {
+            type: "required",
+            message: "Description is required.",
+          },
+          address_line: {
+            type: "required",
+            message: "Address line is required.",
+          },
+          city: {
+            type: "required",
+            message: "City is required.",
+          },
+          phone_number: {
+            type: "required",
+            message: "Phone number is required.",
+          },
         }
-      }
       : {},
   };
 };
 
 const CompanyRegisterForm = () => {
-
   const [showPass, setShowPass] = useState<boolean>(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -91,8 +89,11 @@ const CompanyRegisterForm = () => {
     if (data) {
       setIsSubmitting(true);
       try {
-        const response = await axiosInstance.post(`http://${SERVER_URL}/companies/`, data, { withCredentials: true });
-        alert("Company registered successfully!");
+        const response = await axiosInstance.post(
+          `http://${SERVER_URL}/companies/`,
+          data,
+          { withCredentials: true }
+        );
         reset();
       } catch (error) {
         console.error("Company registration failed:", error);
@@ -102,8 +103,6 @@ const CompanyRegisterForm = () => {
       }
     }
   };
-
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -159,7 +158,7 @@ const CompanyRegisterForm = () => {
             </div>
           </div>
         </div>
-              <div className="col-12">
+        <div className="col-12">
           <div className="input-group-meta position-relative mb-25">
             <label>Company name*</label>
             <input
@@ -173,13 +172,15 @@ const CompanyRegisterForm = () => {
             </div>
           </div>
         </div>
-              <div className="col-12">
+        <div className="col-12">
           <div className="input-group-meta position-relative mb-25">
             <label>Description*</label>
             <input
               type="text"
               placeholder="Give your company a short description"
-              {...register("description", { required: `Description is required!` })}
+              {...register("description", {
+                required: `Description is required!`,
+              })}
               name="description"
             />
             <div className="help-block with-errors">
@@ -187,13 +188,15 @@ const CompanyRegisterForm = () => {
             </div>
           </div>
         </div>
-              <div className="col-12">
+        <div className="col-12">
           <div className="input-group-meta position-relative mb-25">
             <label>Address line*</label>
             <input
               type="text"
               placeholder="Company address"
-              {...register("address_line", { required: `Address is required!` })}
+              {...register("address_line", {
+                required: `Address is required!`,
+              })}
               name="address_line"
             />
             <div className="help-block with-errors">
@@ -201,7 +204,7 @@ const CompanyRegisterForm = () => {
             </div>
           </div>
         </div>
-              <div className="col-12">
+        <div className="col-12">
           <div className="input-group-meta position-relative mb-25">
             <label>City*</label>
             <input
@@ -215,13 +218,15 @@ const CompanyRegisterForm = () => {
             </div>
           </div>
         </div>
-              <div className="col-12">
+        <div className="col-12">
           <div className="input-group-meta position-relative mb-25">
             <label>Phone number*</label>
             <input
               type="text"
               placeholder="+1 2345 6789"
-              {...register("phone_number", { required: `Phone number is required!` })}
+              {...register("phone_number", {
+                required: `Phone number is required!`,
+              })}
               name="phone_number"
             />
             <div className="help-block with-errors">
@@ -232,10 +237,7 @@ const CompanyRegisterForm = () => {
         <div className="col-12">
           <div className="agreement-checkbox d-flex justify-content-between align-items-center">
             <div>
-              <input
-                type="checkbox"
-                name="remember"
-              />
+              <input type="checkbox" name="remember" />
               <label htmlFor="remember">
                 By hitting the Register button, you agree to the{" "}
                 <a href="#">Terms conditions</a> &{" "}
@@ -245,8 +247,10 @@ const CompanyRegisterForm = () => {
           </div>
         </div>
         <div className="col-12">
-          <button type="submit" className="btn-eleven fw-500 tran3s d-block mt-20"
-          disabled={isSubmitting} 
+          <button
+            type="submit"
+            className="btn-eleven fw-500 tran3s d-block mt-20"
+            disabled={isSubmitting}
           >
             {isSubmitting ? "Registering..." : "Register"}
           </button>
