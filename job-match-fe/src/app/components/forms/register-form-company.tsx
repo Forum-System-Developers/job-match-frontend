@@ -5,13 +5,16 @@ import * as Yup from "yup";
 import { Resolver, useForm } from "react-hook-form";
 import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
+import axiosInstance from "@/services/axiosInstance";
+import SERVER_URL from "@/services/server";
+
 
 // form data type
 type IFormData = {
   username: string;
   email: string;
   password: string;
-  company_name: string;
+  name: string;
   description: string;
   address_line: string;
   city: string;
@@ -23,7 +26,7 @@ const schema = Yup.object().shape({
   username: Yup.string().required().label("Username"),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(6).label("Password"),
-  company_name: Yup.string().required().label("Company Name"),
+  name: Yup.string().required().label("Company Name"),
   description: Yup.string().required().label("Description"),
   address_line: Yup.string().required().label("Address Line"),
   city: Yup.string().required().label("City"),
@@ -47,7 +50,7 @@ const resolver: Resolver<IFormData> = async (values) => {
           type: "required",
           message: "Password is required.",
         },
-        company_name: {
+        name: {
           type: "required",
           message: "Company name is required.",
         },
@@ -73,21 +76,35 @@ const resolver: Resolver<IFormData> = async (values) => {
 };
 
 const CompanyRegisterForm = () => {
+
   const [showPass, setShowPass] = useState<boolean>(false);
-  // react hook form
+  const [isSubmitting, setIsSubmitting] = useState(false); 
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<IFormData>({ resolver });
-  // on submit
-  const onSubmit = (data: IFormData) => {
+
+  const onSubmit = async (data: IFormData) => {
     if (data) {
-      alert("Register successfully!");
+      setIsSubmitting(true);
+      try {
+        const response = await axiosInstance.post(`http://${SERVER_URL}/companies/`, data, { withCredentials: true });
+        alert("Company registered successfully!");
+        reset();
+      } catch (error) {
+        console.error("Company registration failed:", error);
+        alert("Company registration failed. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
-    reset();
   };
+
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
@@ -148,11 +165,11 @@ const CompanyRegisterForm = () => {
             <input
               type="text"
               placeholder="Enter Company Name"
-              {...register("company_name", { required: `Company name is required!` })}
-              name="company_name"
+              {...register("name", { required: `Company name is required!` })}
+              name="name"
             />
             <div className="help-block with-errors">
-              <ErrorMsg msg={errors.company_name?.message!} />
+              <ErrorMsg msg={errors.name?.message!} />
             </div>
           </div>
         </div>
@@ -228,8 +245,10 @@ const CompanyRegisterForm = () => {
           </div>
         </div>
         <div className="col-12">
-          <button type="submit" className="btn-eleven fw-500 tran3s d-block mt-20">
-            Register
+          <button type="submit" className="btn-eleven fw-500 tran3s d-block mt-20"
+          disabled={isSubmitting} 
+          >
+            {isSubmitting ? "Registering..." : "Register"}
           </button>
         </div>
       </div>
