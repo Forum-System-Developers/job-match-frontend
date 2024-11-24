@@ -72,7 +72,6 @@ const ProfessionalRegisterForm = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const isValid = validateForm();
-    console.log("isValid", isValid);
     if (!isValid) return;
 
     setIsSubmitting(true);
@@ -90,6 +89,7 @@ const ProfessionalRegisterForm = () => {
         }
       );
       setFormData({});
+      window.location.href = "/";
     } catch (error) {
       console.error("Professional registration failed:", error);
       alert("Professional registration failed. Please try again.");

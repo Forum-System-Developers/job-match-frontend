@@ -5,7 +5,8 @@ import * as Yup from "yup";
 import { Resolver, useForm } from "react-hook-form";
 import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
-
+import axiosInstance from "@/services/axiosInstance";
+import SERVER_URL from "@/services/server";
 // form data type
 type IFormData = {
   username: string;
@@ -14,7 +15,7 @@ type IFormData = {
 
 // schema
 const schema = Yup.object().shape({
-  username:  Yup.string()
+  username: Yup.string()
     .required("Username is required.")
     .min(3, "Username must be at least 3 characters.")
     .max(20, "Username cannot exceed 20 characters.")
@@ -47,6 +48,8 @@ const resolver: Resolver<IFormData> = async (values) => {
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   // react hook form
   const {
     register,
@@ -55,12 +58,30 @@ const LoginForm = () => {
     reset,
   } = useForm<IFormData>({ resolver });
   // on submit
-  const onSubmit = (data: IFormData) => {
+  const onSubmit = async (data: IFormData) => {
     if (data) {
-      alert("Login successfully!");
+      setIsSubmitting(true);
+      try {
+        const response = await axiosInstance.post(
+          `http://${SERVER_URL}/auth/login`,
+          data,
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          }
+        );
+        localStorage.setItem("token", response.data.access_token);
+        localStorage.setItem("refresh_token", response.data.refresh_token);
+        window.location.href = "/";
+        reset();
+      } catch (error) {
+        console.error("Login failed:", error);
+        alert("Login failed. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
-    reset();
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-10">
       <div className="row">

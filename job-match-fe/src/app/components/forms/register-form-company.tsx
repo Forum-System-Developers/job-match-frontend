@@ -95,6 +95,7 @@ const CompanyRegisterForm = () => {
           { withCredentials: true }
         );
         reset();
+        window.location.href = "/";
       } catch (error) {
         console.error("Company registration failed:", error);
         alert("Company registration failed. Please try again.");
