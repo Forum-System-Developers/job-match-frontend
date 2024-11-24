@@ -1,5 +1,7 @@
 import { IMenuData } from "@/types/menu-data-type";
+import { isAuthenticated, userRole } from "@/utils/auth_utils";
 
+const role = isAuthenticated() ? userRole() : null;
 const menu_data: IMenuData[] = [
   {
     id: 1,
@@ -9,7 +11,7 @@ const menu_data: IMenuData[] = [
   {
     id: 2,
     link: "/job-list-v1",
-    title: "Jobs",
+    title: "Jobs & Applications",
     mega_menus: [
       {
         id: 1,
@@ -66,17 +68,17 @@ const menu_data: IMenuData[] = [
       },
     ],
   },
-  {
-    id: 4,
-    link: "/blog-v1",
-    title: "Blog",
-    sub_menus: [
-      { link: "/blog-v1", title: "Blog Standard" },
-      { link: "/blog-v2", title: "Blog Grid" },
-      { link: "/blog-v3", title: "Full width" },
-      { link: "/blog-details", title: "Blog Details" },
-    ],
-  },
+  // {
+  //   id: 4,
+  //   link: "/blog-v1",
+  //   title: "Blog",
+  //   sub_menus: [
+  //     { link: "/blog-v1", title: "Blog Standard" },
+  //     { link: "/blog-v2", title: "Blog Grid" },
+  //     { link: "/blog-v3", title: "Full width" },
+  //     { link: "/blog-details", title: "Blog Details" },
+  //   ],
+  // },
   {
     id: 5,
     link: "/contact",
@@ -84,12 +86,11 @@ const menu_data: IMenuData[] = [
   },
   {
     id: 6,
-    link: "/dashboard/employer-dashboard",
+    link:
+      role === "company"
+        ? "/dashboard/employ-dashboard"
+        : "/dashboard/candidate-dashboard",
     title: "Dashboard",
-    sub_menus: [
-      { link: "/dashboard/candidate-dashboard", title: "Candidate Dashboard" },
-      { link: "/dashboard/employ-dashboard", title: "Employer Dashboard" },
-    ],
   },
 ];
 
