@@ -42,7 +42,7 @@ const resolver: Resolver<IFormData> = async (values) => {
   };
 };
 
-const RegisterForm = () => {
+const ProfessionalRegisterForm = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   // react hook form
   const {
@@ -137,4 +137,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default ProfessionalRegisterForm;
