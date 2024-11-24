@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Menus from "./component/menus";
-import logo from "@/assets/images/logo/logo_01.png";
+import logo from "@/assets/images/logo/rephera-logo-02.png";
 import CategoryDropdown from "./component/category-dropdown";
 import LoginModal from "@/app/components/common/popup/login-modal";
 import useSticky from "@/hooks/use-sticky";
@@ -18,7 +18,7 @@ const Header = () => {
           <div className="d-flex align-items-center">
             <div className="logo order-lg-0">
               <Link href="/" className="d-flex align-items-center">
-                <Image src={logo} alt="logo" priority />
+                <Image src={logo} alt="logo" priority style={{ width: '90%', height: '90%', display: "flex", margin: 0}} />
               </Link>
             </div>
             <div className="right-widget ms-auto order-lg-3">

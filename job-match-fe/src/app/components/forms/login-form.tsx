@@ -8,25 +8,33 @@ import icon from "@/assets/images/icon/icon_60.svg";
 
 // form data type
 type IFormData = {
-  email: string;
+  username: string;
   password: string;
 };
 
 // schema
 const schema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(6).label("Password"),
+  username:  Yup.string()
+    .required("Username is required.")
+    .min(3, "Username must be at least 3 characters.")
+    .max(20, "Username cannot exceed 20 characters.")
+    .matches(/^\w+$/, "Username must be alphanumeric.")
+    .label("Username"),
+  password: Yup.string()
+    .required("Password is required.")
+    .min(6, "Password must be at least 6 characters.")
+    .label("Password"),
 });
 
 // resolver
 const resolver: Resolver<IFormData> = async (values) => {
   return {
-    values: values.email ? values : {},
-    errors: !values.email
+    values: values.username ? values : {},
+    errors: !values.username
       ? {
-          email: {
+          username: {
             type: "required",
-            message: "Email is required.",
+            message: "Username is required.",
           },
           password: {
             type: "required",
@@ -58,15 +66,15 @@ const LoginForm = () => {
       <div className="row">
         <div className="col-12">
           <div className="input-group-meta position-relative mb-25">
-            <label>Email*</label>
+            <label>Username*</label>
             <input
-              type="email"
-              placeholder="james@example.com"
-              {...register("email", { required: `Email is required!` })}
-              name="email"
+              type="username"
+              placeholder="Enter Username"
+              {...register("username", { required: `Username is required!` })}
+              name="username"
             />
             <div className="help-block with-errors">
-              <ErrorMsg msg={errors.email?.message!} />
+              <ErrorMsg msg={errors.username?.message!} />
             </div>
           </div>
         </div>

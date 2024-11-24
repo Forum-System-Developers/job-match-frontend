@@ -6,7 +6,13 @@ const Menus = () => {
   return (
     <>
       {menu_data.map((menu) =>
-        menu.sub_menus ? (
+          menu.title === "Home" ? (
+          <li key={menu.id} className="nav-item">
+            <Link className="nav-link" href={menu.link}>
+              {menu.title}
+            </Link>
+          </li>
+        ) :  menu.sub_menus ? (
           <li key={menu.id} className={`nav-item dropdown ${menu.title === 'Dashboard' ? 'dashboard-menu' : ''}`}>
             <a
               className="nav-link dropdown-toggle"
