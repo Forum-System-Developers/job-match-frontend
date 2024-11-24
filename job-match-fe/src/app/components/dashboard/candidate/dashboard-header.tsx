@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
@@ -29,21 +29,24 @@ function NotificationItem({
     </li>
   );
 }
-// props type 
+// props type
 type IProps = {
-  setIsOpenSidebar?: React.Dispatch<React.SetStateAction<boolean>>
-}
-const DashboardHeader = ({setIsOpenSidebar}:IProps) => {
-  // handle click to open 
+  setIsOpenSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const DashboardHeader = ({ setIsOpenSidebar }: IProps) => {
+  // handle click to open
   const handleOpen = () => {
-    if(setIsOpenSidebar){
-      setIsOpenSidebar(true)
+    if (setIsOpenSidebar) {
+      setIsOpenSidebar(true);
     }
-  }
+  };
   return (
     <header className="dashboard-header">
       <div className="d-flex align-items-center justify-content-end">
-        <button onClick={handleOpen} className="dash-mobile-nav-toggler d-block d-md-none me-auto">
+        <button
+          onClick={handleOpen}
+          className="dash-mobile-nav-toggler d-block d-md-none me-auto"
+        >
           <span></span>
         </button>
         <form action="#" className="search-form">
@@ -92,10 +95,10 @@ const DashboardHeader = ({setIsOpenSidebar}:IProps) => {
         </div>
         <div>
           <Link
-            href="/dashboard/employ-dashboard/submit-job"
+            href="/dashboard/candidate-dashboard/submit-job"
             className="job-post-btn tran3s"
           >
-            Post a Job
+            New Resume
           </Link>
         </div>
       </div>

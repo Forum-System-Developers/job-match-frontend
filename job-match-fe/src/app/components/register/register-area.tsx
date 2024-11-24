@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import RegisterForm from "../forms/register-form";
+import CompanyRegisterForm from "../forms/register-form-company"; 
+import ProfessionalRegisterForm from "../forms/register-form-professional"; 
 import google from "@/assets/images/icon/google.png";
 import facebook from "@/assets/images/icon/facebook.png";
 
@@ -23,7 +24,7 @@ const RegisterArea = () => {
                   aria-selected="true"
                   tabIndex={-1}
                 >
-                  Candidates
+                  Professionals
                 </button>
               </li>
               <li className="nav-item" role="presentation">
@@ -35,7 +36,7 @@ const RegisterArea = () => {
                   aria-selected="false"
                   tabIndex={-1}
                 >
-                  Employer
+                  Companies
                 </button>
               </li>
             </ul>
@@ -45,10 +46,10 @@ const RegisterArea = () => {
                 role="tabpanel"
                 id="fc1"
               >
-                <RegisterForm />
+                <ProfessionalRegisterForm />
               </div>
               <div className="tab-pane fade" role="tabpanel" id="fc2">
-                <RegisterForm />
+                <CompanyRegisterForm />
               </div>
             </div>
 
