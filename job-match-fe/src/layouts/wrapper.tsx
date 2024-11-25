@@ -17,16 +17,16 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const handleReset = () => {
     dispatch(resetFilter());
   };
-  useEffect(() => {
-    animationCreate();
-  }, []);
+  // useEffect(() => {
+  //   animationCreate();
+  // }, []);
   useEffect(() => {
     handleReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   return (
     <>
-      {children} 
+      {children}
       <ToastContainer />
     </>
   );
