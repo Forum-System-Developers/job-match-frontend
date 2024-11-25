@@ -9,22 +9,20 @@ import LoginModal from "@/app/components/common/popup/login-modal";
 import useSticky from "@/hooks/use-sticky";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { isAuthenticated, userRole } from "@/utils/auth_utils";
+import { role, isAuthenticated, setRole } from "@/utils/auth_utils";
 
 const Header = () => {
   const { sticky } = useSticky();
+
   const handleLogout = async () => {
     try {
       await axiosInstance.post(`http://${SERVER_URL}/auth/logout`);
-      localStorage.removeItem("token");
-      localStorage.removeItem("refresh_token");
+      localStorage.removeItem("role");
       window.location.href = "/";
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
-
-  const role = isAuthenticated() ? userRole() : null;
 
   return (
     <>
