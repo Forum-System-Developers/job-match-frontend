@@ -1,43 +1,27 @@
-import { jwtDecode } from "jwt-decode";
+import SERVER_URL from "@/services/server";
+import axios from "axios";
 
-interface DecodedToken {
-  sub: string;
-  role: string;
-}
+export const setRole = async () => {
+  if (typeof window !== "undefined") {
+    try {
+      const response = await axios.get(`http://${SERVER_URL}/auth/me`, {
+        withCredentials: true,
+      });
+      localStorage.setItem("role", response.data.detail.role);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    } finally {
+      return null;
+    }
+  }
+};
+
+export const role = localStorage.getItem("role")
+  ? localStorage.getItem("role")
+  : null;
 
 export const isAuthenticated = () => {
   if (typeof window !== "undefined") {
-    const token = localStorage.getItem("token");
-    return token !== null;
-  }
-};
-
-export const currentUser = () => {
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("token");
-    if (!token) return null;
-
-    try {
-      const decoded = jwtDecode<DecodedToken>(token);
-      return decoded.sub;
-    } catch (error) {
-      console.error("Token error:", error);
-      return null;
-    }
-  }
-};
-
-export const userRole = () => {
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("token");
-    if (!token) return null;
-
-    try {
-      const decoded = jwtDecode<DecodedToken>(token);
-      return decoded.role;
-    } catch (error) {
-      console.error("Token error:", error);
-      return null;
-    }
+    return localStorage.getItem("role") ? true : false;
   }
 };
