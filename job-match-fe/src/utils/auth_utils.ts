@@ -1,5 +1,7 @@
 import SERVER_URL from "@/services/server";
 import axiosInstance from "@/services/axiosInstance";
+import { CompanyDetails } from "@/app/components/dashboard/employ/data/data";
+import { ProfessionalDetails } from "@/app/components/dashboard/candidate/data/data";
 
 export const setRole = async () => {
   if (typeof window !== "undefined") {
@@ -22,4 +24,24 @@ export const isAuthenticated = () => {
   if (typeof window !== "undefined") {
     return localStorage.getItem("role") ? true : false;
   }
+};
+
+export interface UserDetails {
+  id: string;
+  role: string;
+}
+
+export const currentUser = async (): Promise<UserDetails> => {
+  if (typeof window !== "undefined" && isAuthenticated()) {
+    try {
+      const response = await axiosInstance.get(`http://${SERVER_URL}/auth/me`);
+      const userId = response.data.detail.id;
+      const role = response.data.detail.role;
+      return { id: userId, role: role };
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+  window.location.href = "/";
+  return { id: "", role: "" };
 };
