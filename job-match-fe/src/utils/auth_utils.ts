@@ -1,12 +1,10 @@
 import SERVER_URL from "@/services/server";
-import axios from "axios";
+import axiosInstance from "@/services/axiosInstance";
 
 export const setRole = async () => {
   if (typeof window !== "undefined") {
     try {
-      const response = await axios.get(`http://${SERVER_URL}/auth/me`, {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.get(`http://${SERVER_URL}/auth/me`);
       localStorage.setItem("role", response.data.detail.role);
     } catch (error) {
       console.error("An error occurred:", error);

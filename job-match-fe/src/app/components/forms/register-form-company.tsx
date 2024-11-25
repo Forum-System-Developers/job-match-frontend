@@ -91,8 +91,7 @@ const CompanyRegisterForm = () => {
       try {
         const response = await axiosInstance.post(
           `http://${SERVER_URL}/companies/`,
-          data,
-          { withCredentials: true }
+          data
         );
         reset();
         window.location.href = "/";
