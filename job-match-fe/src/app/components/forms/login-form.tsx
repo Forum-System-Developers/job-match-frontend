@@ -7,6 +7,7 @@ import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
+import { setRole } from "@/utils/auth_utils";
 // form data type
 type IFormData = {
   username: string;
@@ -69,8 +70,7 @@ const LoginForm = () => {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
           }
         );
-        localStorage.setItem("token", response.data.access_token);
-        localStorage.setItem("refresh_token", response.data.refresh_token);
+        setRole();
         window.location.href = "/";
         reset();
       } catch (error) {

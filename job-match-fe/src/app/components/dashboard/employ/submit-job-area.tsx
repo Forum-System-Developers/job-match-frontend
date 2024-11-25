@@ -8,13 +8,14 @@ import CountrySelect from "../candidate/country-select";
 import EmployExperience from "./employ-experience";
 import icon from "@/assets/dashboard/images/icon/icon_16.svg";
 import NiceSelect from "@/ui/nice-select";
+import DashboardHeaderEmployer from "./dashboard-header";
 
-// props type 
+// props type
 type IProps = {
-  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
-}
+  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
+const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
   const handleCategory = (item: { value: string; label: string }) => {};
   const handleJobType = (item: { value: string; label: string }) => {};
   const handleSalary = (item: { value: string; label: string }) => {};
@@ -22,7 +23,7 @@ const SubmitJobArea = ({setIsOpenSidebar}:IProps) => {
     <div className="dashboard-body">
       <div className="position-relative">
         {/* header start */}
-        <DashboardHeader setIsOpenSidebar={setIsOpenSidebar}/>
+        <DashboardHeaderEmployer setIsOpenSidebar={setIsOpenSidebar} />
         {/* header end */}
 
         <h2 className="main-title">Post a New Job</h2>

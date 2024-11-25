@@ -1,7 +1,6 @@
 import { IMenuData } from "@/types/menu-data-type";
-import { isAuthenticated, userRole } from "@/utils/auth_utils";
+import { role } from "@/utils/auth_utils";
 
-const role = isAuthenticated() ? userRole() : null;
 const menu_data: IMenuData[] = [
   {
     id: 1,
