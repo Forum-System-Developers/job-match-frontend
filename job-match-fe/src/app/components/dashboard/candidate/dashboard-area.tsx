@@ -35,11 +35,11 @@ export function CardItem({
     </div>
   );
 }
-// props type 
+// props type
 type IProps = {
-  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
-}
-const DashboardArea = ({setIsOpenSidebar}:IProps) => {
+  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
   const job_items = [...job_data.reverse().slice(0, 5)];
 
   return (

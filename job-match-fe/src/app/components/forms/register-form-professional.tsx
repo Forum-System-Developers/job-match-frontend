@@ -84,7 +84,6 @@ const ProfessionalRegisterForm = () => {
         `http://${SERVER_URL}/professionals/`,
         payload,
         {
-          withCredentials: true,
           headers: { "Content-Type": "application/json" },
         }
       );

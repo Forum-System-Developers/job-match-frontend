@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
+import React, { use, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Menus from "./component/menus";
-import logo from "@/assets/images/logo/rephera-logo-02.png";
+import logo from "@/assets/images/logo/rephera-logo.png";
 import CategoryDropdown from "./component/category-dropdown";
 import LoginModal from "@/app/components/common/popup/login-modal";
 import useSticky from "@/hooks/use-sticky";

@@ -5,7 +5,6 @@ import Image from "next/image";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { currentUser } from "@/utils/auth_utils";
 import { data } from "autoprefixer";
 
 // form data type
@@ -27,7 +26,6 @@ const JobApplicationForm = () => {
   const [errors, setErrors] = useState<
     Partial<Record<keyof IFormData, string>>
   >({});
-  const professional_id = currentUser();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,10 +67,9 @@ const JobApplicationForm = () => {
     setIsSubmitting(true);
     try {
       const response = await axiosInstance.post(
-        `http://${SERVER_URL}/job-applications/${professional_id}/`,
+        `http://${SERVER_URL}/job-applications/`,
         data,
         {
-          withCredentials: true,
           headers: { "Content-Type": "application/json" },
         }
       );

@@ -7,8 +7,11 @@ import axios, {
 import SERVER_URL from "@/services/server";
 
 interface RefreshTokenResponse {
-  access_token: string;
   refresh_token: string;
+}
+
+interface CustomAxiosRequestConfig extends AxiosRequestConfig {
+  _retry?: boolean;
 }
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -18,10 +21,6 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const token = localStorage.getItem("token");
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
     return config;
   },
   (error: AxiosError) => Promise.reject(error)
@@ -33,31 +32,18 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config as AxiosRequestConfig;
 
     if (error.response?.status === 401) {
-      const refreshToken = localStorage.getItem("refresh_token");
+      try {
+        await axios.post(
+          `http://${SERVER_URL}/auth/refresh`,
+          {},
+          { withCredentials: true }
+        );
 
-      if (refreshToken) {
-        try {
-          const response = await axios.post<RefreshTokenResponse>(
-            `https://${SERVER_URL}/auth/refresh`,
-            { refresh_token: refreshToken }
-          );
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        console.error("Token refresh failed:", refreshError);
 
-          console.log(response.data);
-
-          localStorage.setItem("token", response.data.access_token);
-          localStorage.setItem("refresh_token", response.data.refresh_token);
-
-          if (originalRequest.headers) {
-            originalRequest.headers.Authorization = `Bearer ${response.data.access_token}`;
-          }
-          return axiosInstance(originalRequest);
-        } catch (refreshError) {
-          console.error("Token refresh failed:", refreshError);
-
-          localStorage.removeItem("token");
-          localStorage.removeItem("refresh_token");
-          window.location.href = "/login";
-        }
+        window.location.href = "/";
       }
     }
 

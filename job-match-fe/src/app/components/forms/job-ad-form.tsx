@@ -5,7 +5,6 @@ import Image from "next/image";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { currentUser } from "@/utils/auth_utils";
 import { data } from "autoprefixer";
 
 // form data type
@@ -70,7 +69,6 @@ const JobAdForm = () => {
         `http://${SERVER_URL}/job-ads/`,
         data,
         {
-          withCredentials: true,
           headers: { "Content-Type": "application/json" },
         }
       );
