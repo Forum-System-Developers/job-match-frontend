@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401) {
       try {
         await axios.post(
-          `${SERVER_URL}/auth/refresh`,
+          `http://${SERVER_URL}/auth/refresh`,
           {},
           { withCredentials: true }
         );
