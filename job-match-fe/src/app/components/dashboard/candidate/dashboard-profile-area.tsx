@@ -9,6 +9,7 @@ import CitySelect from "./city-select";
 import StateSelect from "./state-select";
 import { useProfessional } from "./hooks/use-professional";
 import { usePhoto } from "./hooks/usePhoto";
+import { uploadPhoto } from "./data/professional-data";
 
 // props type
 type IProps = {
@@ -26,6 +27,17 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {};
+      reader.readAsDataURL(file);
+
+      uploadPhoto(file);
+    }
+  };
 
   return (
     <div className="dashboard-body">
@@ -58,6 +70,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
                 id="uploadImg"
                 name="uploadImg"
                 placeholder=""
+                onChange={handleUpload}
               />
             </div>
             <button className="delete-btn tran3s">Delete</button>

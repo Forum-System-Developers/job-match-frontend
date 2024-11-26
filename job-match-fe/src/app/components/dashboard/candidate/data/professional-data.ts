@@ -146,3 +146,26 @@ export const getPhoto = async (id: string): Promise<Blob | null> => {
     return null;
   }
 };
+
+export const uploadPhoto = async (file: File) => {
+  try {
+    const formData = new FormData();
+    formData.append("logo", file);
+
+    const response = await axiosInstance.post(
+      `http://${SERVER_URL}/professionals/upload-photo`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("Logo uploaded successfully:", response.data);
+  } catch (error) {
+    console.error("Error uploading logo:", error);
+  } finally {
+    window.location.href = "/dashboard/candidate-dashboard/profile";
+  }
+};
