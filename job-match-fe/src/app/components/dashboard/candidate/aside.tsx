@@ -1,10 +1,10 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import logo from "@/assets/dashboard/images/rephera-logo-02.png";
-import avatar from "@/assets/dashboard/images/avatar_01.jpg";
+import logo from "@/assets/rephera-logo-02.gif";
+import avatar from "@/assets/dashboard/images/avatar_03.png";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
 import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
@@ -12,6 +12,11 @@ import logout from "@/assets/dashboard/images/icon/icon_9.svg";
 import { nav_data } from "../employ/data/data";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
+import {
+  getCurrentProfessional,
+  getPhoto,
+  ProfessionalDetails,
+} from "./data/data";
 
 // props type
 type IProps = {
@@ -21,6 +26,47 @@ type IProps = {
 
 const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
+  const [professional, setProfessional] = useState<ProfessionalDetails | null>(
+    null
+  );
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchProfessional = async () => {
+    setLoading(true);
+    try {
+      const professional = await getCurrentProfessional();
+      setProfessional(professional);
+      setFirstName(professional?.first_name || "");
+      setLastName(professional?.last_name || "");
+    } catch (error) {
+      console.error("Error fetching professional:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPhoto = async (id: string) => {
+    setLoading(true);
+    const photo = await getPhoto(id);
+    if (photo) {
+      const url = URL.createObjectURL(photo);
+      setPhotoUrl(url);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProfessional();
+    fetchPhoto(professional?.id || "");
+  }, [professional?.id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <aside className={`dash-aside-navbar ${isOpenSidebar ? "show" : ""}`}>
@@ -31,7 +77,8 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
                 src={logo}
                 alt="logo"
                 priority
-                style={{ width: "100%", height: "50%" }}
+                // style={{ width: "100%", height: "50%" }}
+                width={200}
               />
             </Link>
             <button
@@ -44,10 +91,11 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
           <div className="user-data">
             <div className="user-avatar online position-relative rounded-circle">
               <Image
-                src={avatar}
+                src={photoUrl ? photoUrl : avatar}
                 alt="avatar"
                 className="lazy-img"
-                style={{ height: "auto" }}
+                height={68}
+                width={68}
               />
             </div>
             <div className="user-name-data">
@@ -59,7 +107,7 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
                 data-bs-auto-close="outside"
                 aria-expanded="false"
               >
-                James Brower
+                {professional?.first_name} {professional?.last_name}
               </button>
               <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
                 <li>
