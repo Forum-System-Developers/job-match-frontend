@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
-import avatar from "@/assets/dashboard/images/avatar_04.jpg";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import icon from "@/assets/dashboard/images/icon/icon_16.svg";
 import CountrySelect from "../candidate/country-select";
 import CitySelect from "../candidate/city-select";
@@ -9,6 +9,7 @@ import StateSelect from "../candidate/state-select";
 import DashboardHeader from "../candidate/dashboard-header";
 import { usePhoto } from "./hooks/usePhoto";
 import { useCompany } from "./hooks/useCompany";
+import { uploadLogo } from "./data/data";
 
 // props type
 type IProps = {
@@ -17,12 +18,24 @@ type IProps = {
 const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
   const { company, loading: companyLoading } = useCompany();
   const { photoUrl, loading: photoLoading } = usePhoto(company?.id || null);
-
   const isLoading = companyLoading || photoLoading;
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        // setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      uploadLogo(file);
+    }
+  };
 
   return (
     <div className="dashboard-body">
@@ -36,7 +49,7 @@ const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
             <Image
-              src={photoUrl ? photoUrl : avatar}
+              src={photoUrl ? photoUrl : profile_icon_1}
               alt="avatar"
               className="lazy-img user-img"
               height={68}
@@ -55,6 +68,7 @@ const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
                 id="uploadImg"
                 name="uploadImg"
                 placeholder=""
+                onChange={handleUpload}
               />
             </div>
             <button className="delete-btn tran3s">Delete</button>
