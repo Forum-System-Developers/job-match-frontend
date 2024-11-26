@@ -1,7 +1,7 @@
 import SERVER_URL from "@/services/server";
 import axiosInstance from "@/services/axiosInstance";
-import { CompanyDetails } from "@/app/components/dashboard/employ/data/data";
-import { ProfessionalDetails } from "@/app/components/dashboard/candidate/data/data";
+import { CompanyDetails } from "@/app/components/dashboard/employ/data/company-data";
+import { ProfessionalDetails } from "@/app/components/dashboard/candidate/data/professional-data";
 
 export const setRole = async () => {
   if (typeof window !== "undefined") {

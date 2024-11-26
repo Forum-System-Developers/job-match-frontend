@@ -9,7 +9,7 @@ import StateSelect from "../candidate/state-select";
 import DashboardHeader from "../candidate/dashboard-header";
 import { usePhoto } from "./hooks/usePhoto";
 import { useCompany } from "./hooks/useCompany";
-import { uploadLogo } from "./data/data";
+import { uploadLogo } from "./data/company-data";
 
 // props type
 type IProps = {
@@ -28,9 +28,7 @@ const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        // setPreview(reader.result as string);
-      };
+      reader.onloadend = () => {};
       reader.readAsDataURL(file);
 
       uploadLogo(file);
