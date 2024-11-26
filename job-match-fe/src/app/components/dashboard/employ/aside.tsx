@@ -17,8 +17,6 @@ import {
 } from "./data/data";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
-import { get } from "http";
-import { set } from "react-hook-form";
 
 // props type
 type IProps = {
@@ -28,7 +26,6 @@ type IProps = {
 const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
   const [company, setCompany] = useState<CompanyDetails | null>(null);
-  const [photo, setPhoto] = useState<Blob | null>(null);
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [companyName, setCompanyName] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,9 +36,8 @@ const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
       const company = await getCurrentCompany();
       setCompany(company);
       setCompanyName(company?.name || "");
-      console.log("company name is ", companyName);
     } catch (error) {
-      console.error("Error fetching employer or photo:", error);
+      console.error("Error fetching company:", error);
     } finally {
       setLoading(false);
     }
