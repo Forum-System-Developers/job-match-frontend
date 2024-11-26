@@ -1,18 +1,29 @@
-"use client"
-import React from 'react';
-import Image from 'next/image';
-import avatar from '@/assets/dashboard/images/avatar_04.jpg';
-import icon from '@/assets/dashboard/images/icon/icon_16.svg';
-import CountrySelect from '../candidate/country-select';
-import CitySelect from '../candidate/city-select';
-import StateSelect from '../candidate/state-select';
-import DashboardHeader from '../candidate/dashboard-header';
+"use client";
+import React from "react";
+import Image from "next/image";
+import avatar from "@/assets/dashboard/images/avatar_04.jpg";
+import icon from "@/assets/dashboard/images/icon/icon_16.svg";
+import CountrySelect from "../candidate/country-select";
+import CitySelect from "../candidate/city-select";
+import StateSelect from "../candidate/state-select";
+import DashboardHeader from "../candidate/dashboard-header";
+import { usePhoto } from "./hooks/usePhoto";
+import { useCompany } from "./hooks/useCompany";
 
-// props type 
+// props type
 type IProps = {
-  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
-}
-const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
+  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
+  const { company, loading: companyLoading } = useCompany();
+  const { photoUrl, loading: photoLoading } = usePhoto(company?.id || null);
+
+  const isLoading = companyLoading || photoLoading;
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -24,10 +35,27 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
 
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
-            <Image src={avatar} alt="avatar" className="lazy-img user-img" />
+            <Image
+              src={photoUrl ? photoUrl : avatar}
+              alt="avatar"
+              className="lazy-img user-img"
+              height={68}
+              width={68}
+              style={{
+                width: "10%",
+                height: "10%",
+                objectFit: "cover",
+                borderRadius: "50%",
+              }}
+            />
             <div className="upload-btn position-relative tran3s ms-4 me-3">
               Upload new photo
-              <input type="file" id="uploadImg" name="uploadImg" placeholder="" />
+              <input
+                type="file"
+                id="uploadImg"
+                name="uploadImg"
+                placeholder=""
+              />
             </div>
             <button className="delete-btn tran3s">Delete</button>
           </div>
@@ -75,11 +103,15 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
           </div>
           <div className="dash-input-wrapper">
             <label htmlFor="">About Company*</label>
-            <textarea className="size-lg" placeholder="Write something interesting about you...."></textarea>
-            <div className="alert-text">Brief description for your company. URLs are hyperlinked.</div>
+            <textarea
+              className="size-lg"
+              placeholder="Write something interesting about you...."
+            ></textarea>
+            <div className="alert-text">
+              Brief description for your company. URLs are hyperlinked.
+            </div>
           </div>
         </div>
-
 
         <div className="bg-white card-box border-20 mt-40">
           <h4 className="dash-title-three">Social Media</h4>
@@ -91,7 +123,9 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
             <label htmlFor="">Network 2</label>
             <input type="text" placeholder="https://twitter.com/FIFAcom" />
           </div>
-          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i> Add more link</a>
+          <a href="#" className="dash-btn-one">
+            <i className="bi bi-plus"></i> Add more link
+          </a>
         </div>
 
         <div className="bg-white card-box border-20 mt-40">
@@ -100,7 +134,10 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
             <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Address*</label>
-                <input type="text" placeholder="Cowrasta, Chandana, Gazipur Sadar" />
+                <input
+                  type="text"
+                  placeholder="Cowrasta, Chandana, Gazipur Sadar"
+                />
               </div>
             </div>
             <div className="col-lg-3">
@@ -138,7 +175,10 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
                 </div>
                 <div className="map-frame mt-30">
                   <div className="gmap_canvas h-100 w-100">
-                    <iframe className="gmap_iframe h-100 w-100" src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                    <iframe
+                      className="gmap_iframe h-100 w-100"
+                      src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                    ></iframe>
                   </div>
                 </div>
               </div>
@@ -154,11 +194,23 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
           <div className="accordion dash-accordion-one" id="accordionOne">
             <div className="accordion-item">
               <div className="accordion-header" id="headingOne">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <button
+                  className="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="false"
+                  aria-controls="collapseOne"
+                >
                   Add Member 1
                 </button>
               </div>
-              <div id="collapseOne" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionOne">
+              <div
+                id="collapseOne"
+                className="accordion-collapse collapse"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionOne"
+              >
                 <div className="accordion-body">
                   <div className="row">
                     <div className="col-lg-2">
@@ -168,7 +220,10 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
                     </div>
                     <div className="col-lg-10">
                       <div className="dash-input-wrapper mb-30">
-                        <input type="text" placeholder="Product Designer (Google)" />
+                        <input
+                          type="text"
+                          placeholder="Product Designer (Google)"
+                        />
                       </div>
                     </div>
                   </div>
@@ -197,19 +252,26 @@ const EmployProfileArea = ({setIsOpenSidebar}:IProps) => {
                     </div>
                   </div>
                   <div className="d-flex justify-content-end mb-20">
-                    <a href="#" className="dash-btn-one">Remove</a>
+                    <a href="#" className="dash-btn-one">
+                      Remove
+                    </a>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <a href="#" className="dash-btn-one"><i className="bi bi-plus"></i> Add Another Member</a>
+          <a href="#" className="dash-btn-one">
+            <i className="bi bi-plus"></i> Add Another Member
+          </a>
         </div>
 
-
         <div className="button-group d-inline-flex align-items-center mt-30">
-          <a href="#" className="dash-btn-two tran3s me-3">Save</a>
-          <a href="#" className="dash-cancel-btn tran3s">Cancel</a>
+          <a href="#" className="dash-btn-two tran3s me-3">
+            Save
+          </a>
+          <a href="#" className="dash-cancel-btn tran3s">
+            Cancel
+          </a>
         </div>
       </div>
     </div>
