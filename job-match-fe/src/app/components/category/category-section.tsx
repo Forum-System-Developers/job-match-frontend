@@ -19,7 +19,7 @@ const CategorySection = () => {
               <h2>
                 Most{" "}
                 <span className="position-relative">
-                  Demanding{" "}
+                  In-demand{" "}
                   <Image
                     src={shape_1}
                     alt="shape"
@@ -32,10 +32,11 @@ const CategorySection = () => {
           </div>
           <div className="col-xxl-5 col-lg-6">
             <p className="text-md mb-25 lg-mb-10 md-mt-20">
-              Together with useful notifications, collaboration, insights, and
-              improvement tip lorem etc.
+              Receive notifications, emails, insights, and improvement tips by
+              our team.
             </p>
-            <Link href="/job-grid-v1"
+            <Link
+              href="/job-grid-v1"
               className="btn-two d-none d-lg-inline-block"
             >
               Explore all fields
@@ -49,7 +50,10 @@ const CategorySection = () => {
               className="card-style-one text-center mt-20 wow fadeInUp"
               data-wow-delay={`0.1${i + 1}s`}
             >
-              <Link href="/job-grid-v2" className={`bg wrapper ${i === 0 ? 'active' : ''}`}>
+              <Link
+                href="/job-grid-v2"
+                className={`bg wrapper ${i === 0 ? "active" : ""}`}
+              >
                 <div className="icon d-flex align-items-center justify-content-center">
                   <Image src={item.icon} alt="icon" className="lazy-img" />
                 </div>
