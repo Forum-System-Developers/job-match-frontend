@@ -95,15 +95,25 @@ export const getCurrentProfessional =
       const { data } = await axiosInstance.get(
         `http://${SERVER_URL}/professionals/${user.id}`
       );
+      const {
+        first_name,
+        last_name,
+        description,
+        city,
+        email,
+        status,
+        active_application_count,
+      } = data.detail;
+
       const professional = {
         id: user.id,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        description: data.description,
-        city: data.city,
-        email: data.email,
-        status: data.status,
-        active_application_count: data.active_application_count,
+        first_name,
+        last_name,
+        description,
+        city,
+        email,
+        status,
+        active_application_count,
       };
       return professional;
     } catch (error) {

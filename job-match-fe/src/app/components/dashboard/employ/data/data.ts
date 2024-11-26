@@ -106,14 +106,14 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
     );
     const company = {
       id: user.id,
-      name: data.name,
-      address_line: data.address_line,
-      city: data.city,
-      description: data.description,
-      email: data.email,
-      phone_number: data.phone_number,
-      active_job_ads: data.active_job_ads,
-      successful_matches: data.successful_matches,
+      name: data.detail.name,
+      address_line: data.detail.address_line,
+      city: data.detail.city,
+      description: data.detail.description,
+      email: data.detail.email,
+      phone_number: data.detail.phone_number,
+      active_job_ads: data.detail.active_job_ads,
+      successful_matches: data.detail.successful_matches,
     };
     return company;
   } catch (error) {
