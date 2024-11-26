@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-import { getCurrentProfessional, ProfessionalDetails } from "../data/data";
+import {
+  getCurrentProfessional,
+  ProfessionalDetails,
+} from "../data/professional-data";
 
 export const useProfessional = () => {
   const [professional, setProfessional] = useState<ProfessionalDetails | null>(

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import avatar from "@/assets/dashboard/images/avatar_02.jpg";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import search from "@/assets/dashboard/images/icon/icon_16.svg";
 import DashboardHeader from "./dashboard-header";
 import CountrySelect from "./country-select";
@@ -9,6 +9,7 @@ import CitySelect from "./city-select";
 import StateSelect from "./state-select";
 import { useProfessional } from "./hooks/use-professional";
 import { usePhoto } from "./hooks/usePhoto";
+import { uploadPhoto } from "./data/professional-data";
 
 // props type
 type IProps = {
@@ -27,6 +28,17 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     return <div>Loading...</div>;
   }
 
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {};
+      reader.readAsDataURL(file);
+
+      uploadPhoto(file);
+    }
+  };
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -39,7 +51,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
             <Image
-              src={photoUrl ? photoUrl : avatar}
+              src={photoUrl ? photoUrl : profile_icon_1}
               alt="avatar"
               className="lazy-img user-img"
               height={68}
@@ -58,6 +70,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
                 id="uploadImg"
                 name="uploadImg"
                 placeholder=""
+                onChange={handleUpload}
               />
             </div>
             <button className="delete-btn tran3s">Delete</button>

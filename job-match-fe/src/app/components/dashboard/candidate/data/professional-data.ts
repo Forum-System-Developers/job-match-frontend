@@ -19,7 +19,7 @@ import axios from "axios";
 import SERVER_URL from "@/services/server";
 
 // nav data
-const nav_data: {
+export const nav_data: {
   id: number;
   icon: StaticImageData;
   icon_active: StaticImageData;
@@ -144,5 +144,28 @@ export const getPhoto = async (id: string): Promise<Blob | null> => {
     }
 
     return null;
+  }
+};
+
+export const uploadPhoto = async (file: File) => {
+  try {
+    const formData = new FormData();
+    formData.append("logo", file);
+
+    const response = await axiosInstance.post(
+      `http://${SERVER_URL}/professionals/upload-photo`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("Logo uploaded successfully:", response.data);
+  } catch (error) {
+    console.error("Error uploading logo:", error);
+  } finally {
+    window.location.href = "/dashboard/candidate-dashboard/profile";
   }
 };
