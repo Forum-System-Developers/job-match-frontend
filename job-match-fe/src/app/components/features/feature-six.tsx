@@ -38,7 +38,7 @@ const FeatureSix = () => {
                   We collaborate with a number of top tier companies on
                   imagining the future of work, have a look.
                 </p>
-                <Link href="/company-v1" className="btn-five">
+                <Link href="/company-v2" className="btn-five">
                   Learn More
                 </Link>
               </div>
@@ -47,7 +47,12 @@ const FeatureSix = () => {
               <div className="big-circle d-inline-block position-relative wow fadeInRight">
                 <Image src={shape} alt="shape" className="lazy-img" />
                 <div className="logo rounded-circle d-flex align-items-center justify-content-center">
-                  <Image src={logo} alt="logo" className="lazy-img" style={{height:'auto'}} />
+                  <Image
+                    src={logo}
+                    alt="logo"
+                    className="lazy-img"
+                    style={{ height: "auto" }}
+                  />
                 </div>
                 <MediaImg img={media_1} num="01" />
                 <MediaImg img={media_2} num="02" />
