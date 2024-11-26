@@ -16,9 +16,9 @@ import nav_7_active from "@/assets/dashboard/images/icon/icon_7_active.svg";
 import nav_9 from "@/assets/dashboard/images/icon/icon_40.svg";
 import nav_9_active from "@/assets/dashboard/images/icon/icon_40_active.svg";
 import { currentUser } from "@/utils/auth_utils";
-import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
+import axiosInstance from "@/services/axiosInstance";
 
 // nav data
 export const nav_data: {
