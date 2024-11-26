@@ -16,9 +16,10 @@ export const setRole = async () => {
   }
 };
 
-export const role = localStorage.getItem("role")
-  ? localStorage.getItem("role")
-  : null;
+export const role =
+  typeof window !== "undefined" && localStorage.getItem("role")
+    ? localStorage.getItem("role")
+    : null;
 
 export const isAuthenticated = () => {
   if (typeof window !== "undefined") {
