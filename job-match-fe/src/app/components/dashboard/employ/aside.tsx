@@ -9,12 +9,10 @@ import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
 import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
 import logout from "@/assets/dashboard/images/icon/icon_9.svg";
-import {
-  nav_data,
-  getCurrentCompany,
-  getPhoto,
-  CompanyDetails,
-} from "./data/data";
+import { nav_data, getPhoto } from "./data/data";
+import { usePhoto } from "./hooks/usePhoto";
+import { useCompany } from "./hooks/useCompany";
+
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
 
@@ -25,40 +23,12 @@ type IProps = {
 };
 const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
-  const [company, setCompany] = useState<CompanyDetails | null>(null);
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-  const [companyName, setCompanyName] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const { company, loading: companyLoading } = useCompany();
+  const { photoUrl, loading: photoLoading } = usePhoto(company?.id || null);
 
-  const fetchEmployer = async () => {
-    setLoading(true);
-    try {
-      const company = await getCurrentCompany();
-      setCompany(company);
-      setCompanyName(company?.name || "");
-    } catch (error) {
-      console.error("Error fetching company:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const isLoading = companyLoading || photoLoading;
 
-  const fetchPhoto = async (id: string) => {
-    setLoading(true);
-    const photo = await getPhoto(id);
-    if (photo) {
-      const url = URL.createObjectURL(photo);
-      setPhotoUrl(url);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchEmployer();
-    fetchPhoto(company?.id || "");
-  }, [company?.id]);
-
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -80,11 +50,17 @@ const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
           <div className="user-data">
             <div className="user-avatar online position-relative rounded-circle">
               <Image
-                src={photoUrl ? photoUrl : avatar}
+                src={photoUrl ? photoUrl : profile_icon_1}
                 alt="avatar"
                 className="lazy-img"
                 height={68}
                 width={68}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
               />
             </div>
             <div className="user-name-data">
@@ -96,7 +72,7 @@ const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
                 data-bs-auto-close="outside"
                 aria-expanded="false"
               >
-                {companyName}
+                {company?.name}
               </button>
               <ul className="dropdown-menu" aria-labelledby="profile-dropdown">
                 <li>

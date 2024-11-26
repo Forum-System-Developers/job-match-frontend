@@ -12,11 +12,8 @@ import logout from "@/assets/dashboard/images/icon/icon_9.svg";
 import { nav_data } from "../employ/data/data";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
-import {
-  getCurrentProfessional,
-  getPhoto,
-  ProfessionalDetails,
-} from "./data/data";
+import { useProfessional } from "./hooks/use-professional";
+import { usePhoto } from "./hooks/usePhoto";
 
 // props type
 type IProps = {
@@ -26,44 +23,15 @@ type IProps = {
 
 const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
-  const [professional, setProfessional] = useState<ProfessionalDetails | null>(
-    null
+
+  const { professional, loading: professionalLoading } = useProfessional();
+  const { photoUrl, loading: photoLoading } = usePhoto(
+    professional?.id || null
   );
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchProfessional = async () => {
-    setLoading(true);
-    try {
-      const professional = await getCurrentProfessional();
-      setProfessional(professional);
-      setFirstName(professional?.first_name || "");
-      setLastName(professional?.last_name || "");
-    } catch (error) {
-      console.error("Error fetching professional:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const isLoading = professionalLoading || photoLoading;
 
-  const fetchPhoto = async (id: string) => {
-    setLoading(true);
-    const photo = await getPhoto(id);
-    if (photo) {
-      const url = URL.createObjectURL(photo);
-      setPhotoUrl(url);
-    }
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchProfessional();
-    fetchPhoto(professional?.id || "");
-  }, [professional?.id]);
-
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
@@ -72,14 +40,8 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
       <aside className={`dash-aside-navbar ${isOpenSidebar ? "show" : ""}`}>
         <div className="position-relative">
           <div className="logo text-md-center d-md-block d-flex align-items-center justify-content-between">
-            <Link href="/dashboard/candidate-dashboard">
-              <Image
-                src={logo}
-                alt="logo"
-                priority
-                // style={{ width: "100%", height: "50%" }}
-                width={200}
-              />
+            <Link href="/">
+              <Image src={logo} alt="logo" priority width={200} />
             </Link>
             <button
               onClick={() => setIsOpenSidebar(false)}
@@ -91,11 +53,17 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
           <div className="user-data">
             <div className="user-avatar online position-relative rounded-circle">
               <Image
-                src={photoUrl ? photoUrl : avatar}
+                src={photoUrl ? photoUrl : profile_icon_1}
                 alt="avatar"
                 className="lazy-img"
                 height={68}
                 width={68}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
               />
             </div>
             <div className="user-name-data">
