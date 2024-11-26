@@ -9,7 +9,7 @@ import LoginModal from "@/app/components/common/popup/login-modal";
 import useSticky from "@/hooks/use-sticky";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { role, isAuthenticated, setRole } from "@/utils/auth_utils";
+import { role, isAuthenticated } from "@/utils/auth_utils";
 
 const Header = () => {
   const { sticky } = useSticky();
@@ -85,7 +85,7 @@ const Header = () => {
                         </Link>
                       ) : (
                         <Link
-                          href="/create-application"
+                          href="/dashboard/candidate-dashboard/submit-application"
                           className="job-post-btn tran3s"
                         >
                           Create Application
