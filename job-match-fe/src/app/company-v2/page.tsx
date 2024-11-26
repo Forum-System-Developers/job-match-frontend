@@ -20,10 +20,7 @@ const CompanyV2Page = () => {
         {/* header end */}
 
         {/*breadcrumb start */}
-        <CompanyBreadcrumb
-          title="Company"
-          subtitle="Find your desire company and get your dream job"
-        />
+        <CompanyBreadcrumb title="Companies" subtitle="All companies" />
         {/*breadcrumb end */}
 
         {/* company v2 area start */}
