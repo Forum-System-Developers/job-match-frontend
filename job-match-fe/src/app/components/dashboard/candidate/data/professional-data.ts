@@ -19,7 +19,7 @@ import axios from "axios";
 import SERVER_URL from "@/services/server";
 
 // nav data
-const nav_data: {
+export const nav_data: {
   id: number;
   icon: StaticImageData;
   icon_active: StaticImageData;

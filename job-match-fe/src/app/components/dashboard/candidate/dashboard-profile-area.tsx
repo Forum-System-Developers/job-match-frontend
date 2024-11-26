@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import avatar from "@/assets/dashboard/images/avatar_02.jpg";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import search from "@/assets/dashboard/images/icon/icon_16.svg";
 import DashboardHeader from "./dashboard-header";
 import CountrySelect from "./country-select";
@@ -51,7 +51,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
             <Image
-              src={photoUrl ? photoUrl : avatar}
+              src={photoUrl ? photoUrl : profile_icon_1}
               alt="avatar"
               className="lazy-img user-img"
               height={68}
