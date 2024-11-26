@@ -168,3 +168,14 @@ export const uploadLogo = async (file: File) => {
     window.location.href = "/dashboard/employ-dashboard/profile";
   }
 };
+
+export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
+  try {
+    const response = await axiosInstance.get(`http://${SERVER_URL}/companies/`);
+    const companies: CompanyDetails[] = response.data.detail ?? [];
+    return companies;
+  } catch (error) {
+    console.error("Error fetching companies:", error);
+    return [];
+  }
+};

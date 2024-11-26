@@ -6,8 +6,8 @@ import shape_2 from "@/assets/images/shape/shape_03.svg";
 import SearchForm from "../../forms/search-form";
 
 const JobBreadcrumb = ({
-  title = "Job Listing",
-  subtitle = "We delivered blazing fast & striking work solution",
+  title = "Job Opportunities",
+  subtitle = "Explore the latest job ads posted by Companies",
 }: {
   title?: string;
   subtitle?: string;
@@ -30,7 +30,7 @@ const JobBreadcrumb = ({
             <div className="row">
               <div className="col-xl-9 col-lg-8 m-auto">
                 <div className="job-search-one position-relative">
-                  <SearchForm/>
+                  <SearchForm />
                 </div>
               </div>
             </div>

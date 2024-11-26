@@ -11,23 +11,22 @@ export const how_works_data: how_works_type[] = [
     id: 1,
     icon: icon_1,
     icon_white: icon_W_1,
-    title: "Create Account",
-    sub_title: "It’s very easy to open an account and start your journey.",
+    title: "Create an account",
+    sub_title: "Sign up as either a Company or a Professional.",
   },
   {
     id: 2,
     icon: icon_2,
     icon_white: icon_W_2,
     title: "Complete your profile",
-    sub_title:
-      "Complete your profile with all the info to get attention of client.",
+    sub_title: "Create one or more job ads or job applications.",
   },
   {
     id: 3,
     icon: icon_3,
     icon_white: icon_W_3,
-    title: "Apply job or hire",
+    title: "Send a Match request",
     sub_title:
-      "Apply & get your preferable jobs with all the requirements and get it.",
+      "You can request a match with the selected job ad or job application.",
   },
 ];

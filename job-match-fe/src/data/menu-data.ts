@@ -14,13 +14,13 @@ const menu_data: IMenuData[] = [
     mega_menus: [
       {
         id: 1,
-        title: "By Professionals",
-        sub_menus: [{ link: "/job-list-v1", title: "Job Aplications" }],
+        title: "By Companies",
+        sub_menus: [{ link: "/job-list-v1", title: "Job Ads" }],
       },
       {
         id: 2,
-        title: "By Companies",
-        sub_menus: [{ link: "/job-list-v3", title: "Job Ads" }],
+        title: "By Professionals",
+        sub_menus: [{ link: "/job-list-v3", title: "Job Applications" }],
       },
       {
         id: 3,

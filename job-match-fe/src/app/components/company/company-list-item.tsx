@@ -14,7 +14,8 @@ const CompanyListItem = ({ item }: { item: ICompany }) => {
       <div className="row justify-content-between align-items-center">
         <div className="col-xl-5">
           <div className="d-flex align-items-xl-center">
-            <Link href="/company-details"
+            <Link
+              href="/company-details"
               className="company-logo rounded-circle"
             >
               <Image
@@ -36,7 +37,7 @@ const CompanyListItem = ({ item }: { item: ICompany }) => {
         <div className="col-xl-4 col-md-8">
           <div className="d-flex align-items-center ps-xxl-5 lg-mt-20">
             <div className="d-flex align-items-center">
-              <Image
+              {/* <Image
                 src={team_img_1}
                 alt="team_img"
                 className="lazy-img rounded-circle team-img"
@@ -50,22 +51,26 @@ const CompanyListItem = ({ item }: { item: ICompany }) => {
                 src={team_img_3}
                 alt="team_img"
                 className="lazy-img rounded-circle team-img"
-              />
+              /> */}
               <div className="team-text">
-                <span className="text-md fw-500 text-dark d-block">14+ </span>{" "}
-                Team Size
+                <span className="text-md fw-500 text-dark d-block">
+                  {item.successfull_matches}{" "}
+                </span>{" "}
+                Successful Matches
               </div>
             </div>
           </div>
         </div>
         <div className="col-xl-3 col-md-4">
           <div className="btn-group d-flex align-items-center justify-content-md-end lg-mt-20">
-            <Link href="/company-details"
+            <Link
+              href="/company-details"
               className="open-job-btn text-center fw-500 tran3s me-2"
             >
-              {item.vacancy} open job
+              {item.vacancy} open jobs
             </Link>
-            <Link href="/company-details"
+            <Link
+              href="/company-details"
               className="save-btn text-center rounded-circle tran3s"
               title="Save Job"
             >
