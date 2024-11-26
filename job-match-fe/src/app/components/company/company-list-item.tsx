@@ -4,6 +4,7 @@ import Link from "next/link";
 import team_img_1 from "@/assets/images/assets/img_42.png";
 import team_img_2 from "@/assets/images/assets/img_43.png";
 import team_img_3 from "@/assets/images/assets/img_44.png";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import { ICompany } from "@/types/company-type";
 
 const CompanyListItem = ({ item }: { item: ICompany }) => {
@@ -19,9 +20,17 @@ const CompanyListItem = ({ item }: { item: ICompany }) => {
               className="company-logo rounded-circle"
             >
               <Image
-                src={item.img}
+                src={item.img ? item.img : profile_icon_1}
                 alt="image"
                 className="lazy-img rounded-circle"
+                height={85}
+                width={85}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
               />
             </Link>
             <div className="company-data">
