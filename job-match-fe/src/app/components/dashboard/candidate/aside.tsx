@@ -58,6 +58,12 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
                 className="lazy-img"
                 height={68}
                 width={68}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
               />
             </div>
             <div className="user-name-data">
