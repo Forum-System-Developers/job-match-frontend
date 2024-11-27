@@ -16,7 +16,9 @@ const CompanyListItem = ({ item }: { item: ICompany }) => {
         <div className="col-xl-5">
           <div className="d-flex align-items-xl-center">
             <Link
-              href="/company-details"
+              href={{
+                pathname: `/company/${item.id}`,
+              }}
               className="company-logo rounded-circle"
             >
               <Image
@@ -35,7 +37,12 @@ const CompanyListItem = ({ item }: { item: ICompany }) => {
             </Link>
             <div className="company-data">
               <h5 className="m0">
-                <Link href="/company-details" className="company-name tran3s">
+                <Link
+                  href={{
+                    pathname: `/company/${item.id}`,
+                  }}
+                  className="company-name tran3s"
+                >
                   {item.name}
                 </Link>
               </h5>
@@ -73,13 +80,17 @@ const CompanyListItem = ({ item }: { item: ICompany }) => {
         <div className="col-xl-3 col-md-4">
           <div className="btn-group d-flex align-items-center justify-content-md-end lg-mt-20">
             <Link
-              href="/company-details"
+              href={{
+                pathname: `/company/${item.id}`,
+              }}
               className="open-job-btn text-center fw-500 tran3s me-2"
             >
               {item.vacancy} open jobs
             </Link>
             <Link
-              href="/company-details"
+              href={{
+                pathname: `/company/${item.id}`,
+              }}
               className="save-btn text-center rounded-circle tran3s"
               title="Save Job"
             >
