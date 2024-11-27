@@ -2,21 +2,32 @@ import img_1 from "@/assets/images/logo/media_29.png";
 import { ICompany } from "./../types/company-type";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
+import { getPhoto } from "@/app/components/dashboard/employ/data/company-data";
 
 export const getCompanies = async () => {
   try {
     const response = await axiosInstance.get(`http://${SERVER_URL}/companies/`);
-    const companies: ICompany[] = (response.data.detail ?? []).map(
-      (company: any) => ({
-        id: company.id,
-        img: img_1,
-        name: company.name,
-        location: company.city,
-        successfull_matches: company.successful_matches,
-        vacancy: company.active_job_ads,
-        isFav: false,
+    const companiesData = response.data.detail ?? [];
+
+    const companies: ICompany[] = await Promise.all(
+      companiesData.map(async (company: any) => {
+        const photoBlob = await getPhoto(company.id);
+        const imgUrl = photoBlob
+          ? URL.createObjectURL(photoBlob)
+          : "/path/to/default/image.png";
+
+        return {
+          id: company.id,
+          img: imgUrl,
+          name: company.name,
+          location: company.city,
+          successfull_matches: company.successful_matches,
+          vacancy: company.active_job_ads,
+          isFav: false,
+        };
       })
     );
+
     return companies;
   } catch (error) {
     console.error("Error fetching companies:", error);

@@ -9,50 +9,50 @@ const menu_data: IMenuData[] = [
   },
   {
     id: 2,
-    link: "/job-list-v1",
+    link: "/",
     title: "Jobs & Applications",
     mega_menus: [
       {
         id: 1,
         title: "By Companies",
-        sub_menus: [{ link: "/job-list-v1", title: "Job Ads" }],
+        sub_menus: [{ link: "/job-ads", title: "Job postings" }],
       },
       {
         id: 2,
         title: "By Professionals",
-        sub_menus: [{ link: "/job-list-v3", title: "Job Applications" }],
+        sub_menus: [{ link: "/job-applications", title: "Job Applications" }],
       },
       {
         id: 3,
         title: "Wishlist",
         sub_menus: [
           { link: "/job-wishlist", title: "Job Wishlist" },
-          { link: "/job-details-v1", title: "Job Details v-1" },
-          { link: "/job-details-v2", title: "Job Details v-2" },
+          // { link: "/job-details-v1", title: "Job Details v-1" },
+          // { link: "/job-details-v2", title: "Job Details v-2" },
         ],
       },
     ],
   },
   {
     id: 3,
-    link: "/candidates-v1",
+    link: "/",
     title: "Explore",
     mega_menus: [
       {
         id: 1,
         title: "Professionals",
         sub_menus: [
-          { title: "View all professionals", link: "/candidates-v1" },
-          { title: "Candidates Details v-1", link: "/candidate-profile-v1" },
-          { title: "Candidates Details v-2", link: "/candidate-profile-v2" },
+          { title: "View all professionals", link: "/professionals" },
+          // { title: "Candidates Details v-1", link: "/candidate-profile-v1" },
+          // { title: "Candidates Details v-2", link: "/candidate-profile-v2" },
         ],
       },
       {
         id: 2,
         title: "Companies",
         sub_menus: [
-          { title: "View all companies", link: "/company-v2" },
-          { title: "Company Details", link: "/company-details" },
+          { title: "View all companies", link: "/companies" },
+          // { title: "Company Details", link: "/company-details" },
         ],
       },
       {

@@ -8,7 +8,7 @@ import FooterOne from "@/layouts/footers/footer-one";
 import CompanyV1Area from "../components/company/company-v1-area";
 
 export const metadata: Metadata = {
-  title: "Company v2",
+  title: "Companies",
 };
 
 const CompanyV2Page = () => {
