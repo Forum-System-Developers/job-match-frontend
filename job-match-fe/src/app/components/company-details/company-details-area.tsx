@@ -92,7 +92,7 @@ const CompanyDetailsArea = () => {
             </div>
             <div className="col-xxl-9 col-xl-8 order-xl-first">
               <div className="details-post-data me-xxl-5 pe-xxl-4">
-                <h3>Overview</h3>
+                <h3>Company Description</h3>
                 <p>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                   do eiusmod tempor incididunt ut labore et dolore magna aliqua.
