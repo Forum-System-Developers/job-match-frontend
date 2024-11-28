@@ -3,15 +3,15 @@ import Image from "next/image";
 import Link from "next/link";
 import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
-import job_data from "@/data/job-data";
+import job_data from "@/data/job-ad-data";
 import ActionDropdown from "./action-dropdown";
 
-// props type 
+// props type
 type IProps = {
-  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
-}
+  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const SavedJobArea = ({setIsOpenSidebar}:IProps) => {
+const SavedJobArea = ({ setIsOpenSidebar }: IProps) => {
   const job_items = job_data.slice(0, 4);
   return (
     <div className="dashboard-body">
@@ -50,7 +50,8 @@ const SavedJobArea = ({setIsOpenSidebar}:IProps) => {
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-4 col-sm-6 ms-auto">
-                  <Link href={`/job-details-v1/${j.id}`}
+                  <Link
+                    href={`/job-details-v1/${j.id}`}
                     className={`job-duration fw-500 ${
                       j.duration === "Part time" ? "part-time" : ""
                     }`}
@@ -86,7 +87,7 @@ const SavedJobArea = ({setIsOpenSidebar}:IProps) => {
                       <span></span>
                     </button>
                     {/* action dropdown start */}
-                    <ActionDropdown/>
+                    <ActionDropdown />
                     {/* action dropdown end */}
                   </div>
                 </div>

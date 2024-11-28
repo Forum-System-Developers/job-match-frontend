@@ -1,16 +1,16 @@
 import React from "react";
-import job_data from "@/data/job-data";
+import job_data from "@/data/job-ad-data";
 import ListItem from "./list-item";
 import Link from "next/link";
 
-export function JobListItems({style_2=false}:{style_2?:boolean}) {
+export function JobListItems({ style_2 = false }: { style_2?: boolean }) {
   return (
     <>
       {job_data.slice(0, 5).map((item) => (
         <ListItem key={item.id} item={item} style_2={style_2} />
       ))}
     </>
-  )
+  );
 }
 
 const JobListOne = () => {
@@ -21,7 +21,9 @@ const JobListOne = () => {
           <div className="row justify-content-between align-items-center">
             <div className="col-lg-6">
               <div className="title-one">
-                <h2 className="text-dark wow fadeInUp" data-wow-delay="0.3s">New job listing</h2>
+                <h2 className="text-dark wow fadeInUp" data-wow-delay="0.3s">
+                  New job listing
+                </h2>
               </div>
             </div>
             <div className="col-lg-5">

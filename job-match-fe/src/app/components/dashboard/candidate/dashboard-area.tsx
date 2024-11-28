@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import job_data from "@/data/job-data";
+import job_data from "@/data/job-ad-data";
 import icon_1 from "@/assets/dashboard/images/icon/icon_12.svg";
 import icon_2 from "@/assets/dashboard/images/icon/icon_13.svg";
 import icon_3 from "@/assets/dashboard/images/icon/icon_14.svg";
