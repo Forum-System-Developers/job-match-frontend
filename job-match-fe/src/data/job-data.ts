@@ -38,9 +38,7 @@ export const getJobAds = async () => {
       jobAdsData.map(async (ad: any) => {
         const company = await getCompany(ad.company_id);
         const photoBlob = await getLogo(ad.company_id);
-        const imgUrl = photoBlob
-          ? URL.createObjectURL(photoBlob)
-          : "/path/to/default/image.png";
+        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
 
         return {
           id: ad.id,
@@ -89,6 +87,41 @@ export const getCompany = async (
     return company;
   } catch (error) {
     console.error("An error occurred:", error);
+    return null;
+  }
+};
+
+export const getJobAd = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(
+      `http://${SERVER_URL}/job-ads/${id}`
+    );
+    const jobAdData = response.data.detail;
+
+    const company = await getCompany(jobAdData.company_id);
+    const photoBlob = await getLogo(jobAdData.company_id);
+    const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+
+    const Ad: IJobType = {
+      id: jobAdData.id,
+      logo: imgUrl,
+      title: jobAdData.title,
+      duration: "",
+      date: jobAdData.created_at,
+      company: company?.name ?? "",
+      location: "",
+      category: [],
+      tags: jobAdData.requirements,
+      experience: "",
+      salary: jobAdData.min_salary,
+      salary_duration: "",
+      english_fluency: "",
+      overview: jobAdData.description,
+    };
+
+    return Ad;
+  } catch (error) {
+    console.error("Error fetching Ad:", error);
     return null;
   }
 };
