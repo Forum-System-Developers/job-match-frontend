@@ -2,7 +2,7 @@ import img_1 from "@/assets/images/logo/media_29.png";
 import { ICompany } from "./../types/company-type";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { getPhoto } from "@/app/components/dashboard/employ/data/company-data";
+import { getLogo } from "@/app/components/dashboard/employ/data/company-data";
 
 export const getCompanies = async () => {
   try {
@@ -11,7 +11,7 @@ export const getCompanies = async () => {
 
     const companies: ICompany[] = await Promise.all(
       companiesData.map(async (company: any) => {
-        const photoBlob = await getPhoto(company.id);
+        const photoBlob = await getLogo(company.id);
         const imgUrl = photoBlob
           ? URL.createObjectURL(photoBlob)
           : "/path/to/default/image.png";

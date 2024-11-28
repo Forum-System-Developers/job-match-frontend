@@ -1,15 +1,26 @@
 "use client";
 import React, { useState } from "react";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import Image from "next/image";
 import logo from "@/assets/images/logo/media_37.png";
 import CompanyReviews from "./company-reviews";
 import VideoPopup from "../common/video-popup";
 import { useParams } from "next/navigation";
+import { useCompany } from "../company/hooks/useCompany";
+import { useLogo } from "../dashboard/employ/hooks/useLogo";
 
 const CompanyDetailsArea = () => {
   const { id } = useParams();
-
+  const { company, loading: companyLoading } = useCompany(id as string);
+  const { photoUrl, loading: photoLoading } = useLogo(id as string);
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+
+  const isLoading = companyLoading || photoLoading;
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <section className="company-details pt-110 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
@@ -17,9 +28,21 @@ const CompanyDetailsArea = () => {
           <div className="row">
             <div className="col-xxl-3 col-xl-4 order-xl-last">
               <div className="job-company-info ms-xl-5 ms-xxl-0 lg-mb-50">
-                <Image src={logo} alt="logo" className="lazy-img m-auto logo" />
+                <Image
+                  src={photoUrl ? photoUrl : profile_icon_1}
+                  alt="logo"
+                  className="lazy-img m-auto logo"
+                  height={35}
+                  width={35}
+                  style={{
+                    width: "50%",
+                    height: "50%",
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                  }}
+                />
                 <div className="text-md text-dark text-center mt-15 mb-20 lg-mb-10">
-                  Adobe Inc.
+                  {company?.name}
                 </div>
                 <div className="text-center">
                   <a
@@ -35,7 +58,7 @@ const CompanyDetailsArea = () => {
                   <ul className="job-meta-data row style-none">
                     <li className="col-12">
                       <span>Location: </span>
-                      <div>Spain, Barcelona </div>
+                      <div>{company?.address_line} </div>
                     </li>
                     <li className="col-12">
                       <span>Size:</span>
@@ -44,7 +67,7 @@ const CompanyDetailsArea = () => {
                     <li className="col-12">
                       <span>Email: </span>
                       <div>
-                        <a href="#">company@inquery.com</a>
+                        <a href="#">{company?.email}</a>
                       </div>
                     </li>
                     <li className="col-12">
@@ -54,8 +77,7 @@ const CompanyDetailsArea = () => {
                     <li className="col-12">
                       <span>Phone:</span>
                       <div>
-                        <a href="#">(990) 234 112 779,</a>{" "}
-                        <a href="#">+770 723801870</a>
+                        <a href="#">{company?.phone_number}</a>{" "}
                       </div>
                     </li>
                     <li className="col-12">

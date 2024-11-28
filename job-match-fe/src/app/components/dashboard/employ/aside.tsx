@@ -10,7 +10,7 @@ import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
 import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
 import logout from "@/assets/dashboard/images/icon/icon_9.svg";
 import { nav_data } from "./data/company-data";
-import { usePhoto } from "./hooks/usePhoto";
+import { useLogo } from "./hooks/useLogo";
 import { useCompany } from "./hooks/useCompany";
 
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
@@ -24,7 +24,7 @@ type IProps = {
 const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
   const { company, loading: companyLoading } = useCompany();
-  const { photoUrl, loading: photoLoading } = usePhoto(company?.id || null);
+  const { photoUrl, loading: photoLoading } = useLogo(company?.id || null);
 
   const isLoading = companyLoading || photoLoading;
 
