@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import Image from "next/image";
-import logo from "@/assets/images/logo/media_37.png";
 import CompanyReviews from "./company-reviews";
 import VideoPopup from "../common/video-popup";
 import { useParams } from "next/navigation";
