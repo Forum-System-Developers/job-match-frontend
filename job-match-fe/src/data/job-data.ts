@@ -37,7 +37,7 @@ export const getJobAds = async () => {
     const Ads: IJobType[] = await Promise.all(
       jobAdsData.map(async (ad: any) => {
         const company = await getCompany(ad.company_id);
-        const photoBlob = await getLogo(ad.id);
+        const photoBlob = await getLogo(ad.company_id);
         const imgUrl = photoBlob
           ? URL.createObjectURL(photoBlob)
           : "/path/to/default/image.png";

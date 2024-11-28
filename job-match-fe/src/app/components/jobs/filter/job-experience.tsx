@@ -1,10 +1,16 @@
 import React from "react";
-import job_data from "@/data/job-data";
 import { setExperience } from "@/redux/features/filterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { useAds } from "../../company/hooks/useAds";
 
-export function JobExperienceItems({showLength = true}: {showLength?: boolean}) {
-  const uniqueExperiences = [...new Set(job_data.map((job) => job.experience))];
+export function JobExperienceItems({
+  showLength = true,
+}: {
+  showLength?: boolean;
+}) {
+  const { ads, loading: companyLoading } = useAds();
+
+  const uniqueExperiences = [...new Set(ads.map((job) => job.experience))];
   const { experience } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
   return (
@@ -21,9 +27,7 @@ export function JobExperienceItems({showLength = true}: {showLength?: boolean}) 
           <label>
             {e}
             {showLength && (
-              <span>
-                {job_data.filter((job) => job.experience === e).length}
-              </span>
+              <span>{ads.filter((job) => job.experience === e).length}</span>
             )}
           </label>
         </li>

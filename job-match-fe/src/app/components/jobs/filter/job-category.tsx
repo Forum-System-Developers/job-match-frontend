@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import job_data from "@/data/job-data";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { setCategory } from "@/redux/features/filterSlice";
+import { useAds } from "../../company/hooks/useAds";
 
 const JobCategory = () => {
-  const uniqueCategories = [
-    ...new Set(job_data.flatMap((job) => job.category)),
-  ];
+  const { ads, loading: companyLoading } = useAds();
+
+  const uniqueCategories = [...new Set(ads.flatMap((job) => job.category))];
   const [isShowMore, setIsShowMore] = useState(false);
   const { category } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
@@ -30,7 +30,7 @@ const JobCategory = () => {
             <label>
               {c}{" "}
               <span>
-                {job_data.filter((job) => job.category.includes(c)).length}
+                {ads.filter((job) => job.category.includes(c)).length}
               </span>
             </label>
           </li>

@@ -17,7 +17,7 @@ const JobListThree = ({
   itemsPerPage: number;
   grid_style?: boolean;
 }) => {
-  const { ads, loading: companyLoading } = useAds();
+  const { ads, loading } = useAds();
 
   let all_jobs = ads;
   const maxPrice = ads.reduce((max, job) => {
@@ -59,8 +59,8 @@ const JobListThree = ({
       )
       .filter((item) =>
         tags.length !== 0 ? tags.some((t) => item?.tags?.includes(t)) : true
-      )
-      .filter((j) => j.salary >= priceValue[0] && j.salary <= priceValue[1]);
+      );
+    // .filter((j) => j.salary >= priceValue[0] && j.salary <= priceValue[1]);
 
     if (shortValue === "price-low-to-high") {
       filteredData = filteredData
@@ -86,7 +86,7 @@ const JobListThree = ({
     location,
     tags,
     all_jobs,
-    priceValue,
+    // priceValue,
     shortValue,
   ]);
 
@@ -98,6 +98,10 @@ const JobListThree = ({
   const handleShort = (item: { value: string; label: string }) => {
     setShortValue(item.value);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <section className="job-listing-three pt-110 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
       <div className="container">
@@ -130,7 +134,7 @@ const JobListThree = ({
                 </div>
                 <div className="d-flex align-items-center">
                   <div className="short-filter d-flex align-items-center">
-                    <div className="text-dark fw-500 me-2">Short:</div>
+                    <div className="text-dark fw-500 me-2">Sort:</div>
                     <NiceSelect
                       options={[
                         { value: "", label: "Price Short" },

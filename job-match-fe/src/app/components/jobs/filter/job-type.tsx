@@ -1,12 +1,14 @@
 import React from "react";
-import job_data from "@/data/job-data";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { setJobType } from "@/redux/features/filterSlice";
+import { useAds } from "../../company/hooks/useAds";
 
 // job type items
 
 export function JobTypeItems({ showLength = true }: { showLength?: boolean }) {
-  const jobDuration = [...new Set(job_data.map((job) => job.duration))];
+  const { ads, loading: companyLoading } = useAds();
+
+  const jobDuration = [...new Set(ads.map((job) => job.duration))];
   const { job_type } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
   return (
@@ -24,7 +26,7 @@ export function JobTypeItems({ showLength = true }: { showLength?: boolean }) {
             {duration}{" "}
             {showLength && (
               <span>
-                {job_data.filter((job) => job.duration === duration).length}
+                {ads.filter((job) => job.duration === duration).length}
               </span>
             )}
           </label>

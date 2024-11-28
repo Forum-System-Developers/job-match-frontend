@@ -1,10 +1,12 @@
 import React from "react";
-import job_data from "@/data/job-data";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { setTags } from "@/redux/features/filterSlice";
+import { useAds } from "../../company/hooks/useAds";
 
 const JobTags = () => {
-  const uniqueTags = [...new Set(job_data.flatMap((job) => job.tags))];
+  const { ads, loading: companyLoading } = useAds();
+
+  const uniqueTags = [...new Set(ads.flatMap((job) => job.tags))];
   const { tags } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
   return (

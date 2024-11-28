@@ -1,14 +1,16 @@
 import React from "react";
 import slugify from "slugify";
-import job_data from "@/data/job-data";
 import NiceSelect from "@/ui/nice-select";
+import { useAds } from "../company/hooks/useAds";
 
 const JobLocationSelect = ({
   setLocationVal,
 }: {
   setLocationVal: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const uniqueLocations = [...new Set(job_data.map((job) => job.location))];
+  const { ads, loading: companyLoading } = useAds();
+
+  const uniqueLocations = [...new Set(ads.map((job) => job.location))];
   // location_option
   const location_option = uniqueLocations.map((l) => {
     return {

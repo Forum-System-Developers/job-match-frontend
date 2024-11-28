@@ -18,7 +18,7 @@ const Header = () => {
     try {
       await axiosInstance.post(`http://${SERVER_URL}/auth/logout`);
       localStorage.removeItem("role");
-      window.location.reload();
+      window.location.href = "/";
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -68,7 +68,7 @@ const Header = () => {
                       </a>
                     </li>
                     <li className="d-none d-md-block ms-4">
-                      <Link href="/candidates-v1" className="btn-one">
+                      <Link href="/register" className="btn-one">
                         Hire Top Talents
                       </Link>
                     </li>
@@ -94,7 +94,7 @@ const Header = () => {
                     </li>
                     <li className="d-none d-md-block">
                       <Link
-                        href="/"
+                        href="#"
                         className="login-btn-one"
                         onClick={handleLogout}
                       >

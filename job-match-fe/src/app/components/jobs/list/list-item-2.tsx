@@ -1,14 +1,15 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import Link from "next/link";
 import { IJobType } from "@/types/job-data-type";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { add_to_wishlist } from "@/redux/features/wishlist";
 
 const ListItemTwo = ({ item }: { item: IJobType }) => {
-  const {wishlist} = useAppSelector(state => state.wishlist);
-  const isActive = wishlist.some(p => p.id === item.id);
+  const { wishlist } = useAppSelector((state) => state.wishlist);
+  const isActive = wishlist.some((p) => p.id === item.id);
   const dispatch = useAppDispatch();
   // handle add wishlist
   const handleAddWishlist = (item: IJobType) => {
@@ -20,7 +21,19 @@ const ListItemTwo = ({ item }: { item: IJobType }) => {
         <div className="col-md-5">
           <div className="job-title d-flex align-items-center">
             <Link href={`/job-details-v1/${item.id}`} className="logo">
-              <Image src={item.logo} alt="logo" className="lazy-img m-auto" />
+              <Image
+                src={item.logo ? item.logo : profile_icon_1}
+                alt="logo"
+                className="lazy-img m-auto"
+                height={35}
+                width={35}
+                style={{
+                  width: "50%",
+                  height: "50%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
+              />
             </Link>
             <div className="split-box1">
               <Link
@@ -51,8 +64,10 @@ const ListItemTwo = ({ item }: { item: IJobType }) => {
           <div className="btn-group d-flex align-items-center justify-content-sm-end xs-mt-20">
             <a
               onClick={() => handleAddWishlist(item)}
-              className={`save-btn text-center rounded-circle tran3s me-3 cursor-pointer ${isActive?'active':''}`}
-              title={`${isActive?'Remove Job':'Save Job'}`}
+              className={`save-btn text-center rounded-circle tran3s me-3 cursor-pointer ${
+                isActive ? "active" : ""
+              }`}
+              title={`${isActive ? "Remove Job" : "Save Job"}`}
             >
               <i className="bi bi-bookmark-dash"></i>
             </a>
