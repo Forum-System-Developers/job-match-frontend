@@ -65,13 +65,13 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
         location
           ? slugify(l.city.split(",").join("-").toLowerCase(), "-") === location
           : true
-      )
-      .filter(
-        (j) =>
-          j.min_salary != null &&
-          j.min_salary >= priceValue[0] &&
-          j.min_salary <= priceValue[1]
       );
+    // .filter(
+    //   (j) =>
+    //     j.min_salary != null &&
+    //     j.min_salary >= priceValue[0] &&
+    //     j.min_salary <= priceValue[1]
+    // );
 
     if (shortValue === "price-low-to-high") {
       filteredData = filteredData.slice().sort((a, b) => {
