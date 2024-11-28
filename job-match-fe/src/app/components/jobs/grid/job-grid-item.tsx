@@ -27,7 +27,7 @@ const JobGridItem = ({
     <div
       className={`job-list-two ${style_2 ? "style-two" : ""} position-relative`}
     >
-      <Link href={`/job-details-v1/${id}`} className="logo">
+      <Link href={`/job-ad/${id}`} className="logo">
         <Image
           src={logo ? logo : profile_icon_1}
           alt="logo"
@@ -35,8 +35,8 @@ const JobGridItem = ({
           height={35}
           width={35}
           style={{
-            width: "50%",
-            height: "50%",
+            width: "100%",
+            height: "100%",
             objectFit: "cover",
             borderRadius: "50%",
           }}
@@ -53,7 +53,7 @@ const JobGridItem = ({
       </a>
       <div>
         <Link
-          href={`/job-details-v1/${id}`}
+          href={`/job-ad/${id}`}
           className={`job-duration fw-500 ${
             duration === "Part time" ? "part-time" : ""
           }`}
@@ -62,7 +62,7 @@ const JobGridItem = ({
         </Link>
       </div>
       <div>
-        <Link href={`/job-details-v1/${id}`} className="title fw-500 tran3s">
+        <Link href={`/job-ad/${id}`} className="title fw-500 tran3s">
           {title}
         </Link>
       </div>
@@ -71,13 +71,10 @@ const JobGridItem = ({
       </div>
       <div className="d-flex align-items-center justify-content-between mt-auto">
         <div className="job-location">
-          <Link href={`/job-details-v1/${id}`}>{location}</Link>
+          <Link href={`/job-ad/${id}`}>{location}</Link>
         </div>
-        <Link
-          href={`/job-details-v1/${id}`}
-          className="apply-btn text-center tran3s"
-        >
-          APPLY
+        <Link href={`/job-ad/${id}`} className="apply-btn text-center tran3s">
+          VIEW
         </Link>
       </div>
     </div>

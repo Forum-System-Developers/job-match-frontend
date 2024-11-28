@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { resetFilter } from "@/redux/features/filterSlice";
 import { useAppDispatch } from "@/redux/hook";
@@ -51,13 +51,13 @@ const JobFilterModal = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
                     <SearchFilter />
                   </div>
                   <div className="col-lg-3 col-sm-6">
-                    <FilterCategory />
+                    {/* <FilterCategory /> */}
                   </div>
                   <div className="col-lg-3 col-sm-6">
                     <FilterLocation />
                   </div>
                   <div className="col-lg-3 col-sm-6">
-                    <FilterEnglishFluency />
+                    {/* <FilterEnglishFluency /> */}
                   </div>
                 </div>
 

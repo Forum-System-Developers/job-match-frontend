@@ -137,13 +137,13 @@ const JobListThree = ({
                     <div className="text-dark fw-500 me-2">Sort:</div>
                     <NiceSelect
                       options={[
-                        { value: "", label: "Price Short" },
+                        { value: "", label: "Price Sort" },
                         { value: "price-low-to-high", label: "low to high" },
                         { value: "price-high-to-low", label: "High to low" },
                       ]}
                       defaultCurrent={0}
                       onChange={(item) => handleShort(item)}
-                      name="Price Short"
+                      name="Price Sort"
                     />
                   </div>
                   <button

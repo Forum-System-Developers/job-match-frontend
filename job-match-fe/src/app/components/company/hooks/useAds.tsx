@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { IJobType } from "@/types/job-data-type";
-import { getJobAds } from "@/data/job-data";
+import { getJobAds } from "@/data/job-ad-data";
 
 export const useAds = () => {
   const [ads, setAds] = useState<IJobType[]>([]);
