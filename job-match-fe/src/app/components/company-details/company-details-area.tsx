@@ -60,10 +60,10 @@ const CompanyDetailsArea = () => {
                       <span>Location: </span>
                       <div>{company?.address_line} </div>
                     </li>
-                    <li className="col-12">
+                    {/* <li className="col-12">
                       <span>Size:</span>
                       <div>7000-8000, Worldwide</div>
-                    </li>
+                    </li> */}
                     <li className="col-12">
                       <span>Email: </span>
                       <div>
