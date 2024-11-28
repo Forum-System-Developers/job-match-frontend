@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import job_data from "@/data/job-data";
 import icon_1 from "@/assets/dashboard/images/icon/icon_12.svg";
 import icon_2 from "@/assets/dashboard/images/icon/icon_13.svg";
 import icon_3 from "@/assets/dashboard/images/icon/icon_14.svg";
@@ -11,6 +10,7 @@ import DashboardHeader from "../candidate/dashboard-header";
 import { CardItem } from "../candidate/dashboard-area";
 import NiceSelect from "@/ui/nice-select";
 import DashboardHeaderEmployer from "./dashboard-header";
+import { useAds } from "../../company/hooks/useAds";
 
 // props type
 type IProps = {
@@ -18,7 +18,9 @@ type IProps = {
 };
 
 const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
-  const job_items = [...job_data.reverse().slice(0, 6)];
+  const { ads, loading } = useAds();
+
+  const job_items = [...ads.reverse().slice(0, 6)];
   const handleJobs = (item: { value: string; label: string }) => {};
   return (
     <div className="dashboard-body">

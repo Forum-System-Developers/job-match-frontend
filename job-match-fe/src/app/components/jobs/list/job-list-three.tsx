@@ -22,7 +22,7 @@ const JobListThree = ({
   let all_jobs = ads;
   const maxPrice = ads.reduce((max, job) => {
     return job.salary > max ? job.salary : max;
-  }, 0);
+  }, 1);
   const { category, experience, job_type, location, tags } = useAppSelector(
     (state) => state.filter
   );
