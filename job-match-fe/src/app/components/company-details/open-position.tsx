@@ -1,13 +1,14 @@
 "use client";
-import React from "react";
-import job_data from "@/data/job-data";
+import React, { useState } from "react";
 import ListItemTwo from "../jobs/list/list-item-2";
 import { useParams } from "next/navigation";
+import { useAds } from "../company/hooks/useAds";
 
 const OpenPosition = () => {
   const { id } = useParams();
+  const { ads, loading: companyLoading } = useAds();
 
-  const job_items = job_data.slice(0, 4);
+  const job_items = ads.slice(0, 4);
   return (
     <section className="company-open-position pt-80 lg-pt-60 pb-100 lg-pb-60">
       <div className="container">

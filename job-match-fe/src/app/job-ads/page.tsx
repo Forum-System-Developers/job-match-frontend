@@ -8,7 +8,7 @@ import JobPortalIntro from "../components/job-portal-intro/job-portal-intro";
 import FooterOne from "@/layouts/footers/footer-one";
 
 export const metadata: Metadata = {
-  title: "Job List v1",
+  title: "Job Postings",
 };
 
 const JobListOnePage = () => {
