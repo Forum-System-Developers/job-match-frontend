@@ -122,7 +122,7 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
   }
 };
 
-export const getPhoto = async (id: string): Promise<Blob | null> => {
+export const getLogo = async (id: string): Promise<Blob | null> => {
   try {
     const file = await axiosInstance.get<Blob>(
       `http://${SERVER_URL}/companies/${id}/download-logo`,

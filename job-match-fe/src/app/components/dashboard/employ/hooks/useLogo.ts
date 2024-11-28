@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { getPhoto } from "../data/company-data";
+import { getLogo } from "../data/company-data";
 
-export const usePhoto = (id: string | null) => {
+export const useLogo = (id: string | null) => {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchPhoto = async (id: string) => {
     setLoading(true);
     try {
-      const photo = await getPhoto(id);
+      const photo = await getLogo(id);
       if (photo) {
         const url = URL.createObjectURL(photo);
         setPhotoUrl(url);

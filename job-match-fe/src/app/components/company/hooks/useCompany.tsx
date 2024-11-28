@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  CompanyDetails,
-  getPhoto,
-} from "@/app/components/dashboard/employ/data/company-data";
+import { CompanyDetails } from "@/app/components/dashboard/employ/data/company-data";
 import SERVER_URL from "@/services/server";
 import axios from "axios";
 import axiosInstance from "@/services/axiosInstance";

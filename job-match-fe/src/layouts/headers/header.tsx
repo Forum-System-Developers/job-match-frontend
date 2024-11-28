@@ -18,7 +18,7 @@ const Header = () => {
     try {
       await axiosInstance.post(`http://${SERVER_URL}/auth/logout`);
       localStorage.removeItem("role");
-      window.location.href = "/";
+      window.location.reload();
     } catch (error) {
       console.error("Logout failed:", error);
     }

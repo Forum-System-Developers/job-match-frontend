@@ -7,7 +7,7 @@ import CountrySelect from "../candidate/country-select";
 import CitySelect from "../candidate/city-select";
 import StateSelect from "../candidate/state-select";
 import DashboardHeader from "../candidate/dashboard-header";
-import { usePhoto } from "./hooks/usePhoto";
+import { usePhoto } from "./hooks/useLogo";
 import { useCompany } from "./hooks/useCompany";
 import { uploadLogo } from "./data/company-data";
 
