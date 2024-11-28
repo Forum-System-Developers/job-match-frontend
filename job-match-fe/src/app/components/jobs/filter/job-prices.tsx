@@ -8,7 +8,11 @@ type IProps = {
   maxPrice: number;
 };
 // Salary Range Slider
-export function SalaryRangeSlider({ priceValue, setPriceValue, maxPrice }: IProps) {
+export function SalaryRangeSlider({
+  priceValue,
+  setPriceValue,
+  maxPrice,
+}: IProps) {
   // handleChanges
   const handleChanges = (val: number[]) => {
     setPriceValue(val);
@@ -56,7 +60,7 @@ const JobPrices = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
         priceValue={priceValue}
         setPriceValue={setPriceValue}
       />
-      <ul className="style-none d-flex flex-wrap justify-content-between radio-filter mb-5">
+      {/* <ul className="style-none d-flex flex-wrap justify-content-between radio-filter mb-5">
         <li>
           <input type="radio" name="jobDuration" defaultValue="01" />
           <label>Weekly</label>
@@ -69,7 +73,7 @@ const JobPrices = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
           <input type="radio" name="jobDuration" defaultValue="03" />
           <label>Hourly</label>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 };

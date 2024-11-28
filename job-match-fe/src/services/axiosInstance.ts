@@ -5,6 +5,7 @@ import axios, {
   AxiosInstance,
 } from "axios";
 import SERVER_URL from "@/services/server";
+import { isAuthenticated } from "@/utils/auth_utils";
 
 interface RefreshTokenResponse {
   refresh_token: string;
@@ -29,9 +30,14 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
+    const isUserAuthenticated = isAuthenticated();
     const originalRequest = error.config as CustomAxiosRequestConfig;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      isUserAuthenticated
+    ) {
       originalRequest._retry = true;
 
       try {
