@@ -1,5 +1,7 @@
 import { IMenuData } from "@/types/menu-data-type";
-import { role } from "@/utils/auth_utils";
+import { isAuthenticated, role } from "@/utils/auth_utils";
+
+const isUserAuthenticated = isAuthenticated();
 
 const menu_data: IMenuData[] = [
   {
@@ -15,18 +17,31 @@ const menu_data: IMenuData[] = [
       {
         id: 1,
         title: "By Companies",
-        sub_menus: [{ link: "/job-ads", title: "Job postings" }],
+        sub_menus: [
+          {
+            link: isUserAuthenticated ? "/job-ads" : "/register",
+            title: "Job postings",
+          },
+        ],
       },
       {
         id: 2,
         title: "By Professionals",
-        sub_menus: [{ link: "/job-applications", title: "Job Applications" }],
+        sub_menus: [
+          {
+            link: isUserAuthenticated ? "/job-applications" : "/register",
+            title: "Job Applications",
+          },
+        ],
       },
       {
         id: 3,
         title: "Wishlist",
         sub_menus: [
-          { link: "/job-wishlist", title: "Job Wishlist" },
+          {
+            link: isUserAuthenticated ? "/job-wishlist" : "/register",
+            title: "Job Wishlist",
+          },
           // { link: "/job-details-v1", title: "Job Details v-1" },
           // { link: "/job-details-v2", title: "Job Details v-2" },
         ],
@@ -42,7 +57,10 @@ const menu_data: IMenuData[] = [
         id: 1,
         title: "Professionals",
         sub_menus: [
-          { title: "View all professionals", link: "/professionals" },
+          {
+            title: "View all professionals",
+            link: isUserAuthenticated ? "/professionals" : "/register",
+          },
           // { title: "Candidates Details v-1", link: "/candidate-profile-v1" },
           // { title: "Candidates Details v-2", link: "/candidate-profile-v2" },
         ],
@@ -51,7 +69,10 @@ const menu_data: IMenuData[] = [
         id: 2,
         title: "Companies",
         sub_menus: [
-          { title: "View all companies", link: "/companies" },
+          {
+            title: "View all companies",
+            link: isUserAuthenticated ? "/companies" : "/register",
+          },
           // { title: "Company Details", link: "/company-details" },
         ],
       },

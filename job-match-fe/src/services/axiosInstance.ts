@@ -29,9 +29,11 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as AxiosRequestConfig;
+    const originalRequest = error.config as CustomAxiosRequestConfig;
 
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
       try {
         await axios.post(
           `http://${SERVER_URL}/auth/refresh`,
@@ -42,8 +44,6 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
-
-        window.location.href = "/";
       }
     }
 
