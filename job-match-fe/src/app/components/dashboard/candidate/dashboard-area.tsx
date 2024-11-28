@@ -1,13 +1,14 @@
 "use client";
 import React from "react";
 import Image, { StaticImageData } from "next/image";
-import job_data from "@/data/job-ad-data";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import icon_1 from "@/assets/dashboard/images/icon/icon_12.svg";
 import icon_2 from "@/assets/dashboard/images/icon/icon_13.svg";
 import icon_3 from "@/assets/dashboard/images/icon/icon_14.svg";
 import icon_4 from "@/assets/dashboard/images/icon/icon_15.svg";
 import main_graph from "@/assets/dashboard/images/main-graph.png";
 import DashboardHeader from "./dashboard-header";
+import { useJobApplications } from "../../jobs/hooks/useJobApplications";
 
 // card item
 export function CardItem({
@@ -39,7 +40,10 @@ export function CardItem({
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
+  const { jobApplications, loading } = useJobApplications();
+  let job_data = jobApplications;
   const job_items = [...job_data.reverse().slice(0, 5)];
 
   return (
@@ -81,7 +85,7 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
                   >
                     <div>
                       <Image
-                        src={j.logo}
+                        src={j.photo ? j.photo : profile_icon_1}
                         alt="logo"
                         width={40}
                         height={40}
@@ -89,11 +93,11 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
                       />
                     </div>
                     <div className="job-title">
-                      <h6 className="mb-5">
+                      {/* <h6 className="mb-5">
                         <a href="#">{j.duration}</a>
-                      </h6>
+                      </h6> */}
                       <div className="meta">
-                        <span>Fulltime</span> . <span>{j.location}</span>
+                        <span>Fulltime</span> . <span>{j.city}</span>
                       </div>
                     </div>
                     <div className="job-action">
