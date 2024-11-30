@@ -11,7 +11,7 @@ type IPropType = {
 const VideoPopup = ({
   isVideoOpen,
   setIsVideoOpen,
-  videoId = "-6ZbrfSRWKc",
+  videoId = "-CQBG3OepJXc",
 }: IPropType) => {
   return (
     <ModalVideo
