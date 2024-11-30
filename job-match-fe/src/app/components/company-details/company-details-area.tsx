@@ -189,7 +189,7 @@ const CompanyDetailsArea = () => {
       <VideoPopup
         isVideoOpen={isVideoOpen}
         setIsVideoOpen={setIsVideoOpen}
-        videoId={"-6ZbrfSRWKc"}
+        videoId={"XqZsoesa55w"}
       />
       {/* video modal end */}
     </>

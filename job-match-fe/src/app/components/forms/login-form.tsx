@@ -71,7 +71,7 @@ const LoginForm = () => {
           }
         );
         setRole();
-        window.location.reload();
+        window.location.href = "/";
         reset();
       } catch (error) {
         console.error("Login failed:", error);

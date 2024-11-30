@@ -2,17 +2,28 @@ import React from "react";
 import { ICandidate } from "@/data/candidate-data";
 import Image from "next/image";
 import Link from "next/link";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 
-const CandidateListItem = ({ item,style_2=false }: { item: ICandidate;style_2?:boolean }) => {
+const CandidateListItem = ({
+  item,
+  style_2 = false,
+}: {
+  item: ICandidate;
+  style_2?: boolean;
+}) => {
   return (
     <div
-      className={`candidate-profile-card ${item.favorite ? "favourite" : ""} ${style_2?'border-0':''} list-layout mb-25`}
+      className={`candidate-profile-card ${item.favorite ? "favourite" : ""} ${
+        style_2 ? "border-0" : ""
+      } list-layout mb-25`}
     >
       <div className="d-flex">
         <div className="cadidate-avatar online position-relative d-block me-auto ms-auto">
           <Link href="/candidate-profile-v2" className="rounded-circle">
             <Image
-              src={item.img}
+              src={item.img ? item.img : profile_icon_1}
+              height={85}
+              width={85}
               alt="image"
               className="lazy-img rounded-circle"
             />
@@ -29,12 +40,12 @@ const CandidateListItem = ({ item,style_2=false }: { item: ICandidate;style_2?:b
                 </h4>
                 <div className="candidate-post">{item.post}</div>
                 <ul className="cadidate-skills style-none d-flex align-items-center">
-                  {item.skills.slice(0, 3).map((s, i) => (
+                  {item.skills?.slice(0, 3).map((s, i) => (
                     <li key={i}>{s}</li>
                   ))}
-                  {item.skills.length > 3 && (
+                  {item.skills?.length > 3 && (
                     <li className="more">
-                      {item.skills.length - item.skills.slice(0, 3).length}+
+                      {item.skills?.length - item.skills?.slice(0, 3).length}+
                     </li>
                   )}
                 </ul>
@@ -56,12 +67,14 @@ const CandidateListItem = ({ item,style_2=false }: { item: ICandidate;style_2?:b
             </div>
             <div className="col-xl-3 col-md-4">
               <div className="d-flex justify-content-lg-end">
-                <Link href="/candidate-profile-v2"
+                <Link
+                  href="/candidate-profile-v2"
                   className="save-btn text-center rounded-circle tran3s mt-10"
                 >
                   <i className="bi bi-heart"></i>
                 </Link>
-                <Link href="/candidate-profile-v2"
+                <Link
+                  href="/candidate-profile-v2"
                   className="profile-btn tran3s ms-md-2 mt-10 sm-mt-20"
                 >
                   View Profile

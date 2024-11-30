@@ -5,10 +5,21 @@ import { useAppDispatch } from "@/redux/hook";
 import { animationCreate } from "@/utils/utils";
 import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
+import { isAuthenticated } from "@/utils/auth_utils";
+import { redirect } from "next/navigation";
 
 if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
 }
+
+const PUBLIC_PATHS = [
+  "/",
+  "/about-us",
+  "/register",
+  "/contact",
+  "/pricing",
+  "/faq",
+];
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
@@ -20,10 +31,18 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   // useEffect(() => {
   //   animationCreate();
   // }, []);
+  const isPublicRoute = PUBLIC_PATHS.includes(pathname);
+
   useEffect(() => {
     handleReset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  useEffect(() => {
+    if (!isAuthenticated && !isPublicRoute) {
+      redirect("/register");
+    }
+  }, [isAuthenticated]);
   return (
     <>
       {children}

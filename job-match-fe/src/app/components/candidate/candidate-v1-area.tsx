@@ -1,12 +1,14 @@
-"use client"
+"use client";
 import React, { useState } from "react";
-import candidate_data from "@/data/candidate-data";
 import CandidateGridItem from "./candidate-grid-item";
 import CandidateListItem from "./candidate-list-item";
 import CandidateV1FilterArea from "./filter/candidate-v1-filter-area";
 import ShortSelect from "../common/short-select";
+import { useProfessionals } from "./hooks/useProfessionals";
 
-const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
+const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
+  const { professionals, loading } = useProfessionals();
+  const candidate_data = professionals;
   const [jobType, setJobType] = useState<string>(style_2 ? "list" : "grid");
   return (
     <>
@@ -32,24 +34,31 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
               <div className="ms-xxl-5 ms-xl-3">
                 <div className="upper-filter d-flex justify-content-between align-items-center mb-20">
                   <div className="total-job-found">
-                    All <span className="text-dark fw-500">1,270</span>{" "}
+                    All{" "}
+                    <span className="text-dark fw-500">
+                      {candidate_data.length}
+                    </span>{" "}
                     candidates found
                   </div>
                   <div className="d-flex align-items-center">
                     <div className="short-filter d-flex align-items-center">
-                      <div className="text-dark fw-500 me-2">Short:</div>
+                      <div className="text-dark fw-500 me-2">Sort:</div>
                       <ShortSelect />
                     </div>
                     <button
                       onClick={() => setJobType("list")}
-                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 list-btn ${jobType === "grid" ? "active" : ""}`}
+                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 list-btn ${
+                        jobType === "grid" ? "active" : ""
+                      }`}
                       title="Active List"
                     >
                       <i className="bi bi-list"></i>
                     </button>
                     <button
                       onClick={() => setJobType("grid")}
-                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 grid-btn ${jobType === "list" ? "active" : ""}`}
+                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 grid-btn ${
+                        jobType === "list" ? "active" : ""
+                      }`}
                       title="Active Grid"
                     >
                       <i className="bi bi-grid"></i>
@@ -58,7 +67,9 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
                 </div>
 
                 <div
-                  className={`accordion-box grid-style ${jobType === "grid" ? "show" : ""}`}
+                  className={`accordion-box grid-style ${
+                    jobType === "grid" ? "show" : ""
+                  }`}
                 >
                   <div className="row">
                     {candidate_data.map((item) => (
@@ -70,7 +81,9 @@ const CandidateV1Area = ({style_2=false}:{style_2?:boolean}) => {
                 </div>
 
                 <div
-                  className={`accordion-box list-style ${jobType === "list" ? "show" : ""}`}
+                  className={`accordion-box list-style ${
+                    jobType === "list" ? "show" : ""
+                  }`}
                 >
                   {candidate_data.map((item) => (
                     <CandidateListItem key={item.id} item={item} />

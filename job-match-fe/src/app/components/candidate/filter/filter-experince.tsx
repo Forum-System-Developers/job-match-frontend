@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import candidate_data from "@/data/candidate-data";
+import { useProfessionals } from "../hooks/useProfessionals";
 
 const FilterCandidateExperience = () => {
+  const { professionals, loading } = useProfessionals();
+  const candidate_data = professionals;
   const uniqueExperiences = [
     ...new Set(candidate_data.map((c) => c.experience)),
   ];
@@ -9,12 +11,11 @@ const FilterCandidateExperience = () => {
   // handle Experience
   const handleExperience = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newExperience = e.target.value;
-    if(experience.includes(newExperience)){
-      const remaining = experience.filter(e => e !== newExperience)
-      setExperience(remaining)
-    }
-    else {
-      setExperience(prevExperience => [...prevExperience, newExperience]);
+    if (experience.includes(newExperience)) {
+      const remaining = experience.filter((e) => e !== newExperience);
+      setExperience(remaining);
+    } else {
+      setExperience((prevExperience) => [...prevExperience, newExperience]);
     }
   };
   return (
