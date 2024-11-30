@@ -34,12 +34,15 @@ const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
               <div className="ms-xxl-5 ms-xl-3">
                 <div className="upper-filter d-flex justify-content-between align-items-center mb-20">
                   <div className="total-job-found">
-                    All <span className="text-dark fw-500">1,270</span>{" "}
+                    All{" "}
+                    <span className="text-dark fw-500">
+                      {candidate_data.length}
+                    </span>{" "}
                     candidates found
                   </div>
                   <div className="d-flex align-items-center">
                     <div className="short-filter d-flex align-items-center">
-                      <div className="text-dark fw-500 me-2">Short:</div>
+                      <div className="text-dark fw-500 me-2">Sort:</div>
                       <ShortSelect />
                     </div>
                     <button
