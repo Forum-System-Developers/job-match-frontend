@@ -1,11 +1,16 @@
 import React from "react";
+import { ProfessionalDetails } from "../dashboard/candidate/data/professional-data";
 
-const CandidateBio = () => {
+const CandidateBio = ({
+  professional,
+}: {
+  professional: ProfessionalDetails | null;
+}) => {
   return (
     <ul className="style-none">
       <li>
         <span>Location: </span>
-        <div>Spain, Barcelona </div>
+        <div>{professional?.city} </div>
       </li>
       <li>
         <span>Age: </span>
@@ -14,7 +19,7 @@ const CandidateBio = () => {
       <li>
         <span>Email: </span>
         <div>
-          <a href="mailto:me@support.com">me@support.com</a>
+          <a href="mailto:me@support.com">{professional?.email}</a>
         </div>
       </li>
       <li>
@@ -25,10 +30,10 @@ const CandidateBio = () => {
         <span>Gender: </span>
         <div>Male</div>
       </li>
-      <li>
-        <span>Expected Salary: </span>
+      {/* <li>
+        <span>Expected Min Salary: </span>
         <div>$3k-$4k/month</div>
-      </li>
+      </li> */}
       <li>
         <span>Social:</span>
         <div>
