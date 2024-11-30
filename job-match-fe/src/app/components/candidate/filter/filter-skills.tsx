@@ -1,8 +1,11 @@
 import React from "react";
-import candidate_data from "@/data/candidate-data";
 import NiceSelect from "@/ui/nice-select";
+import { useProfessionals } from "../hooks/useProfessionals";
 
 const FilterSkills = () => {
+  const { professionals, loading } = useProfessionals();
+  const candidate_data = professionals;
+
   const uniqueSkills = [...new Set(candidate_data.flatMap((c) => c.skills))];
   const options = uniqueSkills.map((c) => {
     return { value: c, label: c };
