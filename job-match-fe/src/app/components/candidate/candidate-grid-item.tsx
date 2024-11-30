@@ -17,11 +17,21 @@ const CandidateGridItem = ({
         item.favorite ? "favourite" : ""
       } text-center ${style_2 ? "border-0" : ""} grid-layout mb-25`}
     >
-      <Link href="/candidate-profile-v1" className="save-btn tran3s">
+      <Link
+        href={{
+          pathname: `/candidate/${item.id}`,
+        }}
+        className="save-btn tran3s"
+      >
         <i className="bi bi-heart"></i>
       </Link>
       <div className="cadidate-avatar online position-relative d-block m-auto">
-        <Link href="/candidate-profile-v1" className="rounded-circle">
+        <Link
+          href={{
+            pathname: `/candidate/${item.id}`,
+          }}
+          className="rounded-circle"
+        >
           <Image
             src={item.img ? item.img : profile_icon_1}
             height={85}
@@ -38,7 +48,12 @@ const CandidateGridItem = ({
         </Link>
       </div>
       <h4 className="candidate-name mt-15 mb-0">
-        <Link href="/candidate-profile-v1" className="tran3s">
+        <Link
+          href={{
+            pathname: `/candidate/${item.id}`,
+          }}
+          className="tran3s"
+        >
           {item.name}
         </Link>
       </h4>
@@ -72,7 +87,9 @@ const CandidateGridItem = ({
       <div className="row gx-2 pt-25 sm-pt-10">
         <div className="col-md-6">
           <Link
-            href="/candidate-profile-v1"
+            href={{
+              pathname: `/candidate/${item.id}`,
+            }}
             className="profile-btn tran3s w-100 mt-5"
           >
             View Profile
@@ -80,7 +97,9 @@ const CandidateGridItem = ({
         </div>
         <div className="col-md-6">
           <Link
-            href="/candidate-profile-v1"
+            href={{
+              pathname: `/candidate/${item.id}`,
+            }}
             className="msg-btn tran3s w-100 mt-5"
           >
             Message
