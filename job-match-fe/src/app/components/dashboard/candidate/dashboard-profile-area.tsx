@@ -7,7 +7,7 @@ import DashboardHeader from "./dashboard-header";
 import CountrySelect from "./country-select";
 import CitySelect from "./city-select";
 import StateSelect from "./state-select";
-import { useProfessional } from "./hooks/use-professional";
+import { useProfessional } from "./hooks/useProfessional";
 import { usePhoto } from "./hooks/usePhoto";
 import { uploadPhoto } from "./data/professional-data";
 
@@ -19,7 +19,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
   const { professional, loading: professionalLoading } = useProfessional();
 
   const { photoUrl, loading: photoLoading } = usePhoto(
-    professional?.id || null
+    professional?.id as string
   );
 
   const isLoading = professionalLoading || photoLoading;

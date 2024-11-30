@@ -12,7 +12,7 @@ import logout from "@/assets/dashboard/images/icon/icon_9.svg";
 import { nav_data } from "../candidate/data/professional-data";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
-import { useProfessional } from "./hooks/use-professional";
+import { useProfessional } from "./hooks/useProfessional";
 import { usePhoto } from "./hooks/usePhoto";
 
 // props type
@@ -26,7 +26,7 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
 
   const { professional, loading: professionalLoading } = useProfessional();
   const { photoUrl, loading: photoLoading } = usePhoto(
-    professional?.id || null
+    professional?.id as string
   );
 
   const isLoading = professionalLoading || photoLoading;
