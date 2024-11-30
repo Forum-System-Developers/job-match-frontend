@@ -62,11 +62,11 @@ const JobListThree = ({
       );
     // .filter((j) => j.salary >= priceValue[0] && j.salary <= priceValue[1]);
 
-    if (shortValue === "price-low-to-high") {
-      filteredData = filteredData
-        .slice()
-        .sort((a, b) => Number(a.salary) - Number(b.salary));
-    }
+    // if (shortValue === "price-low-to-high") {
+    //   filteredData = filteredData
+    //     .slice()
+    //     .sort((a, b) => Number(a.salary) - Number(b.salary));
+    // }
 
     if (shortValue === "price-high-to-low") {
       filteredData = filteredData
