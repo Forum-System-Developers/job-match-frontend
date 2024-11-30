@@ -169,3 +169,37 @@ export const uploadPhoto = async (file: File) => {
     window.location.href = "/dashboard/candidate-dashboard/profile";
   }
 };
+
+export const getProfessional = async (
+  id: string
+): Promise<ProfessionalDetails | null> => {
+  try {
+    const { data } = await axiosInstance.get(
+      `http://${SERVER_URL}/professionals/${id}`
+    );
+    const {
+      first_name,
+      last_name,
+      description,
+      city,
+      email,
+      status,
+      active_application_count,
+    } = data.detail;
+
+    const professional = {
+      id: id,
+      first_name,
+      last_name,
+      description,
+      city,
+      email,
+      status,
+      active_application_count,
+    };
+    return professional;
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return null;
+  }
+};

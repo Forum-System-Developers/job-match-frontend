@@ -3,14 +3,25 @@ import React, { useState } from "react";
 import Image from "next/image";
 import CandidateProfileSlider from "./candidate-profile-slider";
 import avatar from "@/assets/images/candidates/img_01.jpg";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import VideoPopup from "../common/video-popup";
 import Skills from "./skills";
 import WorkExperience from "./work-experience";
 import CandidateBio from "./bio";
 import EmailSendForm from "../forms/email-send-form";
+import { useProfessional } from "../candidate-details/hooks/useProfessional";
+import { usePhoto } from "../dashboard/candidate/hooks/usePhoto";
+import { useParams } from "next/navigation";
 
 const CandidateDetailsArea = () => {
+  const { id } = useParams();
+
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+  const { professional, loading: professionalLoading } = useProfessional(
+    id as string
+  );
+  const { photoUrl, loading: photoLoading } = usePhoto(id as string);
+
   return (
     <>
       <section className="candidates-profile pt-100 lg-pt-70 pb-150 lg-pb-80">
@@ -100,20 +111,24 @@ const CandidateDetailsArea = () => {
                   <div className="pt-25">
                     <div className="cadidate-avatar m-auto">
                       <Image
-                        src={avatar}
+                        src={photoUrl ? photoUrl : profile_icon_1}
+                        height={85}
+                        width={85}
                         alt="avatar"
                         className="lazy-img rounded-circle w-100"
                       />
                     </div>
                   </div>
-                  <h3 className="cadidate-name text-center">James Brower</h3>
+                  <h3 className="cadidate-name text-center">
+                    {professional?.first_name} {professional?.last_name}
+                  </h3>
                   <div className="text-center pb-25">
                     <a href="#" className="invite-btn fw-500">
                       Invite
                     </a>
                   </div>
                   {/* CandidateBio */}
-                  <CandidateBio />
+                  <CandidateBio professional={professional} />
                   {/* CandidateBio */}
                   <a
                     href="#"
