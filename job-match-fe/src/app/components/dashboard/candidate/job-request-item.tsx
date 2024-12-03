@@ -10,12 +10,12 @@ import { acceptMatchRequestFromAd } from "@/services/matching";
 const JobRequestItem = ({ request }: { request: JobAdResponse }) => {
   const [response, setResponse] = useState<boolean>(false);
 
-  const handleAccept = async () => {
-    try {
-      const response = await acceptMatchRequestFromAd(request.id, applicationId);
-      setResponse(response)
-    }
-  }
+  // const handleAccept = async () => {
+  //   try {
+  //     const response = await acceptMatchRequestFromAd(request.id, applicationId);
+  //     setResponse(response)
+  //   }
+  // }
 
   return (
     <tr>
