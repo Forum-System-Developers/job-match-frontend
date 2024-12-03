@@ -88,6 +88,11 @@ export interface ProfessionalDetails {
   active_application_count: number;
 }
 
+export interface Skills {
+  name: string;
+  level: string;
+}
+
 export const getCurrentProfessional =
   async (): Promise<ProfessionalDetails | null> => {
     const user = await currentUser();
@@ -201,5 +206,26 @@ export const getProfessional = async (
   } catch (error) {
     console.error("An error occurred:", error);
     return null;
+  }
+};
+
+export const getSkills = async (id: string | null): Promise<Skills[] | []> => {
+  try {
+    const response = await axiosInstance.get(
+      `http://${SERVER_URL}/professionals/${id}/skills`
+    );
+    const skillsResponse = response.data.detail ?? [];
+    const skills: Skills[] | [] = await Promise.all(
+      skillsResponse.map(async (skill: any) => {
+        return {
+          name: skill.name,
+          level: skill.level,
+        };
+      })
+    );
+    return skills;
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+    return [];
   }
 };
