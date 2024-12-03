@@ -7,7 +7,7 @@ import NiceSelect from "@/ui/nice-select";
 import ListItemThree from "./list-item-3";
 import JobFilterModal from "../../common/popup/job-filter-modal";
 import { useJobApplications } from "../hooks/useJobApplications";
-import { JobApplication } from "../../job-application/data/job-applications-data";
+import { JobApplication } from "../../../../data/job-applications-data";
 
 const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
   const { jobApplications, loading } = useJobApplications();

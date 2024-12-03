@@ -1,9 +1,10 @@
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { getPhoto } from "../../dashboard/candidate/data/professional-data";
+import { getPhoto } from "./professional-data";
 
 export interface JobApplication {
   id: string;
+  name: string;
   professional_id: string;
   first_name: string;
   last_name: string;
@@ -39,6 +40,7 @@ export const getJobApplications = async () => {
 
         return {
           id: job_application.id,
+          name: job_application.name,
           professional_id: job_application.professional_id,
           photo: imgUrl,
           first_name: job_application.first_name,
@@ -73,6 +75,7 @@ export const getJobApplication = async (
 
     const job_application = {
       id: data.detail.id,
+      name: data.detail.name,
       professional_id: data.detail.professional_id,
       photo: imgUrl,
       first_name: data.detail.first_name,

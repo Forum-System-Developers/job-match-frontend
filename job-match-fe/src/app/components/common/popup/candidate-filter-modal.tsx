@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import JobPrices from "../../jobs/filter/job-prices";
 import FilterSkills from "../../candidate/filter/filter-skills";
 import FilterCandidateLocation from "../../candidate/filter/filter-location";
-import FilterEnglishFluency from "../../candidate/filter/filter-english-fluency";
 import SelectCandidateExperience from "../../candidate/filter/select-candidate-experience";
 import SelectCandidateQualification from "../../candidate/filter/select-qualification";
 import SelectCandidateType from "../../candidate/filter/select-gender";
@@ -67,7 +66,7 @@ const CandidateFilterModal = () => {
                       <div className="filter-title fw-500 text-dark">
                         English Fluency
                       </div>
-                      <FilterEnglishFluency />
+                      {/* <FilterEnglishFluency /> */}
                     </div>
                   </div>
                 </div>
@@ -79,7 +78,7 @@ const CandidateFilterModal = () => {
                         Expert Level
                       </div>
                       <div className="main-body">
-                        <SelectCandidateExperience />
+                        {/* <SelectCandidateExperience /> */}
                       </div>
                     </div>
                   </div>
@@ -89,7 +88,7 @@ const CandidateFilterModal = () => {
                         Qualification
                       </div>
                       <div className="main-body">
-                        <SelectCandidateQualification />
+                        {/* <SelectCandidateQualification /> */}
                       </div>
                     </div>
                   </div>

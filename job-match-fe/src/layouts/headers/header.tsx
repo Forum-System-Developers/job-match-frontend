@@ -7,22 +7,10 @@ import logo from "@/assets/images/logo/rephera-logo.png";
 import CategoryDropdown from "./component/category-dropdown";
 import LoginModal from "@/app/components/common/popup/login-modal";
 import useSticky from "@/hooks/use-sticky";
-import axiosInstance from "@/services/axiosInstance";
-import SERVER_URL from "@/services/server";
-import { role, isAuthenticated } from "@/utils/auth_utils";
+import { role, isAuthenticated, handleLogout } from "@/utils/auth_utils";
 
 const Header = () => {
   const { sticky } = useSticky();
-
-  const handleLogout = async () => {
-    try {
-      await axiosInstance.post(`http://${SERVER_URL}/auth/logout`);
-      localStorage.removeItem("role");
-      window.location.href = "/";
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
 
   return (
     <>

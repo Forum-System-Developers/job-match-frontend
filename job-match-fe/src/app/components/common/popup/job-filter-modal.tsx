@@ -5,7 +5,6 @@ import { useAppDispatch } from "@/redux/hook";
 import SearchFilter from "../../jobs/filter/job-filter-2/search-filter";
 import FilterCategory from "../../jobs/filter/job-filter-2/filter-category";
 import FilterLocation from "../../jobs/filter/job-filter-2/filter-location";
-import FilterEnglishFluency from "../../jobs/filter/job-filter-2/filter-english-fluency";
 import FilterJobType from "../../jobs/filter/job-filter-2/filter-job-type";
 import FilterExperience from "../../jobs/filter/job-filter-2/filter-experience";
 import { SalaryRangeSlider } from "../../jobs/filter/job-prices";

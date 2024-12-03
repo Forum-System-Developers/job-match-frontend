@@ -3,8 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
-import job_data from "@/data/job-ad-data";
 import ActionDropdown from "./action-dropdown";
+import { useAds } from "../../company/hooks/useAds";
 
 // props type
 type IProps = {
@@ -12,6 +12,10 @@ type IProps = {
 };
 
 const SavedJobArea = ({ setIsOpenSidebar }: IProps) => {
+  const { ads, loading } = useAds();
+
+  let job_data = ads;
+
   const job_items = job_data.slice(0, 4);
   return (
     <div className="dashboard-body">

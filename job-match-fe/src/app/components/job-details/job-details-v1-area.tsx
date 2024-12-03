@@ -1,15 +1,27 @@
 "use client";
-import React from "react";
-import { IJobType } from "@/types/job-data-type";
+import React, { useState } from "react";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useAd } from "../company/hooks/useAd";
+import NiceSelect from "@/ui/nice-select";
+import { sendMatchRequestToJobAd } from "@/services/matching";
+import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
+import { role } from "@/utils/auth_utils";
 
 const JobDetailsV1Area = () => {
   const { id } = useParams();
   const { ad, loading } = useAd(id as string);
+  const { jobApplications, loading: jobApplicationsLoading } =
+    useJobApplicationsProfessional();
+  const [open, setOpen] = useState(false);
   const job = ad;
+
+  const options = jobApplications.map((application) => ({
+    value: application.id,
+    label: application.name,
+  }));
+
   return (
     <section className="job-details pt-100 lg-pt-80 pb-130 lg-pb-80">
       <div className="container">
@@ -225,9 +237,35 @@ const JobDetailsV1Area = () => {
                       </a>
                     ))}
                 </div>
-                <a href="#" className="btn-one w-100 mt-25">
-                  Apply Now
-                </a>
+                {role === "professional" && (
+                  <>
+                    <a
+                      href="#"
+                      className="btn-one w-100 mt-25"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setOpen((prevState: boolean) => !prevState);
+                      }}
+                    >
+                      Send Match Request
+                    </a>
+                    {open && (
+                      <div className="match-request-form mt-30">
+                        <NiceSelect
+                          options={options}
+                          defaultCurrent={0}
+                          onChange={(item) => {
+                            sendMatchRequestToJobAd(
+                              id as string,
+                              item.label as string
+                            );
+                          }}
+                          name="Location"
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>

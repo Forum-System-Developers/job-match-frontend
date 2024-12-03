@@ -9,7 +9,7 @@ import CitySelect from "./city-select";
 import StateSelect from "./state-select";
 import { useProfessional } from "./hooks/useProfessional";
 import { usePhoto } from "./hooks/usePhoto";
-import { uploadPhoto } from "./data/professional-data";
+import { uploadPhoto } from "../../../../data/professional-data";
 
 // props type
 type IProps = {

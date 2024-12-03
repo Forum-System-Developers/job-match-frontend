@@ -11,7 +11,7 @@ import EmailSendForm from "../forms/email-send-form";
 import { useProfessional } from "../candidate-details/hooks/useProfessional";
 import { usePhoto } from "../dashboard/candidate/hooks/usePhoto";
 import { useParams } from "next/navigation";
-import { getCV } from "../dashboard/candidate/data/professional-data";
+import { getCV } from "../../../data/professional-data";
 
 const CandidateDetailsArea = () => {
   const { id } = useParams();
@@ -111,7 +111,7 @@ const CandidateDetailsArea = () => {
                 <div className="inner-card border-style mb-75 lg-mb-50">
                   <h3 className="title">Skills</h3>
                   {/* skill area */}
-                  <Skills itemId={professional?.id ? professional.id : null} />
+                  <Skills itemId={id as string} />
                   {/* skill area */}
                 </div>
                 <div className="inner-card border-style mb-60 lg-mb-50">

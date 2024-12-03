@@ -3,10 +3,7 @@ import { ICompany } from "./../types/company-type";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
 import { getLogo } from "@/app/components/dashboard/employ/data/company-data";
-import {
-  ProfessionalDetails,
-  getPhoto,
-} from "@/app/components/dashboard/candidate/data/professional-data";
+import { ProfessionalDetails, getPhoto } from "@/data/professional-data";
 
 // data type
 export type ICandidate = {

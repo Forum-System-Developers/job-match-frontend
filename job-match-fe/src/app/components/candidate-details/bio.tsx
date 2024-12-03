@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfessionalDetails } from "../dashboard/candidate/data/professional-data";
+import { ProfessionalDetails } from "../../../data/professional-data";
 
 const CandidateBio = ({
   professional,
