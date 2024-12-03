@@ -93,6 +93,11 @@ export interface Skills {
   level: string;
 }
 
+interface CVResponse {
+  file: Blob | null;
+  filename: string | null;
+}
+
 export const getCurrentProfessional =
   async (): Promise<ProfessionalDetails | null> => {
     const user = await currentUser();
@@ -227,5 +232,56 @@ export const getSkills = async (id: string | null): Promise<Skills[] | []> => {
   } catch (error) {
     console.error("Error fetching skills:", error);
     return [];
+  }
+};
+
+export const getCV = async (id: string): Promise<CVResponse | null> => {
+  try {
+    const response = await axiosInstance.get<Blob>(
+      `http://${SERVER_URL}/professionals/${id}/download-cv`,
+      { responseType: "blob" }
+    );
+    const contentDisposition = response.headers["content-disposition"];
+    let filename = null;
+    if (contentDisposition) {
+      filename = contentDisposition
+        .split("filename=")[1]
+        ?.replace(/['"]/g, "")
+        .trim();
+    }
+
+    return { file: response.data, filename };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(
+        "Error fetching photo:",
+        error.response?.status,
+        error.message
+      );
+    } else {
+      console.error("Unexpected error:", error);
+    }
+
+    return null;
+  }
+};
+
+export const uploadCV = async (file: File) => {
+  const formData = new FormData();
+  formData.append("cv", file);
+
+  try {
+    const response = await axiosInstance.post(
+      `http://${SERVER_URL}/professionals/upload-cv`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    alert("CV uploaded successfully");
+  } catch (error) {
+    console.error("Error uploading file:", error);
   }
 };
