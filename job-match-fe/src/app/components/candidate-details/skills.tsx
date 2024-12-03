@@ -4,7 +4,7 @@ import {
   type Skills,
 } from "../dashboard/candidate/data/professional-data";
 
-const Skills = ({ itemId }: { itemId: string | null }) => {
+const Skills = ({ itemId }: { itemId: string }) => {
   const [skills, setSkills] = useState<Skills[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
