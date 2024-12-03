@@ -1,21 +1,22 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import job_data from "@/data/job-ad-data";
 import slugify from "slugify";
 import ListItemTwo from "../jobs/list/list-item-2";
 import JobGridItem from "../jobs/grid/job-grid-item";
 import { IJobType } from "@/types/job-data-type";
+import { useAds } from "../company/hooks/useAds";
 
 const SearchItems = () => {
   const searchParams = useSearchParams();
+  const { ads, loading } = useAds();
+  const job_data = ads;
   const [jobs, setJobs] = useState<IJobType[]>(job_data);
   const [jobType, setJobType] = useState<string>("list");
   const category = searchParams.get("category");
   const location = searchParams.get("location");
   const search = searchParams.get("search");
   const company = searchParams.get("company");
-
   const categoryMatch = (item: IJobType) => {
     return item.category.some(
       (e) => slugify(e.split(",").join("-").toLowerCase(), "-") === category
@@ -37,7 +38,6 @@ const SearchItems = () => {
       return item.title.toLowerCase().includes(search.toLowerCase());
     }
   };
-
   useEffect(() => {
     // category && location && company && search all are match
     if (category && location && company && search) {
@@ -125,7 +125,6 @@ const SearchItems = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, company, location, search]);
-
   return (
     <section className="job-listing-three pt-110 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
       <div className="container">
@@ -143,7 +142,6 @@ const SearchItems = () => {
               </div>
             </div>
           </div>
-
           {jobs.length > 0 && (
             <div className="col-12">
               <div className="job-post-item-wrapper">
@@ -155,7 +153,7 @@ const SearchItems = () => {
                   <div className="d-flex align-items-center">
                     <button
                       onClick={() => setJobType("list")}
-                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 list-btn 
+                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 list-btn
                    ${jobType === "grid" ? "active" : ""}`}
                       title="Active List"
                     >
@@ -163,7 +161,7 @@ const SearchItems = () => {
                     </button>
                     <button
                       onClick={() => setJobType("grid")}
-                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 grid-btn 
+                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 grid-btn
                   ${jobType === "list" ? "active" : ""}`}
                       title="Active Grid"
                     >
@@ -171,7 +169,6 @@ const SearchItems = () => {
                     </button>
                   </div>
                 </div>
-
                 <div
                   className={`accordion-box list-style ${
                     jobType === "list" ? "show" : ""
@@ -181,7 +178,6 @@ const SearchItems = () => {
                     <ListItemTwo key={job.id} item={job} />
                   ))}
                 </div>
-
                 <div
                   className={`accordion-box grid-style ${
                     jobType === "grid" ? "show" : ""

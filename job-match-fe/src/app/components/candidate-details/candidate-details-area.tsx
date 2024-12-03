@@ -11,7 +11,7 @@ import EmailSendForm from "../forms/email-send-form";
 import { useProfessional } from "../candidate-details/hooks/useProfessional";
 import { usePhoto } from "../dashboard/candidate/hooks/usePhoto";
 import { useParams } from "next/navigation";
-import { getCV } from "../dashboard/candidate/data/professional-data";
+import { getCV } from "../../../data/professional-data";
 
 const CandidateDetailsArea = () => {
   const { id } = useParams();

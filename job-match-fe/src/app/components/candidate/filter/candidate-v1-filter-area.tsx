@@ -4,7 +4,6 @@ import FilterSkills from "./filter-skills";
 import FilterCandidateLocation from "./filter-location";
 import FilterCandidateExperience from "./filter-experince";
 import JobPrices from "../../jobs/filter/job-prices";
-import FilterEnglishFluency from "./filter-english-fluency";
 
 const CandidateV1FilterArea = () => {
   const [priceValue, setPriceValue] = useState<number[]>([0, 50000]);
@@ -179,9 +178,7 @@ const CandidateV1FilterArea = () => {
             English Fluency
           </a>
           <div className="collapse" id="collapseFluency">
-            <div className="main-body">
-              <FilterEnglishFluency />
-            </div>
+            <div className="main-body">{/* <FilterEnglishFluency /> */}</div>
           </div>
         </div>
 

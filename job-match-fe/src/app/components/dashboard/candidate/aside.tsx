@@ -9,7 +9,7 @@ import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
 import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
 import logout from "@/assets/dashboard/images/icon/icon_9.svg";
-import { nav_data } from "../candidate/data/professional-data";
+import { nav_data } from "../../../../data/professional-data";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
 import { useProfessional } from "./hooks/useProfessional";

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {
   getProfessional,
   ProfessionalDetails,
-} from "../../dashboard/candidate/data/professional-data";
+} from "../../../../data/professional-data";
 
 export const useProfessional = (id: string) => {
   const [professional, setProfessional] = useState<ProfessionalDetails | null>(

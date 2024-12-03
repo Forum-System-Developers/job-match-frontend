@@ -7,7 +7,7 @@ import CountrySelect from "../candidate/country-select";
 import CitySelect from "../candidate/city-select";
 import StateSelect from "../candidate/state-select";
 import DashboardHeader from "../candidate/dashboard-header";
-import { usePhoto } from "./hooks/useLogo";
+import { useLogo } from "./hooks/useLogo";
 import { useCompany } from "./hooks/useCompany";
 import { uploadLogo } from "./data/company-data";
 
@@ -17,7 +17,7 @@ type IProps = {
 };
 const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
   const { company, loading: companyLoading } = useCompany();
-  const { photoUrl, loading: photoLoading } = usePhoto(company?.id || null);
+  const { photoUrl, loading: photoLoading } = useLogo(company?.id || null);
   const isLoading = companyLoading || photoLoading;
 
   if (isLoading) {

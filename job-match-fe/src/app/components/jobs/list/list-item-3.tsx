@@ -5,7 +5,7 @@ import Link from "next/link";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import verify from "@/assets/images/icon/icon_51.svg";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { JobApplication } from "../../job-application/data/job-applications-data";
+import { JobApplication } from "../../../../data/job-applications-data";
 
 const ListItemThree = ({ item }: { item: JobApplication }) => {
   // const { id, photo, min_salary, city, description, skills } = item || {};

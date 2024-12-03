@@ -1,16 +1,17 @@
-"use client"
+"use client";
 import React from "react";
 import DashboardHeader from "../candidate/dashboard-header";
-import candidate_data from "@/data/candidate-data";
 import CandidateItem from "./candidate-item";
 import EmployShortSelect from "./short-select";
+import { ICandidate } from "@/data/candidate-data";
 
-// props type 
+// props type
 type IProps = {
-  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>
-}
+  setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const SavedCandidateArea = ({setIsOpenSidebar}:IProps) => {
+const SavedCandidateArea = ({ setIsOpenSidebar }: IProps) => {
+  const candidate_data: ICandidate[] = [];
   const candidate_items = candidate_data.slice(0, 4);
   return (
     <div className="dashboard-body">
@@ -23,7 +24,7 @@ const SavedCandidateArea = ({setIsOpenSidebar}:IProps) => {
           <h2 className="main-title m0">Saved Candidate</h2>
           <div className="short-filter d-flex align-items-center">
             <div className="text-dark fw-500 me-2">Short by:</div>
-            <EmployShortSelect/>
+            <EmployShortSelect />
           </div>
         </div>
 

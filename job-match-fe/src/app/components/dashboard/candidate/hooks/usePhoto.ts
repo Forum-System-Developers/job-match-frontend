@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getPhoto } from "../data/professional-data";
+import { getPhoto } from "../../../../../data/professional-data";
 
 export const usePhoto = (id: string) => {
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);

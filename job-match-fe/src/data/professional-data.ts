@@ -17,6 +17,7 @@ import { currentUser } from "@/utils/auth_utils";
 import axiosInstance from "@/services/axiosInstance";
 import axios from "axios";
 import SERVER_URL from "@/services/server";
+import { JobApplication } from "./job-applications-data";
 
 // nav data
 export const nav_data: {
@@ -283,5 +284,44 @@ export const uploadCV = async (file: File) => {
     alert("CV uploaded successfully");
   } catch (error) {
     console.error("Error uploading file:", error);
+  }
+};
+
+export const getJobApplicationsForProfessional = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(
+      `http://${SERVER_URL}/professionals/${id}/job-applications`,
+      {
+        params: {
+          application_status: "active",
+        },
+      }
+    );
+    const jobApplications = response.data.detail ?? [];
+
+    const applications: JobApplication[] = await Promise.all(
+      jobApplications.map(async (job_application: any) => {
+        return {
+          id: job_application.id,
+          name: job_application.name,
+          professional_id: job_application.professional_id,
+          photo: null,
+          first_name: job_application.first_name,
+          last_name: job_application.last_name,
+          city: job_application.city,
+          email: job_application.email,
+          skills: job_application.skills,
+          status: job_application.status,
+          min_salary: job_application.min_salary,
+          max_salary: job_application.max_salary,
+          description: job_application.description,
+        };
+      })
+    );
+
+    return applications;
+  } catch (error) {
+    console.error("Error fetching applications:", error);
+    return [];
   }
 };

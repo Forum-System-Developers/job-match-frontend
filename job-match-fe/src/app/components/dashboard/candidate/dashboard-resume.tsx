@@ -5,10 +5,7 @@ import DashboardHeader from "./dashboard-header";
 import DashboardPortfolio from "./dashboard-portfolio";
 import SelectYear from "./select-year";
 import VideoPopup from "../../common/video-popup";
-import {
-  getCV,
-  uploadCV,
-} from "@/app/components/dashboard/candidate/data/professional-data";
+import { getCV, uploadCV } from "@/data/professional-data";
 import { currentUser } from "@/utils/auth_utils";
 
 // props type

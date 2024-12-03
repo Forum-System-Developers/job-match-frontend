@@ -6,7 +6,6 @@ import HowItWorks from "./components/how-it-works/how-it-works";
 import ExpertsOne from "./components/experts/experts-one";
 import FeedbackOne from "./components/feedBacks/feedback-one";
 import FeatureTwo from "./components/features/feature-two";
-import BlogOne from "./components/blogs/blog-one";
 import FancyBanner from "./components/fancy-banner/fancy-banner";
 import JobPortalIntro from "./components/job-portal-intro/job-portal-intro";
 import FooterOne from "@/layouts/footers/footer-one";
@@ -28,7 +27,7 @@ export default function Home() {
       {/* category section end */}
 
       {/* feature one start */}
-      <FeatureOne />
+      {/* <FeatureOne /> */}
       {/* feature one end */}
 
       {/* how works start */}
@@ -36,7 +35,7 @@ export default function Home() {
       {/* how works end */}
 
       {/* expert one section start */}
-      <ExpertsOne />
+      {/* <ExpertsOne /> */}
       {/* expert one section end */}
 
       {/* feedback one start */}
@@ -44,12 +43,8 @@ export default function Home() {
       {/* feedback one end */}
 
       {/* text feature two start */}
-      {/* <FeatureTwo /> */}
+      <FeatureTwo />
       {/* text feature two end */}
-
-      {/* blog section one start */}
-      {/* <BlogOne/> */}
-      {/* blog section one end */}
 
       {/* fancy banner start */}
       <FancyBanner />

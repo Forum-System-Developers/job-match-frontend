@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  getSkills,
-  type Skills,
-} from "../dashboard/candidate/data/professional-data";
+import { getSkills, type Skills } from "../../../data/professional-data";
 
 const Skills = ({ itemId }: { itemId: string }) => {
   const [skills, setSkills] = useState<Skills[]>([]);
