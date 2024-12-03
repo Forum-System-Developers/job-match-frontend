@@ -8,7 +8,7 @@ import icon_3 from "@/assets/dashboard/images/icon/icon_14.svg";
 import icon_4 from "@/assets/dashboard/images/icon/icon_15.svg";
 import main_graph from "@/assets/dashboard/images/main-graph.png";
 import DashboardHeader from "./dashboard-header";
-import { useJobApplications } from "../../jobs/hooks/useJobApplications";
+import { useJobApplicationsProfessional } from "../../jobs/hooks/useJobApplications";
 
 // card item
 export function CardItem({
@@ -42,7 +42,7 @@ type IProps = {
 };
 
 const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
-  const { jobApplications, loading } = useJobApplications();
+  const { jobApplications, loading } = useJobApplicationsProfessional();
   let job_data = jobApplications;
   const job_items = [...job_data.reverse().slice(0, 5)];
 
@@ -76,7 +76,7 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
           </div>
           <div className="col-xl-5 col-lg-6 d-flex">
             <div className="recent-job-tab bg-white border-20 mt-30 w-100">
-              <h4 className="dash-title-two">Recent Applied Job</h4>
+              <h4 className="dash-title-two">Job Applications</h4>
               <div className="wrapper">
                 {job_items.map((j) => (
                   <div
