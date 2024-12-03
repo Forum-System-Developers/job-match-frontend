@@ -33,9 +33,9 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
               <thead>
                 <tr>
                   <th scope="col">Title</th>
-                  <th scope="col">Alert </th>
-                  <th scope="col">Job</th>
-                  <th scope="col">Time</th>
+                  <th scope="col">Description </th>
+                  <th scope="col">Min Salary</th>
+                  <th scope="col">Max Salary</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>

@@ -67,7 +67,7 @@ const JobApplicationForm = () => {
     setIsSubmitting(true);
     try {
       const response = await axiosInstance.post(
-        `http://${SERVER_URL}/job-applications/`,
+        `${SERVER_URL}/job-applications/`,
         data,
         {
           headers: { "Content-Type": "application/json" },

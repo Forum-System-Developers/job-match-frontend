@@ -1,6 +1,6 @@
 import open from 'open';
 
-const PORT = 3000; // Default port for Next.js, update if different.
+const PORT = 4000; // Default port for Next.js, update if different.
 const URL = `http://localhost:${PORT}`;
 
 (async () => {

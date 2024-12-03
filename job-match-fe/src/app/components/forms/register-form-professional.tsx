@@ -81,7 +81,7 @@ const ProfessionalRegisterForm = () => {
         status,
       };
       const response = await axiosInstance.post(
-        `http://${SERVER_URL}/professionals/`,
+        `${SERVER_URL}/professionals/`,
         payload,
         {
           headers: { "Content-Type": "application/json" },

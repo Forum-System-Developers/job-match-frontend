@@ -90,7 +90,7 @@ const CompanyRegisterForm = () => {
       setIsSubmitting(true);
       try {
         const response = await axiosInstance.post(
-          `http://${SERVER_URL}/companies/`,
+          `${SERVER_URL}/companies/`,
           data
         );
         reset();

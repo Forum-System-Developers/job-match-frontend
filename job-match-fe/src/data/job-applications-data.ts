@@ -21,7 +21,7 @@ export interface JobApplication {
 export const getJobApplications = async () => {
   try {
     const response = await axiosInstance.post(
-      `http://${SERVER_URL}/job-applications/all`,
+      `${SERVER_URL}/job-applications/all`,
       {
         params: {
           job_ad_status: "active",
@@ -68,7 +68,7 @@ export const getJobApplication = async (
 ): Promise<JobApplication | null> => {
   try {
     const { data } = await axiosInstance.get(
-      `http://${SERVER_URL}/job-applications/${id}`
+      `${SERVER_URL}/job-applications/${id}`
     );
     const photoBlob = await getPhoto(data.detail.professional_id);
     const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
