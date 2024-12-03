@@ -33,16 +33,18 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   // }, []);
   const isPublicRoute = PUBLIC_PATHS.includes(pathname);
 
-  useEffect(() => {
-    handleReset();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
-
-  useEffect(() => {
-    if (!isAuthenticated && !isPublicRoute) {
+  const validateAuthentication = () => {
+    if (!isAuthenticated() && !isPublicRoute) {
       redirect("/register");
     }
-  }, [isAuthenticated]);
+  };
+
+  useEffect(() => {
+    validateAuthentication();
+    handleReset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       {children}
