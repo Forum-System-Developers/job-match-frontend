@@ -18,6 +18,7 @@ import axiosInstance from "@/services/axiosInstance";
 import axios from "axios";
 import SERVER_URL from "@/services/server";
 import { JobApplication } from "./job-applications-data";
+import { JobAdResponse } from "./job-ad-data";
 
 // nav data
 export const nav_data: {
@@ -35,18 +36,18 @@ export const nav_data: {
     title: "Dashboard",
   },
   {
-    id: 2,
-    icon: nav_2,
-    icon_active: nav_2_active,
-    link: "/dashboard/candidate-dashboard/profile",
-    title: "My Profile",
-  },
-  {
     id: 4,
     icon: nav_4,
     icon_active: nav_4_active,
     link: "/dashboard/candidate-dashboard/messages",
     title: "Messages",
+  },
+  {
+    id: 3,
+    icon: nav_3,
+    icon_active: nav_3_active,
+    link: "/dashboard/candidate-dashboard/match-requests",
+    title: "Match Requests",
   },
   {
     id: 5,
@@ -61,13 +62,6 @@ export const nav_data: {
     icon_active: nav_6_active,
     link: "/dashboard/candidate-dashboard/saved-job",
     title: "Saved Job",
-  },
-  {
-    id: 7,
-    icon: nav_7,
-    icon_active: nav_7_active,
-    link: "/dashboard/candidate-dashboard/setting",
-    title: "Account Settings",
   },
 ];
 
@@ -315,6 +309,39 @@ export const getJobApplicationsForProfessional = async (id: string) => {
     return applications;
   } catch (error) {
     console.error("Error fetching applications:", error);
+    return [];
+  }
+};
+
+export const getMatchRequestsForProfessional = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(
+      `http://${SERVER_URL}/professionals/${id}/match-requests`
+    );
+    const jobAds = response.data.detail ?? [];
+
+    const requests: JobAdResponse[] = await Promise.all(
+      jobAds.map(async (job_ad: any) => {
+        return {
+          id: job_ad.id,
+          company_id: job_ad.company_id,
+          category_id: job_ad.category_id,
+          location_id: job_ad.city.id,
+          title: job_ad.title,
+          description: job_ad.description,
+          min_salary: job_ad.min_salary,
+          max_salary: job_ad.max_salary,
+          status: "active",
+          requirements: job_ad.requirements,
+          created_at: job_ad.created_at,
+          updated_at: job_ad.updated_at,
+        };
+      })
+    );
+
+    return requests;
+  } catch (error) {
+    console.error("Error fetching match requests:", error);
     return [];
   }
 };

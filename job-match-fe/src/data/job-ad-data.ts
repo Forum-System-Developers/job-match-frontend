@@ -14,8 +14,8 @@ export interface JobAdResponse {
   location_id: string;
   title: string;
   description: string;
-  min_salary: number;
-  max_salary: number;
+  min_salary: number | null;
+  max_salary: number | null;
   status: "active" | "archived";
   requirements: string[];
   created_at: string;
