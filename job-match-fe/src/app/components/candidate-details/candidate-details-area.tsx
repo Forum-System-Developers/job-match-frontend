@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import CandidateProfileSlider from "./candidate-profile-slider";
-import avatar from "@/assets/images/candidates/img_01.jpg";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import VideoPopup from "../common/video-popup";
 import Skills from "./skills";
@@ -90,7 +89,7 @@ const CandidateDetailsArea = () => {
                 <div className="inner-card border-style mb-75 lg-mb-50">
                   <h3 className="title">Skills</h3>
                   {/* skill area */}
-                  <Skills />
+                  <Skills itemId={professional?.id ? professional.id : null} />
                   {/* skill area */}
                 </div>
                 <div className="inner-card border-style mb-60 lg-mb-50">

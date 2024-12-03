@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {
+  getSkills,
+  type Skills,
+} from "../dashboard/candidate/data/professional-data";
 
-const Skills = () => {
+const Skills = ({ itemId }: { itemId: string | null }) => {
+  const [skills, setSkills] = useState<Skills[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchSkills = async () => {
+    setLoading(true);
+    try {
+      const skills = await getSkills(itemId as string);
+      setSkills(skills);
+    } catch (error) {
+      console.error("Error fetching skills:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchSkills();
+  }, [itemId]);
+
   return (
     <ul className="style-none skill-tags d-flex flex-wrap pb-25">
-      <li>Figma</li>
-      <li>HTML5</li>
-      <li>Illustrator</li>
-      <li>Adobe Photoshop</li>
-      <li>WordPress</li>
-      <li>jQuery</li>
-      <li>Web Design</li>
-      <li>Adobe XD</li>
-      <li>CSS</li>
-      <li className="more">3+</li>
+      {skills?.map((skill) => (
+        <li>{skill.name}</li>
+      ))}
+
+      {/* <li className="more">3+</li> */}
     </ul>
   );
 };
