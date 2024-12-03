@@ -95,10 +95,10 @@ const DashboardHeader = ({ setIsOpenSidebar }: IProps) => {
         </div>
         <div>
           <Link
-            href="/dashboard/candidate-dashboard/submit-job"
+            href="/dashboard/candidate-dashboard/new-application"
             className="job-post-btn tran3s"
           >
-            New Resume
+            Create New
           </Link>
         </div>
       </div>
