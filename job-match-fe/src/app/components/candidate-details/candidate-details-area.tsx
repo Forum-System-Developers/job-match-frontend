@@ -11,6 +11,7 @@ import EmailSendForm from "../forms/email-send-form";
 import { useProfessional } from "../candidate-details/hooks/useProfessional";
 import { usePhoto } from "../dashboard/candidate/hooks/usePhoto";
 import { useParams } from "next/navigation";
+import { getCV } from "../dashboard/candidate/data/professional-data";
 
 const CandidateDetailsArea = () => {
   const { id } = useParams();
@@ -20,6 +21,27 @@ const CandidateDetailsArea = () => {
     id as string
   );
   const { photoUrl, loading: photoLoading } = usePhoto(id as string);
+
+  const fetchCV = async () => {
+    const cvResponse = await getCV(id as string);
+    const CV = cvResponse?.file;
+
+    if (CV) {
+      const downloadLink = document.createElement("a");
+      const url = window.URL.createObjectURL(CV);
+      downloadLink.href = url;
+      downloadLink.setAttribute(
+        "download",
+        `${professional?.first_name}_${professional?.last_name}_Rephera_CV.pdf`
+      );
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      window.URL.revokeObjectURL(url);
+    } else {
+      console.error("Error: CV could not be fetched.");
+    }
+  };
 
   return (
     <>
@@ -131,6 +153,7 @@ const CandidateDetailsArea = () => {
                   {/* CandidateBio */}
                   <a
                     href="#"
+                    onClick={fetchCV}
                     className="btn-ten fw-500 text-white w-100 text-center tran3s mt-15"
                   >
                     Download CV
