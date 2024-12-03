@@ -14,6 +14,7 @@ import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
 import { useProfessional } from "./hooks/useProfessional";
 import { usePhoto } from "./hooks/usePhoto";
+import { handleLogout } from "@/utils/auth_utils";
 
 // props type
 type IProps = {
@@ -163,7 +164,11 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
             <p>Profile Complete</p>
           </div>
 
-          <a href="#" className="d-flex w-100 align-items-center logout-btn">
+          <a
+            href="#"
+            className="d-flex w-100 align-items-center logout-btn"
+            onClick={handleLogout}
+          >
             <Image src={logout} alt="icon" className="lazy-img" />
             <span>Logout</span>
           </a>
