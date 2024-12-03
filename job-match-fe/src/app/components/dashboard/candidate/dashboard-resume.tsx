@@ -90,6 +90,7 @@ const DashboardResume = ({ setIsOpenSidebar }: IProps) => {
             {file && (
               <button
                 onClick={() => handleFileUpload(file!)}
+                style={{ alignSelf: "center", margin: "10px" }}
                 className="btn btn-primary mt-2"
               >
                 Upload CV
