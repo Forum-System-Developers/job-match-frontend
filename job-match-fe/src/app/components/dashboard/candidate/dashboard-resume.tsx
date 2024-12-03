@@ -15,36 +15,6 @@ type IProps = {
 
 const DashboardResume = ({ setIsOpenSidebar }: IProps) => {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
-  const [filename, setFilename] = useState<string | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-
-  const fetchCV = async () => {
-    try {
-      const user = await currentUser();
-      const response = await getCV(user.id as string);
-      setFilename(response?.filename ?? null);
-    } catch (error) {
-      console.error("Error: CV could not be fetched.");
-    }
-  };
-
-  useEffect(() => {
-    fetchCV();
-  }, [file]);
-
-  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-    }
-  };
-  const handleFileUpload = async (file: File) => {
-    if (!file) {
-      alert("Please select a file first.");
-      return;
-    }
-    await uploadCV(file);
-  };
 
   return (
     <>
@@ -54,46 +24,7 @@ const DashboardResume = ({ setIsOpenSidebar }: IProps) => {
           <DashboardHeader setIsOpenSidebar={setIsOpenSidebar} />
           {/* header end */}
 
-          <h2 className="main-title">My Resume</h2>
-
-          <div className="bg-white card-box border-20">
-            <h4 className="dash-title-three">Resume Attachment</h4>
-            {filename && (
-              <div className="dash-input-wrapper mb-20">
-                <label htmlFor="">CV Attachment*</label>
-
-                <div className="attached-file d-flex align-items-center justify-content-between mb-15">
-                  <span>{filename}</span>
-                  <a href="#" className="remove-btn">
-                    <i className="bi bi-x"></i>
-                  </a>
-                </div>
-              </div>
-            )}
-
-            <div className="dash-btn-one d-inline-block position-relative me-3">
-              <i className="bi bi-plus"></i>
-              Upload CV
-              <input
-                type="file"
-                id="uploadCV"
-                name="uploadCV"
-                placeholder=""
-                onChange={handleFileSelect}
-              />
-            </div>
-            <small>Upload file .pdf</small>
-
-            {file && (
-              <button
-                onClick={() => handleFileUpload(file!)}
-                style={{ alignSelf: "center", margin: "10px" }}
-                className="btn btn-primary mt-2"
-              >
-                Upload CV
-              </button>
-            )}
-          </div>
+          <h2 className="main-title">Create Job Application</h2>
 
           <div className="bg-white card-box border-20 mt-40">
             <h4 className="dash-title-three">Intro & Overview</h4>

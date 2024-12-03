@@ -105,19 +105,6 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
                     <span className="ms-2 ps-1">Account Settings</span>
                   </Link>
                 </li>
-                <li>
-                  <a
-                    className="dropdown-item d-flex align-items-center"
-                    href="#"
-                  >
-                    <Image
-                      src={profile_icon_3}
-                      alt="icon"
-                      className="lazy-img"
-                    />
-                    <span className="ms-2 ps-1">Notification</span>
-                  </a>
-                </li>
               </ul>
             </div>
           </div>

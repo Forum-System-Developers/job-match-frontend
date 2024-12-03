@@ -18,6 +18,7 @@ import axiosInstance from "@/services/axiosInstance";
 import axios from "axios";
 import SERVER_URL from "@/services/server";
 import { JobApplication } from "./job-applications-data";
+import { JobAdResponse } from "./job-ad-data";
 
 // nav data
 export const nav_data: {
@@ -35,25 +36,18 @@ export const nav_data: {
     title: "Dashboard",
   },
   {
-    id: 2,
-    icon: nav_2,
-    icon_active: nav_2_active,
-    link: "/dashboard/candidate-dashboard/profile",
-    title: "My Profile",
-  },
-  {
-    id: 3,
-    icon: nav_3,
-    icon_active: nav_3_active,
-    link: "/dashboard/candidate-dashboard/resume",
-    title: "Resume",
-  },
-  {
     id: 4,
     icon: nav_4,
     icon_active: nav_4_active,
     link: "/dashboard/candidate-dashboard/messages",
     title: "Messages",
+  },
+  {
+    id: 3,
+    icon: nav_3,
+    icon_active: nav_3_active,
+    link: "/dashboard/candidate-dashboard/match-requests",
+    title: "Match Requests",
   },
   {
     id: 5,
@@ -68,13 +62,6 @@ export const nav_data: {
     icon_active: nav_6_active,
     link: "/dashboard/candidate-dashboard/saved-job",
     title: "Saved Job",
-  },
-  {
-    id: 7,
-    icon: nav_7,
-    icon_active: nav_7_active,
-    link: "/dashboard/candidate-dashboard/setting",
-    title: "Account Settings",
   },
 ];
 
@@ -104,7 +91,7 @@ export const getCurrentProfessional =
     const user = await currentUser();
     try {
       const { data } = await axiosInstance.get(
-        `http://${SERVER_URL}/professionals/${user.id}`
+        `${SERVER_URL}/professionals/${user.id}`
       );
       const {
         first_name,
@@ -136,7 +123,7 @@ export const getCurrentProfessional =
 export const getPhoto = async (id: string): Promise<Blob | null> => {
   try {
     const file = await axiosInstance.get<Blob>(
-      `http://${SERVER_URL}/professionals/${id}/download-photo`,
+      `${SERVER_URL}/professionals/${id}/download-photo`,
       { responseType: "blob" }
     );
     return file.data;
@@ -164,7 +151,7 @@ export const uploadPhoto = async (file: File) => {
     formData.append("logo", file);
 
     const response = await axiosInstance.post(
-      `http://${SERVER_URL}/professionals/upload-photo`,
+      `${SERVER_URL}/professionals/upload-photo`,
       formData,
       {
         headers: {
@@ -186,7 +173,7 @@ export const getProfessional = async (
 ): Promise<ProfessionalDetails | null> => {
   try {
     const { data } = await axiosInstance.get(
-      `http://${SERVER_URL}/professionals/${id}`
+      `${SERVER_URL}/professionals/${id}`
     );
     const {
       first_name,
@@ -218,7 +205,7 @@ export const getProfessional = async (
 export const getSkills = async (id: string | null): Promise<Skills[] | []> => {
   try {
     const response = await axiosInstance.get(
-      `http://${SERVER_URL}/professionals/${id}/skills`
+      `${SERVER_URL}/professionals/${id}/skills`
     );
     const skillsResponse = response.data.detail ?? [];
     const skills: Skills[] | [] = await Promise.all(
@@ -239,7 +226,7 @@ export const getSkills = async (id: string | null): Promise<Skills[] | []> => {
 export const getCV = async (id: string): Promise<CVResponse | null> => {
   try {
     const response = await axiosInstance.get<Blob>(
-      `http://${SERVER_URL}/professionals/${id}/download-cv`,
+      `${SERVER_URL}/professionals/${id}/download-cv`,
       { responseType: "blob" }
     );
     const contentDisposition = response.headers["content-disposition"];
@@ -273,7 +260,7 @@ export const uploadCV = async (file: File) => {
 
   try {
     const response = await axiosInstance.post(
-      `http://${SERVER_URL}/professionals/upload-cv`,
+      `${SERVER_URL}/professionals/upload-cv`,
       formData,
       {
         headers: {
@@ -290,7 +277,7 @@ export const uploadCV = async (file: File) => {
 export const getJobApplicationsForProfessional = async (id: string) => {
   try {
     const response = await axiosInstance.get(
-      `http://${SERVER_URL}/professionals/${id}/job-applications`,
+      `${SERVER_URL}/professionals/${id}/job-applications`,
       {
         params: {
           application_status: "active",
@@ -322,6 +309,39 @@ export const getJobApplicationsForProfessional = async (id: string) => {
     return applications;
   } catch (error) {
     console.error("Error fetching applications:", error);
+    return [];
+  }
+};
+
+export const getMatchRequestsForProfessional = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(
+      `${SERVER_URL}/professionals/${id}/match-requests`
+    );
+    const jobAds = response.data.detail ?? [];
+
+    const requests: JobAdResponse[] = await Promise.all(
+      jobAds.map(async (job_ad: any) => {
+        return {
+          id: job_ad.id,
+          company_id: job_ad.company_id,
+          category_id: job_ad.category_id,
+          location_id: job_ad.city.id,
+          title: job_ad.title,
+          description: job_ad.description,
+          min_salary: job_ad.min_salary,
+          max_salary: job_ad.max_salary,
+          status: "active",
+          requirements: job_ad.requirements,
+          created_at: job_ad.created_at,
+          updated_at: job_ad.updated_at,
+        };
+      })
+    );
+
+    return requests;
+  } catch (error) {
+    console.error("Error fetching match requests:", error);
     return [];
   }
 };

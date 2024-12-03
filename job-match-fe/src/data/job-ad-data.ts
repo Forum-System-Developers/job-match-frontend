@@ -14,8 +14,8 @@ export interface JobAdResponse {
   location_id: string;
   title: string;
   description: string;
-  min_salary: number;
-  max_salary: number;
+  min_salary: number | null;
+  max_salary: number | null;
   status: "active" | "archived";
   requirements: string[];
   created_at: string;
@@ -24,14 +24,11 @@ export interface JobAdResponse {
 
 export const getJobAds = async () => {
   try {
-    const response = await axiosInstance.post(
-      `http://${SERVER_URL}/job-ads/all`,
-      {
-        params: {
-          job_ad_status: "active",
-        },
-      }
-    );
+    const response = await axiosInstance.post(`${SERVER_URL}/job-ads/all`, {
+      params: {
+        job_ad_status: "active",
+      },
+    });
     const jobAdsData = response.data.detail ?? [];
 
     const Ads: IJobType[] = await Promise.all(
@@ -70,9 +67,7 @@ export const getCompany = async (
   id: string
 ): Promise<CompanyDetails | null> => {
   try {
-    const { data } = await axiosInstance.get(
-      `http://${SERVER_URL}/companies/${id}`
-    );
+    const { data } = await axiosInstance.get(`${SERVER_URL}/companies/${id}`);
     const company = {
       id: data.detail.id,
       name: data.detail.name,
@@ -93,9 +88,7 @@ export const getCompany = async (
 
 export const getJobAd = async (id: string) => {
   try {
-    const response = await axiosInstance.get(
-      `http://${SERVER_URL}/job-ads/${id}`
-    );
+    const response = await axiosInstance.get(`${SERVER_URL}/job-ads/${id}`);
     const jobAdData = response.data.detail;
 
     const company = await getCompany(jobAdData.company_id);

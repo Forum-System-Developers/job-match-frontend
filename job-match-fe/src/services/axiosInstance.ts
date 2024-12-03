@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         await axios.post(
-          `http://${SERVER_URL}/auth/refresh`,
+          `${SERVER_URL}/auth/refresh`,
           {},
           { withCredentials: true }
         );

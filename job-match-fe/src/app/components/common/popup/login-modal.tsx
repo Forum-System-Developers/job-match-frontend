@@ -17,7 +17,7 @@ const LoginModal = () => {
     setIsSubmitting(true);
     try {
       const response = await axiosInstance.get(
-        `http://${SERVER_URL}/google-auth/login`
+        `${SERVER_URL}/google-auth/login`
       );
 
       if (response.status === 200) {

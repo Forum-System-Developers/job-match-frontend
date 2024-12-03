@@ -6,7 +6,7 @@ import { getLogo } from "@/app/components/dashboard/employ/data/company-data";
 
 export const getCompanies = async () => {
   try {
-    const response = await axiosInstance.get(`http://${SERVER_URL}/companies/`);
+    const response = await axiosInstance.get(`${SERVER_URL}/companies/`);
     const companiesData = response.data.detail ?? [];
 
     const companies: ICompany[] = await Promise.all(

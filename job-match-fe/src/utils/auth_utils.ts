@@ -32,7 +32,7 @@ export interface UserDetails {
 
 const getUser = async (): Promise<UserDetails> => {
   try {
-    const response = await axiosInstance.get(`http://${SERVER_URL}/auth/me`);
+    const response = await axiosInstance.get(`${SERVER_URL}/auth/me`);
     const userId = response.data.detail.id;
     const role: string = response.data.detail.role;
     return { id: userId, role: role };
@@ -45,7 +45,7 @@ const getUser = async (): Promise<UserDetails> => {
 export const currentUser = async (): Promise<UserDetails> => {
   if (typeof window !== "undefined" && isAuthenticated()) {
     try {
-      const response = await axiosInstance.get(`http://${SERVER_URL}/auth/me`);
+      const response = await axiosInstance.get(`${SERVER_URL}/auth/me`);
       const userId = response.data.detail.id;
       const role: string = response.data.detail.role;
       return { id: userId, role: role };
@@ -59,7 +59,7 @@ export const currentUser = async (): Promise<UserDetails> => {
 
 export const handleLogout = async () => {
   try {
-    await axiosInstance.post(`http://${SERVER_URL}/auth/logout`);
+    await axiosInstance.post(`${SERVER_URL}/auth/logout`);
     localStorage.removeItem("role");
     window.location.href = "/";
   } catch (error) {
