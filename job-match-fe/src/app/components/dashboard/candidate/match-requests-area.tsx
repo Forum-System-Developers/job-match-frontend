@@ -3,7 +3,7 @@ import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
 import JobRequestItem from "./job-request-item";
 import { useMatchRequests } from "./hooks/useMatchRequests";
-import { JobAdResponse } from "@/data/job-ad-data";
+import { MatchRequestAd } from "@/data/match-data";
 
 // props type
 type IProps = {
@@ -40,8 +40,8 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
                 </tr>
               </thead>
               <tbody className="border-0">
-                {requests.map((request: JobAdResponse) => (
-                  <JobRequestItem key={request.id} request={request} />
+                {requests.map((request: MatchRequestAd) => (
+                  <JobRequestItem key={request.job_ad_id} request={request} />
                 ))}
               </tbody>
             </table>
