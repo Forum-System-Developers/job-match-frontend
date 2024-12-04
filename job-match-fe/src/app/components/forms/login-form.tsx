@@ -64,9 +64,13 @@ const LoginForm = () => {
     if (data) {
       setIsSubmitting(true);
       try {
-        const response = await axios.post(`${SERVER_URL}/auth/login`, data, {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        });
+        const response = await axiosInstance.post(
+          `${SERVER_URL}/auth/login`,
+          data,
+          {
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          }
+        );
         setRole();
         window.location.href = "/";
         reset();
