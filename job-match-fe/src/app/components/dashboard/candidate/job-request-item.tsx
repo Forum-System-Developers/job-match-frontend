@@ -1,21 +1,40 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { JobAdResponse } from "@/data/job-ad-data";
+import { MatchRequestAd } from "@/data/match-data";
 import view from "@/assets/dashboard/images/icon/icon_18.svg";
 import share from "@/assets/dashboard/images/icon/icons8-accept.svg";
-import edit from "@/assets/dashboard/images/icon/icon_20.svg";
 import delete_icon from "@/assets/dashboard/images/icon/icon_21.svg";
-import { acceptMatchRequestFromAd } from "@/services/matching";
+import {
+  acceptMatchRequestFromAd,
+  rejectMatchRequestFromAd,
+} from "@/services/matching";
 
-const JobRequestItem = ({ request }: { request: JobAdResponse }) => {
+const JobRequestItem = ({ request }: { request: MatchRequestAd }) => {
   const [response, setResponse] = useState<boolean>(false);
 
-  // const handleAccept = async () => {
-  //   try {
-  //     const response = await acceptMatchRequestFromAd(request.id, applicationId);
-  //     setResponse(response)
-  //   }
-  // }
+  const handleAccept = async () => {
+    try {
+      await acceptMatchRequestFromAd(
+        request.job_ad_id,
+        request.job_application_id
+      );
+      setResponse(true);
+    } catch (error) {
+      console.error("Error accepting match request:", error);
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      await rejectMatchRequestFromAd(
+        request.job_ad_id,
+        request.job_application_id
+      );
+      setResponse(true);
+    } catch (error) {
+      console.error("Error rejecting match request:", error);
+    }
+  };
 
   return (
     <tr>
@@ -37,12 +56,21 @@ const JobRequestItem = ({ request }: { request: JobAdResponse }) => {
           </button>
           <ul className="dropdown-menu dropdown-menu-end">
             <li>
-              <a className="dropdown-item" href={`/job-ad/${request.id}`}>
+              <a
+                className="dropdown-item"
+                href={`/job-ad/${request.job_ad_id}`}
+              >
                 <Image src={view} alt="icon" className="lazy-img" /> View
               </a>
             </li>
             <li>
-              <a className="dropdown-item" href="#">
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault(), handleAccept;
+                }}
+              >
                 <Image
                   src={share}
                   alt="icon"
@@ -53,7 +81,13 @@ const JobRequestItem = ({ request }: { request: JobAdResponse }) => {
               </a>
             </li>
             <li>
-              <a className="dropdown-item" href="#">
+              <a
+                className="dropdown-item"
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault(), handleReject;
+                }}
+              >
                 <Image src={delete_icon} alt="icon" className="lazy-img" />{" "}
                 Reject
               </a>
