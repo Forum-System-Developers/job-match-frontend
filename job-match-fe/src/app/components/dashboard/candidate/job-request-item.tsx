@@ -68,7 +68,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestAd }) => {
                 className="dropdown-item"
                 href="#"
                 onClick={(e) => {
-                  e.preventDefault(), handleAccept;
+                  e.preventDefault(), handleAccept();
                 }}
               >
                 <Image
@@ -85,7 +85,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestAd }) => {
                 className="dropdown-item"
                 href="#"
                 onClick={(e) => {
-                  e.preventDefault(), handleReject;
+                  e.preventDefault(), handleReject();
                 }}
               >
                 <Image src={delete_icon} alt="icon" className="lazy-img" />{" "}

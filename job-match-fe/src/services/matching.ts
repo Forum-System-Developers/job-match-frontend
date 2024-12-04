@@ -36,8 +36,8 @@ export const acceptMatchRequestFromAd = async (
   applicationId: string
 ) => {
   try {
-    const response = await axiosInstance.post(
-      `${SERVER_URL}/job-applicaion/${applicationId}/${adId}/match-response`,
+    const response = await axiosInstance.put(
+      `${SERVER_URL}/job-applications/${applicationId}/${adId}/match-response`,
       {
         accept_request: true,
       }
@@ -54,8 +54,8 @@ export const rejectMatchRequestFromAd = async (
   applicationId: string
 ) => {
   try {
-    const response = await axiosInstance.post(
-      `${SERVER_URL}/job-applicaion/${applicationId}/${adId}/match-response`,
+    const response = await axiosInstance.put(
+      `${SERVER_URL}/job-applications/${applicationId}/${adId}/match-response`,
       {
         accept_request: false,
       }
