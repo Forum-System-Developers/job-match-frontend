@@ -11,7 +11,7 @@ export const useCompany = (id: string) => {
   const fetchCompany = async () => {
     setLoading(true);
     try {
-      const { data } = await axiosInstance.get(`${SERVER_URL}/companies/${id}`);
+      const { data } = await axiosInstance.get(`/companies/${id}`);
       const {
         name,
         address_line,

@@ -89,10 +89,7 @@ const CompanyRegisterForm = () => {
     if (data) {
       setIsSubmitting(true);
       try {
-        const response = await axiosInstance.post(
-          `${SERVER_URL}/companies/`,
-          data
-        );
+        const response = await axiosInstance.post(`/companies/`, data);
         reset();
         window.location.href = "/";
       } catch (error) {

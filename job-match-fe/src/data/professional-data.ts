@@ -16,9 +16,7 @@ import nav_7_active from "@/assets/dashboard/images/icon/icon_7_active.svg";
 import { currentUser } from "@/utils/auth_utils";
 import axiosInstance from "@/services/axiosInstance";
 import axios from "axios";
-import SERVER_URL from "@/services/server";
 import { JobApplication } from "./job-applications-data";
-import { JobAdResponse } from "./job-ad-data";
 
 // nav data
 export const nav_data: {
@@ -90,9 +88,7 @@ export const getCurrentProfessional =
   async (): Promise<ProfessionalDetails | null> => {
     const user = await currentUser();
     try {
-      const { data } = await axiosInstance.get(
-        `${SERVER_URL}/professionals/${user.id}`
-      );
+      const { data } = await axiosInstance.get(`/professionals/${user.id}`);
       const {
         first_name,
         last_name,
@@ -123,7 +119,7 @@ export const getCurrentProfessional =
 export const getPhoto = async (id: string): Promise<Blob | null> => {
   try {
     const file = await axiosInstance.get<Blob>(
-      `${SERVER_URL}/professionals/${id}/download-photo`,
+      `/professionals/${id}/download-photo`,
       { responseType: "blob" }
     );
     return file.data;
@@ -151,7 +147,7 @@ export const uploadPhoto = async (file: File) => {
     formData.append("logo", file);
 
     const response = await axiosInstance.post(
-      `${SERVER_URL}/professionals/upload-photo`,
+      `/professionals/upload-photo`,
       formData,
       {
         headers: {
@@ -172,9 +168,7 @@ export const getProfessional = async (
   id: string
 ): Promise<ProfessionalDetails | null> => {
   try {
-    const { data } = await axiosInstance.get(
-      `${SERVER_URL}/professionals/${id}`
-    );
+    const { data } = await axiosInstance.get(`/professionals/${id}`);
     const {
       first_name,
       last_name,
@@ -204,9 +198,7 @@ export const getProfessional = async (
 
 export const getSkills = async (id: string | null): Promise<Skills[] | []> => {
   try {
-    const response = await axiosInstance.get(
-      `${SERVER_URL}/professionals/${id}/skills`
-    );
+    const response = await axiosInstance.get(`/professionals/${id}/skills`);
     const skillsResponse = response.data.detail ?? [];
     const skills: Skills[] | [] = await Promise.all(
       skillsResponse.map(async (skill: any) => {
@@ -226,7 +218,7 @@ export const getSkills = async (id: string | null): Promise<Skills[] | []> => {
 export const getCV = async (id: string): Promise<CVResponse | null> => {
   try {
     const response = await axiosInstance.get<Blob>(
-      `${SERVER_URL}/professionals/${id}/download-cv`,
+      `/professionals/${id}/download-cv`,
       { responseType: "blob" }
     );
     const contentDisposition = response.headers["content-disposition"];
@@ -260,7 +252,7 @@ export const uploadCV = async (file: File) => {
 
   try {
     const response = await axiosInstance.post(
-      `${SERVER_URL}/professionals/upload-cv`,
+      `/professionals/upload-cv`,
       formData,
       {
         headers: {
@@ -277,7 +269,7 @@ export const uploadCV = async (file: File) => {
 export const getJobApplicationsForProfessional = async (id: string) => {
   try {
     const response = await axiosInstance.get(
-      `${SERVER_URL}/professionals/${id}/job-applications`,
+      `/professionals/${id}/job-applications`,
       {
         params: {
           application_status: "active",
@@ -316,7 +308,7 @@ export const getJobApplicationsForProfessional = async (id: string) => {
 export const getMatchedApplicationsForProfessional = async (id: string) => {
   try {
     const response = await axiosInstance.get(
-      `${SERVER_URL}/professionals/${id}/job-applications`,
+      `/professionals/${id}/job-applications`,
       {
         params: {
           application_status: "matched",

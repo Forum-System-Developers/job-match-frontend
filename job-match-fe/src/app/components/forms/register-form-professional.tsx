@@ -80,13 +80,9 @@ const ProfessionalRegisterForm = () => {
         professional: { ...formData },
         status,
       };
-      const response = await axiosInstance.post(
-        `${SERVER_URL}/professionals/`,
-        payload,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await axiosInstance.post(`/professionals/`, payload, {
+        headers: { "Content-Type": "application/json" },
+      });
       setFormData({});
       window.location.href = "/";
     } catch (error) {

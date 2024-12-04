@@ -49,12 +49,12 @@ const DashboardHeaderEmployer = ({ setIsOpenSidebar }: IProps) => {
         >
           <span></span>
         </button>
-        <form action="#" className="search-form">
+        {/* <form action="#" className="search-form">
           <input type="text" placeholder="Search here.." />
           <button>
             <Image src={search} alt="search" className="lazy-img m-auto" />
           </button>
-        </form>
+        </form> */}
         <div className="profile-notification ms-2 ms-md-5 me-4">
           <button
             className="noti-btn dropdown-toggle"

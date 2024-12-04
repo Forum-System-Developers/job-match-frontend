@@ -30,7 +30,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
-    const isUserAuthenticated = isAuthenticated();
+    const isUserAuthenticated = await isAuthenticated();
     const originalRequest = error.config as CustomAxiosRequestConfig;
 
     if (
@@ -41,11 +41,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post(
-          `${SERVER_URL}/auth/refresh`,
-          {},
-          { withCredentials: true }
-        );
+        await axios.post(`auth/refresh`, { withCredentials: true });
 
         return axiosInstance(originalRequest);
       } catch (refreshError) {

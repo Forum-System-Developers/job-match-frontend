@@ -28,13 +28,14 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const handleReset = () => {
     dispatch(resetFilter());
   };
-  // useEffect(() => {
-  //   animationCreate();
-  // }, []);
+  useEffect(() => {
+    animationCreate();
+  }, []);
   const isPublicRoute = PUBLIC_PATHS.includes(pathname);
+  const authenticated = isAuthenticated();
 
   const validateAuthentication = () => {
-    if (!isAuthenticated() && !isPublicRoute) {
+    if (!authenticated && !isPublicRoute) {
       redirect("/register");
     }
   };

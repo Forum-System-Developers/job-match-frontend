@@ -24,7 +24,7 @@ export interface JobAdResponse {
 
 export const getJobAds = async () => {
   try {
-    const response = await axiosInstance.post(`${SERVER_URL}/job-ads/all`, {
+    const response = await axiosInstance.post(`/job-ads/all`, {
       params: {
         job_ad_status: "active",
       },
@@ -67,7 +67,7 @@ export const getCompany = async (
   id: string
 ): Promise<CompanyDetails | null> => {
   try {
-    const { data } = await axiosInstance.get(`${SERVER_URL}/companies/${id}`);
+    const { data } = await axiosInstance.get(`/companies/${id}`);
     const company = {
       id: data.detail.id,
       name: data.detail.name,
@@ -88,7 +88,7 @@ export const getCompany = async (
 
 export const getJobAd = async (id: string) => {
   try {
-    const response = await axiosInstance.get(`${SERVER_URL}/job-ads/${id}`);
+    const response = await axiosInstance.get(`/job-ads/${id}`);
     const jobAdData = response.data.detail;
 
     const company = await getCompany(jobAdData.company_id);

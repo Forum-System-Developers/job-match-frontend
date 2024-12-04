@@ -36,18 +36,11 @@ export const nav_data: {
     title: "Dashboard",
   },
   {
-    id: 2,
-    icon: nav_2,
-    icon_active: nav_2_active,
-    link: "/dashboard/employ-dashboard/profile",
-    title: "My Profile",
-  },
-  {
     id: 3,
     icon: nav_3,
     icon_active: nav_3_active,
-    link: "/dashboard/employ-dashboard/jobs",
-    title: "My Jobs",
+    link: "/dashboard/employ-dashboard/match-requests",
+    title: "Match Requests",
   },
   {
     id: 4,
@@ -55,13 +48,6 @@ export const nav_data: {
     icon_active: nav_4_active,
     link: "/dashboard/employ-dashboard/messages",
     title: "Messages",
-  },
-  {
-    id: 5,
-    icon: nav_5,
-    icon_active: nav_5_active,
-    link: "/dashboard/employ-dashboard/submit-job",
-    title: "Submit Job",
   },
   {
     id: 6,
@@ -76,13 +62,6 @@ export const nav_data: {
     icon_active: nav_9_active,
     link: "/dashboard/employ-dashboard/membership",
     title: "Membership",
-  },
-  {
-    id: 8,
-    icon: nav_7,
-    icon_active: nav_7_active,
-    link: "/dashboard/employ-dashboard/setting",
-    title: "Account Settings",
   },
 ];
 
@@ -101,9 +80,7 @@ export interface CompanyDetails {
 export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
   const user = await currentUser();
   try {
-    const { data } = await axiosInstance.get(
-      `${SERVER_URL}/companies/${user.id}`
-    );
+    const { data } = await axiosInstance.get(`/companies/${user.id}`);
     const company = {
       id: user.id,
       name: data.detail.name,
@@ -125,7 +102,7 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
 export const getLogo = async (id: string): Promise<Blob | null> => {
   try {
     const file = await axiosInstance.get<Blob>(
-      `${SERVER_URL}/companies/${id}/download-logo`,
+      `/companies/${id}/download-logo`,
       { responseType: "blob" }
     );
     return file.data;
@@ -152,7 +129,7 @@ export const uploadLogo = async (file: File) => {
     formData.append("logo", file);
 
     const response = await axiosInstance.post(
-      `${SERVER_URL}/companies/upload-logo`,
+      `/companies/upload-logo`,
       formData,
       {
         headers: {
@@ -171,7 +148,7 @@ export const uploadLogo = async (file: File) => {
 
 export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
   try {
-    const response = await axiosInstance.get(`${SERVER_URL}/companies/`);
+    const response = await axiosInstance.get(`/companies/`);
     const companies: CompanyDetails[] = response.data.detail ?? [];
     return companies;
   } catch (error) {
