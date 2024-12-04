@@ -38,7 +38,7 @@ const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
         <div className="position-relative">
           <div className="logo text-md-center d-md-block d-flex align-items-center justify-content-between">
             <Link href="/">
-              <Image src={logo} alt="logo" priority width={200} />
+              <Image src={logo} alt="logo" priority width={200} unoptimized />
             </Link>
             <button
               className="close-btn d-block d-md-none"

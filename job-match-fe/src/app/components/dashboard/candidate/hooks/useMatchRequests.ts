@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-import { JobAdResponse } from "@/data/job-ad-data";
-import { getMatchRequestsForProfessional } from "@/data/professional-data";
+import {
+  getMatchRequestsForProfessional,
+  MatchRequestAd,
+} from "@/data/match-data";
 import { currentUser, UserDetails } from "@/utils/auth_utils";
 
 export const useMatchRequests = () => {
-  const [requests, setRequests] = useState<JobAdResponse[]>([]);
+  const [requests, setRequests] = useState<MatchRequestAd[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchRequests = async () => {

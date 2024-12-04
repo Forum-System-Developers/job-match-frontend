@@ -312,36 +312,3 @@ export const getJobApplicationsForProfessional = async (id: string) => {
     return [];
   }
 };
-
-export const getMatchRequestsForProfessional = async (id: string) => {
-  try {
-    const response = await axiosInstance.get(
-      `${SERVER_URL}/professionals/${id}/match-requests`
-    );
-    const jobAds = response.data.detail ?? [];
-
-    const requests: JobAdResponse[] = await Promise.all(
-      jobAds.map(async (job_ad: any) => {
-        return {
-          id: job_ad.id,
-          company_id: job_ad.company_id,
-          category_id: job_ad.category_id,
-          location_id: job_ad.city.id,
-          title: job_ad.title,
-          description: job_ad.description,
-          min_salary: job_ad.min_salary,
-          max_salary: job_ad.max_salary,
-          status: "active",
-          requirements: job_ad.requirements,
-          created_at: job_ad.created_at,
-          updated_at: job_ad.updated_at,
-        };
-      })
-    );
-
-    return requests;
-  } catch (error) {
-    console.error("Error fetching match requests:", error);
-    return [];
-  }
-};
