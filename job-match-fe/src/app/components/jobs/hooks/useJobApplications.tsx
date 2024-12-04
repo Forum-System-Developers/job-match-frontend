@@ -3,7 +3,10 @@ import {
   getJobApplications,
   JobApplication,
 } from "../../../../data/job-applications-data";
-import { getJobApplicationsForProfessional } from "@/data/professional-data";
+import {
+  getJobApplicationsForProfessional,
+  getMatchedApplicationsForProfessional,
+} from "@/data/professional-data";
 import { currentUser } from "@/utils/auth_utils";
 
 export const useJobApplications = () => {
@@ -33,7 +36,7 @@ export const useJobApplicationsProfessional = () => {
   const [jobApplications, setjobApplications] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchAds = async () => {
+  const fetchApplications = async () => {
     setLoading(true);
     try {
       const user = await currentUser();
@@ -48,8 +51,35 @@ export const useJobApplicationsProfessional = () => {
   };
 
   useEffect(() => {
-    fetchAds();
+    fetchApplications();
   }, []);
 
   return { jobApplications, loading };
+};
+
+export const useMatchedApplicationsProfessional = () => {
+  const [matchedApplications, setjobApplications] = useState<JobApplication[]>(
+    []
+  );
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchApplications = async () => {
+    setLoading(true);
+    try {
+      const user = await currentUser();
+      const id = user.id;
+      const jobApplications = await getMatchedApplicationsForProfessional(id);
+      setjobApplications(jobApplications);
+    } catch (error) {
+      console.error("Error fetching ads:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  return { matchedApplications, loading };
 };
