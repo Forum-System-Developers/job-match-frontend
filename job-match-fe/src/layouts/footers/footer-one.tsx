@@ -33,6 +33,7 @@ const FooterOne = ({
                     height={100}
                     alt="logo"
                     priority
+                    unoptimized
                   />
                 </Link>
               </div>

@@ -21,13 +21,6 @@ const JobRequestItem = ({ request }: { request: JobAdResponse }) => {
     <tr>
       <td>{request.title}</td>
       <td>
-        {/* <div
-          className={`job-type fw-500 ${
-            duration === "Part-Time" ? "part-time" : ""
-          }`}
-        >
-          {duration}
-        </div> */}
         <div>{request.description}</div>
       </td>
       <td>{request.min_salary}</td>
@@ -61,13 +54,8 @@ const JobRequestItem = ({ request }: { request: JobAdResponse }) => {
             </li>
             <li>
               <a className="dropdown-item" href="#">
-                <Image src={edit} alt="icon" className="lazy-img" /> Edit
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
                 <Image src={delete_icon} alt="icon" className="lazy-img" />{" "}
-                Delete
+                Reject
               </a>
             </li>
           </ul>
