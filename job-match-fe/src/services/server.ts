@@ -1,3 +1,3 @@
-const SERVER_URL = "http://localhost:8000/api/v1";
+const SERVER_URL = "https://api.rephera.com";
 
 export default SERVER_URL;
