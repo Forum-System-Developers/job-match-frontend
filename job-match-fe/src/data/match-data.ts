@@ -13,6 +13,19 @@ export interface MatchRequestAd {
   max_salary: number | null;
 }
 
+export interface MatchRequestApplication {
+  job_ad_id: string;
+  job_application_id: string;
+  status: "requested_by_job_app";
+  name: string;
+  description: string;
+  professional_id: string;
+  professional_first_name: string;
+  professional_last_name: string;
+  min_salary: string;
+  max_salary: string;
+}
+
 export const getMatchRequestsForProfessional = async (id: string) => {
   try {
     const response = await axiosInstance.get(
@@ -32,6 +45,37 @@ export const getMatchRequestsForProfessional = async (id: string) => {
           company_name: job_ad.company_name,
           min_salary: job_ad.min_salary,
           max_salary: job_ad.max_salary,
+        };
+      })
+    );
+
+    return requests;
+  } catch (error) {
+    console.error("Error fetching match requests:", error);
+    return [];
+  }
+};
+
+export const getMatchRequestsForCompany = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `${SERVER_URL}/companies/match-requests`
+    );
+    const jobAds = response.data.detail ?? [];
+
+    const requests: MatchRequestApplication[] = await Promise.all(
+      jobAds.map(async (job_app: any) => {
+        return {
+          job_ad_id: job_app.job_app_id,
+          job_application_id: job_app.job_application_id,
+          status: job_app.status,
+          name: job_app.name,
+          description: job_app.description,
+          professional_id: job_app.professional_id,
+          professional_first_name: job_app.professional_first_name,
+          professional_last_name: job_app.professional_last_name,
+          min_salary: job_app.min_salary,
+          max_salary: job_app.max_salary,
         };
       })
     );

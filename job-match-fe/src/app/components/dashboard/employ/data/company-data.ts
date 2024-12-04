@@ -36,18 +36,11 @@ export const nav_data: {
     title: "Dashboard",
   },
   {
-    id: 2,
-    icon: nav_2,
-    icon_active: nav_2_active,
-    link: "/dashboard/employ-dashboard/profile",
-    title: "My Profile",
-  },
-  {
     id: 3,
     icon: nav_3,
     icon_active: nav_3_active,
-    link: "/dashboard/employ-dashboard/jobs",
-    title: "My Jobs",
+    link: "/dashboard/employ-dashboard/match-requests",
+    title: "Match Requests",
   },
   {
     id: 4,
@@ -55,13 +48,6 @@ export const nav_data: {
     icon_active: nav_4_active,
     link: "/dashboard/employ-dashboard/messages",
     title: "Messages",
-  },
-  {
-    id: 5,
-    icon: nav_5,
-    icon_active: nav_5_active,
-    link: "/dashboard/employ-dashboard/submit-job",
-    title: "Submit Job",
   },
   {
     id: 6,
@@ -76,13 +62,6 @@ export const nav_data: {
     icon_active: nav_9_active,
     link: "/dashboard/employ-dashboard/membership",
     title: "Membership",
-  },
-  {
-    id: 8,
-    icon: nav_7,
-    icon_active: nav_7_active,
-    link: "/dashboard/employ-dashboard/setting",
-    title: "Account Settings",
   },
 ];
 
