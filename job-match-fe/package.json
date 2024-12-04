@@ -1,11 +1,11 @@
 {
-  "name": "jobi",
+  "name": "rephera",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev & node open-browser.js",
+    "dev": "next dev -p 4000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8080",
     "lint": "next lint"
   },
   "dependencies": {

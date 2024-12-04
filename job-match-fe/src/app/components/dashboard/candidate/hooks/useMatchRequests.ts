@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { JobAdResponse } from "@/data/job-ad-data";
 import { getMatchRequestsForProfessional } from "@/data/professional-data";
-import { getURL } from "next/dist/shared/lib/utils";
 import { currentUser, UserDetails } from "@/utils/auth_utils";
 
 export const useMatchRequests = () => {

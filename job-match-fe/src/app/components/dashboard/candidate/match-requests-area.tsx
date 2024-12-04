@@ -1,7 +1,9 @@
 import React from "react";
 import DashboardHeader from "./dashboard-header";
-import JobAlertItem from "./job-alert-item";
 import ShortSelect from "../../common/short-select";
+import JobRequestItem from "./job-request-item";
+import { useMatchRequests } from "./hooks/useMatchRequests";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 // props type
 type IProps = {
@@ -31,57 +33,16 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
               <thead>
                 <tr>
                   <th scope="col">Title</th>
-                  <th scope="col">Alert </th>
-                  <th scope="col">Job</th>
-                  <th scope="col">Time</th>
+                  <th scope="col">Description </th>
+                  <th scope="col">Min Salary</th>
+                  <th scope="col">Max Salary</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody className="border-0">
-                <JobAlertItem
-                  title="Product Designer"
-                  location="Yearly Salary . Germany"
-                  duration="Fulltime"
-                  category="Design, Product"
-                  found="2"
-                  time="Weekly"
-                />
-
-                <JobAlertItem
-                  title="Marketing"
-                  location="Weekly Salary . United kingdom"
-                  duration="Part-Time"
-                  category="Account, Marketing"
-                  found="13"
-                  time="Monthly"
-                />
-
-                <JobAlertItem
-                  title="Hotel Manager"
-                  location="Yearly Salary . Germany"
-                  duration="Fulltime"
-                  category="Design, Product"
-                  found="7"
-                  time="Daily"
-                />
-
-                <JobAlertItem
-                  title="Developer"
-                  location="Monthly Salary . United States"
-                  duration="Fulltime"
-                  category="Account, Finance"
-                  found="3"
-                  time="Weekly"
-                />
-
-                <JobAlertItem
-                  title="Account Manager"
-                  location="Hourly Salary . Spain"
-                  duration="Part-Time"
-                  category="Account, Finance"
-                  found="9"
-                  time="Monthly"
-                />
+                {requests.map((request: JobAdResponse) => (
+                  <JobRequestItem key={request.id} request={request} />
+                ))}
               </tbody>
             </table>
           </div>
@@ -117,6 +78,3 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
 };
 
 export default MatchRequestsArea;
-function useMatchRequests(): { requests: any; loading: any } {
-  throw new Error("Function not implemented.");
-}

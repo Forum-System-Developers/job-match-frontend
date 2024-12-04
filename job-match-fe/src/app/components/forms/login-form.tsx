@@ -8,6 +8,7 @@ import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
 import { setRole } from "@/utils/auth_utils";
+import axios from "axios";
 // form data type
 type IFormData = {
   username: string;
@@ -64,7 +65,7 @@ const LoginForm = () => {
       setIsSubmitting(true);
       try {
         const response = await axiosInstance.post(
-          `http://${SERVER_URL}/auth/login`,
+          `${SERVER_URL}/auth/login`,
           data,
           {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
