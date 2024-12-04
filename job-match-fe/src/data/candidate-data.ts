@@ -22,9 +22,7 @@ export type ICandidate = {
 
 export const getProfessionals = async () => {
   try {
-    const response = await axiosInstance.post(
-      `${SERVER_URL}/professionals/all`
-    );
+    const response = await axiosInstance.post(`/professionals/all`);
     const companiesData = response.data.detail ?? [];
 
     const professionals: ICandidate[] = await Promise.all(

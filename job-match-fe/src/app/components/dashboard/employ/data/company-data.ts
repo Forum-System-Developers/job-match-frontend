@@ -80,9 +80,7 @@ export interface CompanyDetails {
 export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
   const user = await currentUser();
   try {
-    const { data } = await axiosInstance.get(
-      `${SERVER_URL}/companies/${user.id}`
-    );
+    const { data } = await axiosInstance.get(`/companies/${user.id}`);
     const company = {
       id: user.id,
       name: data.detail.name,
@@ -104,7 +102,7 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
 export const getLogo = async (id: string): Promise<Blob | null> => {
   try {
     const file = await axiosInstance.get<Blob>(
-      `${SERVER_URL}/companies/${id}/download-logo`,
+      `/companies/${id}/download-logo`,
       { responseType: "blob" }
     );
     return file.data;
@@ -131,7 +129,7 @@ export const uploadLogo = async (file: File) => {
     formData.append("logo", file);
 
     const response = await axiosInstance.post(
-      `${SERVER_URL}/companies/upload-logo`,
+      `/companies/upload-logo`,
       formData,
       {
         headers: {
@@ -150,7 +148,7 @@ export const uploadLogo = async (file: File) => {
 
 export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
   try {
-    const response = await axiosInstance.get(`${SERVER_URL}/companies/`);
+    const response = await axiosInstance.get(`/companies/`);
     const companies: CompanyDetails[] = response.data.detail ?? [];
     return companies;
   } catch (error) {

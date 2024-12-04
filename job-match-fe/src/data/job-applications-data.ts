@@ -20,17 +20,14 @@ export interface JobApplication {
 
 export const getJobApplications = async () => {
   try {
-    const response = await axiosInstance.post(
-      `${SERVER_URL}/job-applications/all`,
-      {
-        params: {
-          job_ad_status: "active",
-        },
-        body: {
-          skills: [],
-        },
-      }
-    );
+    const response = await axiosInstance.post(`/job-applications/all`, {
+      params: {
+        job_ad_status: "active",
+      },
+      body: {
+        skills: [],
+      },
+    });
     const jobApplications = response.data.detail ?? [];
 
     const applications: JobApplication[] = await Promise.all(
@@ -67,9 +64,7 @@ export const getJobApplication = async (
   id: string
 ): Promise<JobApplication | null> => {
   try {
-    const { data } = await axiosInstance.get(
-      `${SERVER_URL}/job-applications/${id}`
-    );
+    const { data } = await axiosInstance.get(`/job-applications/${id}`);
     const photoBlob = await getPhoto(data.detail.professional_id);
     const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
 

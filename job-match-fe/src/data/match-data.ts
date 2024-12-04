@@ -1,5 +1,4 @@
 import axiosInstance from "@/services/axiosInstance";
-import SERVER_URL from "@/services/server";
 
 export interface MatchRequestAd {
   job_ad_id: string;
@@ -29,7 +28,7 @@ export interface MatchRequestApplication {
 export const getMatchRequestsForProfessional = async (id: string) => {
   try {
     const response = await axiosInstance.get(
-      `${SERVER_URL}/professionals/${id}/match-requests`
+      `/professionals/${id}/match-requests`
     );
     const jobAds = response.data.detail ?? [];
 
@@ -58,9 +57,7 @@ export const getMatchRequestsForProfessional = async (id: string) => {
 
 export const getMatchRequestsForCompany = async () => {
   try {
-    const response = await axiosInstance.get(
-      `${SERVER_URL}/companies/match-requests`
-    );
+    const response = await axiosInstance.get(`/companies/match-requests`);
     const jobAds = response.data.detail ?? [];
 
     const requests: MatchRequestApplication[] = await Promise.all(

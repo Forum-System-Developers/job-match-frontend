@@ -7,13 +7,8 @@ import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { setRole } from "@/utils/auth_utils";
+import { IFormData, login, setRole } from "@/utils/auth_utils";
 import axios from "axios";
-// form data type
-type IFormData = {
-  username: string;
-  password: string;
-};
 
 // schema
 const schema = Yup.object().shape({
@@ -64,19 +59,14 @@ const LoginForm = () => {
     if (data) {
       setIsSubmitting(true);
       try {
-        const response = await axiosInstance.post(
-          `${SERVER_URL}/auth/login`,
-          data,
-          {
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          }
-        );
-        setRole();
+        const loggedIn = await login(data);
+        if (!loggedIn) {
+          throw new Error("Login failed.");
+        }
         window.location.href = "/";
         reset();
       } catch (error) {
-        console.error("Login failed:", error);
-        alert("Login failed. Please try again.");
+        alert(`Login failed: ${error}`);
       } finally {
         setIsSubmitting(false);
       }

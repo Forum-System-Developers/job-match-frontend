@@ -16,9 +16,7 @@ const LoginModal = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await axiosInstance.get(
-        `${SERVER_URL}/google-auth/login`
-      );
+      const response = await axiosInstance.get(`/google-auth/login`);
 
       if (response.status === 200) {
         localStorage.setItem("role", "professional");

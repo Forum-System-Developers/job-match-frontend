@@ -65,13 +65,9 @@ const JobAdForm = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await axiosInstance.post(
-        `${SERVER_URL}/job-ads/`,
-        data,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await axiosInstance.post(`/job-ads/`, data, {
+        headers: { "Content-Type": "application/json" },
+      });
       setFormData({});
     } catch (error) {
       console.error("Professional registration failed:", error);
