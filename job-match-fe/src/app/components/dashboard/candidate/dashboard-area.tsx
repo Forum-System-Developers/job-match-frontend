@@ -9,7 +9,6 @@ import icon_4 from "@/assets/dashboard/images/icon/icon_15.svg";
 import main_graph from "@/assets/dashboard/images/main-graph.png";
 import DashboardHeader from "./dashboard-header";
 import {
-  useJobApplications,
   useJobApplicationsProfessional,
   useMatchedApplicationsProfessional,
 } from "../../jobs/hooks/useJobApplications";
@@ -54,10 +53,6 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
   const matched_applications = matchedApplications;
   const job_items = [...job_data.slice(0, 5)];
   const matched_items = [...matched_applications.slice(0, 5)];
-
-  if (jobApplicationsLoading || matchedApplicationsLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="dashboard-body">
