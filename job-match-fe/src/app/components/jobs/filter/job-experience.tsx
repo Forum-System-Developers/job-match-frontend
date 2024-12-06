@@ -8,9 +8,9 @@ export function JobExperienceItems({
 }: {
   showLength?: boolean;
 }) {
-  const { ads, loading: companyLoading } = useAds();
+  const { ads, loading } = useAds();
 
-  const uniqueExperiences = [...new Set(ads.map((job) => job.experience))];
+  const uniqueExperiences = [...new Set(ads.map((job) => job.skill_level))];
   const { experience } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
   return (
@@ -27,7 +27,7 @@ export function JobExperienceItems({
           <label>
             {e}
             {showLength && (
-              <span>{ads.filter((job) => job.experience === e).length}</span>
+              <span>{ads.filter((job) => job.skill_level === e).length}</span>
             )}
           </label>
         </li>

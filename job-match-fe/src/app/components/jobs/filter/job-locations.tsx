@@ -6,9 +6,9 @@ import { setLocation } from "@/redux/features/filterSlice";
 import { useAds } from "../../company/hooks/useAds";
 
 const JobLocations = () => {
-  const { ads, loading: companyLoading } = useAds();
-
-  const uniqueLocations = [...new Set(ads.map((job) => job.location))];
+  const { ads, loading } = useAds();
+  console.log(ads);
+  const uniqueLocations = [...new Set(ads.map((job) => job.city_name))];
   const dispatch = useAppDispatch();
   const handleLocation = (item: { value: string; label: string }) => {
     dispatch(setLocation(item.value));

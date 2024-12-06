@@ -10,7 +10,7 @@ const JobLocationSelect = ({
 }) => {
   const { ads, loading: companyLoading } = useAds();
 
-  const uniqueLocations = [...new Set(ads.map((job) => job.location))];
+  const uniqueLocations = [...new Set(ads.map((job) => job.city_name))];
   // location_option
   const location_option = uniqueLocations.map((l) => {
     return {

@@ -6,7 +6,9 @@ import { useAds } from "../../company/hooks/useAds";
 const JobCategory = () => {
   const { ads, loading: companyLoading } = useAds();
 
-  const uniqueCategories = [...new Set(ads.flatMap((job) => job.category))];
+  const uniqueCategories = [
+    ...new Set(ads.flatMap((job) => job.category_name)),
+  ];
   const [isShowMore, setIsShowMore] = useState(false);
   const { category } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
@@ -30,7 +32,7 @@ const JobCategory = () => {
             <label>
               {c}{" "}
               <span>
-                {ads.filter((job) => job.category.includes(c)).length}
+                {ads.filter((job) => job.category_name.includes(c)).length}
               </span>
             </label>
           </li>

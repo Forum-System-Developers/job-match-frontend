@@ -4,9 +4,9 @@ import { setTags } from "@/redux/features/filterSlice";
 import { useAds } from "../../company/hooks/useAds";
 
 const JobTags = () => {
-  const { ads, loading: companyLoading } = useAds();
+  const { ads, loading } = useAds();
 
-  const uniqueTags = [...new Set(ads.flatMap((job) => job.tags))];
+  const uniqueTags = [...new Set(ads.flatMap((job) => job.requirements))];
   const { tags } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
   return (
