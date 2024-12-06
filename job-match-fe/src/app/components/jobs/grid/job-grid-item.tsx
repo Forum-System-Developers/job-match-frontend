@@ -14,8 +14,15 @@ const JobGridItem = ({
   item: JobAdResponse;
   style_2?: boolean;
 }) => {
-  const { id, company_logo, city_name, min_salary, max_salary, title } =
-    item || {};
+  const {
+    id,
+    company_logo,
+    company_name,
+    city_name,
+    min_salary,
+    max_salary,
+    title,
+  } = item || {};
   const { wishlist } = useAppSelector((state) => state.wishlist);
   const isActive = wishlist.some((p) => p.id === id);
   const dispatch = useAppDispatch();
@@ -42,6 +49,16 @@ const JobGridItem = ({
           }}
         />
       </Link>
+      <div
+        style={{
+          marginTop: "0px",
+        }}
+      >
+        <Link href={`/job-ad/${id}`} className="job-duration fw-500">
+          {company_name}
+        </Link>
+      </div>
+
       <a
         onClick={() => handleAddWishlist(item)}
         className={`save-btn text-center rounded-circle tran3s cursor-pointer ${
@@ -58,7 +75,10 @@ const JobGridItem = ({
         </Link>
       </div>
       <div className="job-salary">
-        <span className="fw-500 text-dark">${min_salary}</span> / {max_salary}
+        <span className="fw-500 text-dark">Min Salary | Max Salary</span>
+        <div className="job-salary">
+          {min_salary} - {max_salary}
+        </div>{" "}
       </div>
       <div className="d-flex align-items-center justify-content-between mt-auto">
         <div className="job-location">

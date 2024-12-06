@@ -7,10 +7,6 @@ import axios, {
 import SERVER_URL from "@/services/server";
 import { isAuthenticated } from "@/utils/auth_utils";
 
-interface RefreshTokenResponse {
-  refresh_token: string;
-}
-
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
@@ -30,7 +26,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response,
   async (error: AxiosError) => {
-    const isUserAuthenticated = await isAuthenticated();
+    const isUserAuthenticated = isAuthenticated();
     const originalRequest = error.config as CustomAxiosRequestConfig;
 
     if (
@@ -41,8 +37,9 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post(`auth/refresh`, { withCredentials: true });
-
+        await axios.post(`${SERVER_URL}/auth/refresh`, {
+          withCredentials: true,
+        });
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
