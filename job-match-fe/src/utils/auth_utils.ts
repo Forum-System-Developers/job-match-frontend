@@ -88,7 +88,7 @@ export const currentUser = async (): Promise<UserDetails> => {
       console.error("An error occurred:", error);
     }
   }
-  window.location.href = "/";
+  // window.location.href = "/";
   return { id: "", role: "" };
 };
 

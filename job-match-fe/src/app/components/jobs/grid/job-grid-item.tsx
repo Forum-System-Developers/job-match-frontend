@@ -3,24 +3,24 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
-import { IJobType } from "@/types/job-data-type";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { add_to_wishlist } from "@/redux/features/wishlist";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 const JobGridItem = ({
   item,
   style_2 = true,
 }: {
-  item: IJobType;
+  item: JobAdResponse;
   style_2?: boolean;
 }) => {
-  const { id, logo, duration, location, salary, salary_duration, title } =
+  const { id, company_logo, city_name, min_salary, max_salary, title } =
     item || {};
   const { wishlist } = useAppSelector((state) => state.wishlist);
   const isActive = wishlist.some((p) => p.id === id);
   const dispatch = useAppDispatch();
   // handle add wishlist
-  const handleAddWishlist = (item: IJobType) => {
+  const handleAddWishlist = (item: JobAdResponse) => {
     dispatch(add_to_wishlist(item));
   };
   return (
@@ -29,7 +29,7 @@ const JobGridItem = ({
     >
       <Link href={`/job-ad/${id}`} className="logo">
         <Image
-          src={logo ? logo : profile_icon_1}
+          src={company_logo ? company_logo : profile_icon_1}
           alt="logo"
           className="lazy-img m-auto"
           height={35}
@@ -51,27 +51,18 @@ const JobGridItem = ({
       >
         <i className="bi bi-bookmark-dash"></i>
       </a>
-      <div>
-        <Link
-          href={`/job-ad/${id}`}
-          className={`job-duration fw-500 ${
-            duration === "Part time" ? "part-time" : ""
-          }`}
-        >
-          {duration}
-        </Link>
-      </div>
+
       <div>
         <Link href={`/job-ad/${id}`} className="title fw-500 tran3s">
           {title}
         </Link>
       </div>
       <div className="job-salary">
-        <span className="fw-500 text-dark">${salary}</span> / {salary_duration}
+        <span className="fw-500 text-dark">${min_salary}</span> / {max_salary}
       </div>
       <div className="d-flex align-items-center justify-content-between mt-auto">
         <div className="job-location">
-          <Link href={`/job-ad/${id}`}>{location}</Link>
+          <Link href={`/job-ad/${id}`}>{city_name}</Link>
         </div>
         <Link href={`/job-ad/${id}`} className="apply-btn text-center tran3s">
           VIEW

@@ -2,11 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getLocalStorage, setLocalStorage } from "@/utils/localstorage";
 import { notifyError, notifySuccess } from "@/utils/toast";
 import { IJobType } from "@/types/job-data-type";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 // Check if the cookie exists
 const wishlistData = getLocalStorage("wishlist_items");
 let initialWishlistState: {
-  wishlist: IJobType[];
+  wishlist: JobAdResponse[];
 } = {
   wishlist: [],
 };
@@ -26,34 +27,35 @@ export const wishlistSlice = createSlice({
   name: "wishlist",
   initialState: initialWishlistState,
   reducers: {
-    add_to_wishlist: (state, { payload }:{ payload:IJobType }) => {
+    add_to_wishlist: (state, { payload }: { payload: JobAdResponse }) => {
       const isExist = state.wishlist.some(
-        (item: IJobType) => item.id === payload.id
+        (item: JobAdResponse) => item.id === payload.id
       );
       if (!isExist) {
         state.wishlist.push(payload);
         notifySuccess(`${payload.title} added to wishlist`);
       } else {
         state.wishlist = state.wishlist.filter(
-          (item: IJobType) => item.id !== payload.id
+          (item: JobAdResponse) => item.id !== payload.id
         );
         notifyError(`${payload.title} removed from wishlist`);
       }
       setLocalStorage("wishlist_items", state.wishlist);
     },
-    remove_wishlist_product: (state, { payload }:{ payload:IJobType }) => {
+    remove_wishlist_product: (
+      state,
+      { payload }: { payload: JobAdResponse }
+    ) => {
       state.wishlist = state.wishlist.filter(
-        (item: IJobType) => item.id !== payload.id
+        (item: JobAdResponse) => item.id !== payload.id
       );
       notifyError(`${payload.title} removed from wishlist`);
       setLocalStorage("wishlist_items", state.wishlist);
       notifyError(`${payload.title} removed from wishlist`);
-    }
+    },
   },
 });
 
-export const {
-  add_to_wishlist,
-  remove_wishlist_product,
-} = wishlistSlice.actions;
+export const { add_to_wishlist, remove_wishlist_product } =
+  wishlistSlice.actions;
 export default wishlistSlice.reducer;

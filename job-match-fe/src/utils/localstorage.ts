@@ -1,12 +1,12 @@
-import { IJobType } from "@/types/job-data-type";
+import { JobAdResponse } from "@/data/job-ad-data";
 
-export const setLocalStorage = (name:string, items:IJobType[]) => {
+export const setLocalStorage = (name: string, items: JobAdResponse[]) => {
   if (typeof window !== "undefined") {
     localStorage.setItem(name, JSON.stringify(items));
   }
-}
+};
 
-export const getLocalStorage = (name:string) => {
+export const getLocalStorage = (name: string) => {
   if (typeof window !== "undefined") {
     const data = localStorage.getItem(name);
     if (data) {
@@ -18,4 +18,4 @@ export const getLocalStorage = (name:string) => {
   } else {
     return [];
   }
-}
+};

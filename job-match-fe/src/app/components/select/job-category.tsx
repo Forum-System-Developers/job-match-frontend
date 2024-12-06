@@ -8,9 +8,11 @@ const JobCategorySelect = ({
 }: {
   setCategoryVal: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const { ads, loading: companyLoading } = useAds();
+  const { ads, loading } = useAds();
 
-  const uniqueCategories = [...new Set(ads.flatMap((job) => job.category))];
+  const uniqueCategories = [
+    ...new Set(ads.flatMap((job) => job.category_name)),
+  ];
   // category_option
   const category_option = uniqueCategories.map((c) => {
     return {

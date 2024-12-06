@@ -5,8 +5,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface IFilterState {
   location: string;
   search_key: string;
-  job_type: string;
-  english_fluency: string;
   experience: string[];
   category: string[];
   tags: string[];
@@ -16,8 +14,6 @@ interface IFilterState {
 const initialState: IFilterState = {
   location: "",
   search_key: "",
-  job_type: "",
-  english_fluency: "",
   experience: [],
   category: [],
   tags: [],
@@ -34,23 +30,10 @@ export const filterSlice = createSlice({
         state.location = action.payload;
       }
     },
-    setJobType: (state, action: PayloadAction<string>) => {
-      if (state.job_type === action.payload) {
-        state.job_type = "";
-      } else {
-        state.job_type = action.payload;
-      }
-    },
     setSearchKey: (state, action: PayloadAction<string>) => {
-      state.search_key = action.payload
+      state.search_key = action.payload;
     },
-    setEnglishFluency: (state, action: PayloadAction<string>) => {
-      if (state.english_fluency === action.payload) {
-        state.english_fluency = "";
-      } else {
-        state.english_fluency = action.payload;
-      }
-    },
+
     setExperience: (state, action: PayloadAction<string>) => {
       if (state.experience.includes(action.payload)) {
         state.experience = state.experience.filter((e) => e !== action.payload);
@@ -74,8 +57,6 @@ export const filterSlice = createSlice({
     },
     resetFilter: (state) => {
       state.location = "";
-      state.job_type = "";
-      state.english_fluency = "";
       state.category = [];
       state.tags = [];
       state.experience = [];
@@ -87,10 +68,8 @@ export const {
   setLocation,
   setCategory,
   setExperience,
-  setJobType,
   setTags,
   resetFilter,
-  setEnglishFluency,
   setSearchKey,
 } = filterSlice.actions;
 

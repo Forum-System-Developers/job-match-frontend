@@ -1,14 +1,18 @@
-'use client'
-import React, { useState } from 'react';
-import CandidateAside from './aside';
-import DashboardArea from './dashboard-area';
+"use client";
+import React, { useState } from "react";
+import CandidateAside from "./aside";
+import DashboardArea from "./dashboard-area";
 
 const CandidateDashboardMain = () => {
-  const [isOpenSidebar,setIsOpenSidebar] = useState<boolean>(false);
+  const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false);
+
   return (
-    <div className='main-page-wrapper'>
+    <div className="main-page-wrapper">
       {/* aside start */}
-      <CandidateAside isOpenSidebar={isOpenSidebar} setIsOpenSidebar={setIsOpenSidebar} />
+      <CandidateAside
+        isOpenSidebar={isOpenSidebar}
+        setIsOpenSidebar={setIsOpenSidebar}
+      />
       {/* aside end  */}
 
       {/* dashboard area start */}

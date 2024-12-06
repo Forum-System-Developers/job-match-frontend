@@ -30,12 +30,6 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
     professional?.id as string
   );
 
-  const isLoading = professionalLoading || photoLoading;
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
       <aside className={`dash-aside-navbar ${isOpenSidebar ? "show" : ""}`}>

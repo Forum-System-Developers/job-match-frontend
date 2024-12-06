@@ -5,8 +5,10 @@ import { useAppDispatch } from "@/redux/hook";
 import { animationCreate } from "@/utils/utils";
 import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
-import { isAuthenticated } from "@/utils/auth_utils";
+import { isAuthenticated, role } from "@/utils/auth_utils";
 import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
+import path from "path";
 
 if (typeof window !== "undefined") {
   require("bootstrap/dist/js/bootstrap");
@@ -28,15 +30,31 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const handleReset = () => {
     dispatch(resetFilter());
   };
-  useEffect(() => {
-    animationCreate();
-  }, []);
+  // useEffect(() => {
+  //   animationCreate();
+  // }, []);
   const isPublicRoute = PUBLIC_PATHS.includes(pathname);
   const authenticated = isAuthenticated();
+
+  const validateRole = () => {
+    if (
+      role === "professional" &&
+      pathname.includes("/dashboard/employ-dashboard")
+    ) {
+      redirect("/");
+    } else if (
+      role === "company" &&
+      pathname.includes("/dashboard/candidate-dashboard")
+    ) {
+      redirect("/");
+    }
+  };
 
   const validateAuthentication = () => {
     if (!authenticated && !isPublicRoute) {
       redirect("/register");
+    } else {
+      validateRole();
     }
   };
 

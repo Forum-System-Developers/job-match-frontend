@@ -3,12 +3,12 @@ import React, { useState, useEffect } from "react";
 import slugify from "slugify";
 import FilterArea from "../filter/filter-area";
 import ListItemTwo from "./list-item-2";
-import { IJobType } from "@/types/job-data-type";
 import Pagination from "@/ui/pagination";
 import JobGridItem from "../grid/job-grid-item";
 import { useAppSelector } from "@/redux/hook";
 import NiceSelect from "@/ui/nice-select";
 import { useAds } from "../../company/hooks/useAds";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 const JobListThree = ({
   itemsPerPage,
@@ -21,13 +21,15 @@ const JobListThree = ({
 
   let all_jobs = ads;
   const maxPrice = ads.reduce((max, job) => {
-    return job.salary > max ? job.salary : max;
+    return (job.max_salary ?? 0) > max ? job.max_salary ?? 0 : max;
   }, 1);
-  const { category, experience, job_type, location, tags } = useAppSelector(
+  const { category, experience, location, tags } = useAppSelector(
     (state) => state.filter
   );
-  const [currentItems, setCurrentItems] = useState<IJobType[] | null>(null);
-  const [filterItems, setFilterItems] = useState<IJobType[]>([]);
+  const [currentItems, setCurrentItems] = useState<JobAdResponse[] | null>(
+    null
+  );
+  const [filterItems, setFilterItems] = useState<JobAdResponse[]>([]);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const [jobType, setJobType] = useState(grid_style ? "grid" : "list");
@@ -39,26 +41,27 @@ const JobListThree = ({
     let filteredData = all_jobs
       .filter((item) =>
         category.length !== 0
-          ? category.some((c) => item.category.includes(c))
+          ? category.some((c) => item.category_name.includes(c))
           : true
       )
       .filter((item) =>
         experience.length !== 0
           ? experience.some(
               (e) =>
-                item.experience.trim().toLowerCase() === e.trim().toLowerCase()
+                item.skill_level.trim().toLowerCase() === e.trim().toLowerCase()
             )
           : true
       )
-      .filter((item) => (job_type ? item.duration === job_type : true))
       .filter((l) =>
         location
-          ? slugify(l.location.split(",").join("-").toLowerCase(), "-") ===
+          ? slugify(l.city_name.split(",").join("-").toLowerCase(), "-") ===
             location
           : true
       )
       .filter((item) =>
-        tags.length !== 0 ? tags.some((t) => item?.tags?.includes(t)) : true
+        tags.length !== 0
+          ? tags.some((t) => item?.requirements?.includes(t))
+          : true
       );
     // .filter((j) => j.salary >= priceValue[0] && j.salary <= priceValue[1]);
 
@@ -71,7 +74,7 @@ const JobListThree = ({
     if (shortValue === "price-high-to-low") {
       filteredData = filteredData
         .slice()
-        .sort((a, b) => Number(b.salary) - Number(a.salary));
+        .sort((a, b) => Number(b.min_salary) - Number(a.min_salary));
     }
     const endOffset = itemOffset + itemsPerPage;
     setFilterItems(filteredData);
@@ -82,7 +85,6 @@ const JobListThree = ({
     itemsPerPage,
     category,
     experience,
-    job_type,
     location,
     tags,
     all_jobs,
