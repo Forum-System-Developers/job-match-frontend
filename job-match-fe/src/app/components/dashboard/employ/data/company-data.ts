@@ -19,6 +19,7 @@ import { currentUser } from "@/utils/auth_utils";
 import SERVER_URL from "@/services/server";
 import axios from "axios";
 import axiosInstance from "@/services/axiosInstance";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 // nav data
 export const nav_data: {
@@ -73,6 +74,8 @@ export interface CompanyDetails {
   description: string;
   email: string;
   phone_number: string;
+  website_url: string;
+  youtube_video_id: string;
   active_job_ads: number;
   successful_matches: number;
 }
@@ -89,6 +92,8 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
       description: data.detail.description,
       email: data.detail.email,
       phone_number: data.detail.phone_number,
+      website_url: data.detail.website_url,
+      youtube_video_id: data.detail.youtube_video_id,
       active_job_ads: data.detail.active_job_ads,
       successful_matches: data.detail.successful_matches,
     };
@@ -153,6 +158,72 @@ export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
     return companies;
   } catch (error) {
     console.error("Error fetching companies:", error);
+    return [];
+  }
+};
+
+export const getCompany = async (
+  id: string
+): Promise<CompanyDetails | null> => {
+  try {
+    const { data } = await axiosInstance.get(`/companies/${id}`);
+    const company = {
+      id: id,
+      name: data.detail.name,
+      address_line: data.detail.address_line,
+      city: data.detail.city,
+      description: data.detail.description,
+      email: data.detail.email,
+      phone_number: data.detail.phone_number,
+      website_url: data.detail.website_url,
+      youtube_video_id: data.detail.youtube_video_id,
+      active_job_ads: data.detail.active_job_ads,
+      successful_matches: data.detail.successful_matches,
+    };
+    return company;
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return null;
+  }
+};
+
+export const getAdsCompany = async (
+  id: string
+): Promise<JobAdResponse[] | []> => {
+  try {
+    const response = await axiosInstance.post(`/job-ads/all`, {
+      job_ad_status: "active",
+      company_id: id,
+    });
+    const jobAdsData = response.data.detail ?? [];
+
+    const Ads: JobAdResponse[] = await Promise.all(
+      jobAdsData.map(async (ad: any) => {
+        const company = await getCompany(ad.company_id);
+        const photoBlob = await getLogo(ad.company_id);
+        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+
+        return {
+          id: ad.id,
+          company_id: ad.company_id,
+          company_name: company?.name ?? "",
+          company_logo: imgUrl,
+          category_id: ad.category_id,
+          category_name: ad.category_name,
+          city_id: ad.city.id,
+          city_name: ad.city.name,
+          title: ad.title,
+          description: ad.description,
+          min_salary: ad.min_salary,
+          max_salary: ad.max_salary,
+          status: ad.status,
+          updated_at: ad.updated_at,
+        };
+      })
+    );
+    return Ads;
+  } catch (error) {
+    console.error("Error fetching Ads:", error);
     return [];
   }
 };
