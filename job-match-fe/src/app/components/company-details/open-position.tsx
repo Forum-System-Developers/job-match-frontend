@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import ListItemTwo from "../jobs/list/list-item-2";
 import { useParams } from "next/navigation";
-import { useAds } from "../company/hooks/useAds";
+import { useAdsCompany } from "../company/hooks/useAds";
 
 const OpenPosition = () => {
   const { id } = useParams();
-  const { ads, loading: companyLoading } = useAds();
+  const { ads, loading } = useAdsCompany(id as string);
 
   const job_items = ads.slice(0, 4);
   return (
