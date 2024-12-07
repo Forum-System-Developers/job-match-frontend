@@ -44,7 +44,7 @@ export const getJobApplications = async () => {
           last_name: job_application.last_name,
           city: job_application.city,
           email: job_application.email,
-          skills: job_application.skills,
+          skills: job_application.skills.map((skill: any) => skill.name),
           status: job_application.status,
           min_salary: job_application.min_salary,
           max_salary: job_application.max_salary,

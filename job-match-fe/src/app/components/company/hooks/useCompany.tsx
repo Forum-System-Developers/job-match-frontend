@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { CompanyDetails } from "@/app/components/dashboard/employ/data/company-data";
-import SERVER_URL from "@/services/server";
-import axios from "axios";
 import axiosInstance from "@/services/axiosInstance";
 
 export const useCompany = (id: string) => {

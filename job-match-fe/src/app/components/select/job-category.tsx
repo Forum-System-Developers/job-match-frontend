@@ -26,6 +26,7 @@ const JobCategorySelect = ({
   return (
     <NiceSelect
       options={category_option}
+      placeholder={uniqueCategories[0]}
       defaultCurrent={0}
       onChange={(item) => handleCategory(item)}
       name="Category"
