@@ -1,7 +1,5 @@
-import img_1 from "@/assets/images/logo/media_29.png";
 import { ICompany } from "./../types/company-type";
 import axiosInstance from "@/services/axiosInstance";
-import SERVER_URL from "@/services/server";
 import { getLogo } from "@/app/components/dashboard/employ/data/company-data";
 
 export const getCompanies = async () => {

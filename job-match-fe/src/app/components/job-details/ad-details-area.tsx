@@ -11,9 +11,8 @@ import { role } from "@/utils/auth_utils";
 
 const JobDetailsV1Area = () => {
   const { id } = useParams();
-  const { ad, loading } = useAd(id as string);
-  const { jobApplications, loading: jobApplicationsLoading } =
-    useJobApplicationsProfessional();
+  const { ad } = useAd(id as string);
+  const { jobApplications } = useJobApplicationsProfessional();
   const [open, setOpen] = useState(false);
   const job = ad;
 
@@ -29,9 +28,9 @@ const JobDetailsV1Area = () => {
           <div className="col-xxl-9 col-xl-8">
             <div className="details-post-data me-xxl-5 pe-xxl-4">
               <div className="post-date">
-                {job?.date} by{" "}
+                {job?.created_at} by{" "}
                 <a href="#" className="fw-500 text-dark">
-                  {job?.company}
+                  {job?.company_name}
                 </a>
               </div>
               <h3 className="post-title">{job?.title}</h3>
@@ -72,7 +71,7 @@ const JobDetailsV1Area = () => {
                   </div>
                   <h4 className="block-title">Overview</h4>
                 </div>
-                <p>{job?.overview}</p>
+                <p>{job?.description}</p>
               </div>
               <div className="post-block border-style mt-30">
                 <div className="d-flex align-items-center">
@@ -187,14 +186,14 @@ const JobDetailsV1Area = () => {
           <div className="col-xxl-3 col-xl-4">
             <div className="job-company-info ms-xl-5 ms-xxl-0 lg-mt-50">
               <Image
-                src={job?.logo ? job.logo : profile_icon_1}
+                src={job?.company_logo || profile_icon_1}
                 alt="logo"
                 className="lazy-img m-auto logo"
                 width={60}
                 height={60}
               />
               <div className="text-md text-dark text-center mt-15 mb-20 text-capitalize">
-                {job?.company}
+                {job?.company_name}
               </div>
               <a href="#" className="website-btn tran3s">
                 Visit website
@@ -205,33 +204,26 @@ const JobDetailsV1Area = () => {
                   <li className="col-xl-7 col-md-4 col-sm-6">
                     <span>Salary</span>
                     <div>
-                      {job?.salary}/{job?.salary_duration}
+                      {job?.min_salary}/{job?.max_salary}
                     </div>
                   </li>
-                  <li className="col-xl-5 col-md-4 col-sm-6">
-                    <span>Expertise</span>
-                    <div>{job?.experience}</div>
-                  </li>
+
                   <li className="col-xl-7 col-md-4 col-sm-6">
                     <span>Location</span>
-                    <div>{job?.location}</div>
-                  </li>
-                  <li className="col-xl-5 col-md-4 col-sm-6">
-                    <span>Job? Type</span>
-                    <div>{job?.duration}</div>
+                    <div>{job?.city_name}</div>
                   </li>
                   <li className="col-xl-7 col-md-4 col-sm-6">
                     <span>Date</span>
-                    <div>{job?.date} </div>
+                    <div>{job?.created_at} </div>
                   </li>
                   <li className="col-xl-5 col-md-4 col-sm-6">
                     <span>Experience</span>
-                    <div>{job?.experience}</div>
+                    <div>{job?.skill_level}</div>
                   </li>
                 </ul>
                 <div className="job-tags d-flex flex-wrap pt-15">
-                  {job?.tags &&
-                    job?.tags.map((t, i) => (
+                  {job?.requirements &&
+                    job?.requirements.map((t, i) => (
                       <a key={i} href="#">
                         {t}
                       </a>
@@ -255,10 +247,10 @@ const JobDetailsV1Area = () => {
                           options={options}
                           defaultCurrent={0}
                           onChange={(item) => {
-                            sendMatchRequestToJobAd(
-                              id as string,
-                              item.label as string
-                            );
+                            sendMatchRequestToJobAd({
+                              jobAdId: id as string,
+                              jobApplicationId: item.value as string,
+                            });
                           }}
                           name="Location"
                         />

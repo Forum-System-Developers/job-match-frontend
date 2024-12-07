@@ -1,10 +1,12 @@
 import axiosInstance from "@/services/axiosInstance";
-import SERVER_URL from "@/services/server";
 
-export const sendMatchRequestToJobApplication = async (
-  jobAdId: string,
-  jobApplicationId: string
-) => {
+export const sendMatchRequestToJobApplication = async ({
+  jobAdId,
+  jobApplicationId,
+}: {
+  jobAdId: string;
+  jobApplicationId: string;
+}) => {
   try {
     const response = await axiosInstance.post(
       `/job-ads/${jobAdId}/job-applications/${jobApplicationId}/match-requests`
@@ -16,10 +18,13 @@ export const sendMatchRequestToJobApplication = async (
   }
 };
 
-export const sendMatchRequestToJobAd = async (
-  jobAdId: string,
-  jobApplicationId: string
-) => {
+export const sendMatchRequestToJobAd = async ({
+  jobAdId,
+  jobApplicationId,
+}: {
+  jobAdId: string;
+  jobApplicationId: string;
+}) => {
   try {
     const response = await axiosInstance.post(
       `/job-applications/${jobApplicationId}/job-ads/${jobAdId}`

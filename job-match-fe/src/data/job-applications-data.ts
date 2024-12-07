@@ -1,11 +1,11 @@
 import axiosInstance from "@/services/axiosInstance";
-import SERVER_URL from "@/services/server";
 import { getPhoto } from "./professional-data";
 
 export interface JobApplication {
   id: string;
   name: string;
   professional_id: string;
+  created_at: string;
   category_id: string;
   category_title: string;
   first_name: string;
@@ -17,14 +17,17 @@ export interface JobApplication {
   min_salary: number | null;
   max_salary: number | null;
   status: "active" | "archived";
-  skills: string[];
+  skills: {
+    category_id: string;
+    id: string;
+    name: string;
+  }[];
 }
 
 export const getJobApplications = async () => {
   try {
     const response = await axiosInstance.post(`/job-applications/all`);
     const jobApplications = response.data.detail ?? [];
-    console.log(jobApplications);
 
     const applications: JobApplication[] = await Promise.all(
       jobApplications.map(async (job_application: any) => {
@@ -32,9 +35,10 @@ export const getJobApplications = async () => {
         const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
 
         return {
-          id: job_application.id,
+          id: job_application.application_id,
           name: job_application.name,
           professional_id: job_application.professional_id,
+          created_at: job_application.created_at,
           category_id: job_application.category_id,
           category_title: job_application.category_title,
           photo: imgUrl,
@@ -42,7 +46,7 @@ export const getJobApplications = async () => {
           last_name: job_application.last_name,
           city: job_application.city,
           email: job_application.email,
-          skills: job_application.skills.map((skill: any) => skill.name),
+          skills: job_application.skills,
           status: job_application.status,
           min_salary: job_application.min_salary,
           max_salary: job_application.max_salary,
@@ -70,6 +74,7 @@ export const getJobApplication = async (
       id: data.detail.id,
       name: data.detail.name,
       professional_id: data.detail.professional_id,
+      created_at: data.detail.created_at,
       category_id: data.detail.category_id,
       category_title: data.detail.category_title,
       photo: imgUrl,

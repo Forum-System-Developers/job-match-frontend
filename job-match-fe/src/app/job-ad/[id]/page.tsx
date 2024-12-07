@@ -3,12 +3,11 @@ import Wrapper from "@/layouts/wrapper";
 import { Metadata } from "next";
 
 import Header from "@/layouts/headers/header";
-import JobDetailsV1Area from "@/app/components/job-details/job-details-v1-area";
+import JobDetailsV1Area from "@/app/components/job-details/ad-details-area";
 import JobPortalIntro from "@/app/components/job-portal-intro/job-portal-intro";
 import JobDetailsBreadcrumb from "@/app/components/jobs/breadcrumb/job-details-breadcrumb";
 import RelatedJobs from "@/app/components/jobs/related-jobs";
 import FooterOne from "@/layouts/footers/footer-one";
-import { useParams } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Job Details",
