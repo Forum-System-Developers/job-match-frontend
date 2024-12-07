@@ -37,9 +37,13 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        await axios.post(`${SERVER_URL}/auth/refresh`, {
-          withCredentials: true,
-        });
+        await axios.post(
+          `${SERVER_URL}/auth/refresh`,
+
+          {
+            withCredentials: true,
+          }
+        );
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         console.error("Token refresh failed:", refreshError);
