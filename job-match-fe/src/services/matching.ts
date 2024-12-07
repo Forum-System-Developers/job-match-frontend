@@ -9,8 +9,9 @@ export const sendMatchRequestToJobApplication = async ({
 }) => {
   try {
     const response = await axiosInstance.post(
-      `/job-ads/${jobAdId}/job-applications/${jobApplicationId}/match-requests`
+      `/job-applications/${jobApplicationId}/job-ads/${jobAdId}`
     );
+
     return response.data.detail;
   } catch (error) {
     console.error("Error sending match request:", error);
@@ -27,7 +28,7 @@ export const sendMatchRequestToJobAd = async ({
 }) => {
   try {
     const response = await axiosInstance.post(
-      `/job-applications/${jobApplicationId}/job-ads/${jobAdId}`
+      `/job-ads/${jobAdId}/job-applications/${jobApplicationId}/match-requests`
     );
     return response.data.detail;
   } catch (error) {
