@@ -7,7 +7,6 @@ import { useAds } from "../../company/hooks/useAds";
 
 const JobLocations = () => {
   const { ads, loading } = useAds();
-  console.log(ads);
   const uniqueLocations = [...new Set(ads.map((job) => job.city_name))];
   const dispatch = useAppDispatch();
   const handleLocation = (item: { value: string; label: string }) => {

@@ -6,6 +6,8 @@ export interface JobApplication {
   id: string;
   name: string;
   professional_id: string;
+  category_id: string;
+  category_title: string;
   first_name: string;
   last_name: string;
   city: string;
@@ -20,15 +22,9 @@ export interface JobApplication {
 
 export const getJobApplications = async () => {
   try {
-    const response = await axiosInstance.post(`/job-applications/all`, {
-      params: {
-        job_ad_status: "active",
-      },
-      body: {
-        skills: [],
-      },
-    });
+    const response = await axiosInstance.post(`/job-applications/all`);
     const jobApplications = response.data.detail ?? [];
+    console.log(jobApplications);
 
     const applications: JobApplication[] = await Promise.all(
       jobApplications.map(async (job_application: any) => {
@@ -39,6 +35,8 @@ export const getJobApplications = async () => {
           id: job_application.id,
           name: job_application.name,
           professional_id: job_application.professional_id,
+          category_id: job_application.category_id,
+          category_title: job_application.category_title,
           photo: imgUrl,
           first_name: job_application.first_name,
           last_name: job_application.last_name,
@@ -72,6 +70,8 @@ export const getJobApplication = async (
       id: data.detail.id,
       name: data.detail.name,
       professional_id: data.detail.professional_id,
+      category_id: data.detail.category_id,
+      category_title: data.detail.category_title,
       photo: imgUrl,
       first_name: data.detail.first_name,
       last_name: data.detail.last_name,

@@ -5,7 +5,6 @@ import { useAppDispatch } from "@/redux/hook";
 import SearchFilter from "../../jobs/filter/job-filter-2/search-filter";
 import FilterCategory from "../../jobs/filter/job-filter-2/filter-category";
 import FilterLocation from "../../jobs/filter/job-filter-2/filter-location";
-import FilterJobType from "../../jobs/filter/job-filter-2/filter-job-type";
 import FilterExperience from "../../jobs/filter/job-filter-2/filter-experience";
 import { SalaryRangeSlider } from "../../jobs/filter/job-prices";
 
@@ -61,9 +60,6 @@ const JobFilterModal = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-4 col-sm-6">
-                    <FilterJobType />
-                  </div>
                   <div className="col-lg-4 col-sm-6">
                     <FilterExperience />
                   </div>

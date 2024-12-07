@@ -116,11 +116,6 @@ export const getLogo = async (id: string): Promise<Blob | null> => {
       if (error.response?.status === 404) {
         return null;
       }
-      console.error(
-        "Error fetching photo:",
-        error.response?.status,
-        error.message
-      );
     } else {
       console.error("Unexpected error:", error);
     }

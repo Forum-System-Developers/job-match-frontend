@@ -2,7 +2,6 @@ import React from "react";
 import SearchFilter from "./search-filter";
 import FilterCategory from "./filter-category";
 import FilterLocation from "./filter-location";
-import FilterJobType from "./filter-job-type";
 import FilterExperience from "./filter-experience";
 import { SalaryRangeSlider } from "../job-prices";
 import { resetFilter } from "@/redux/features/filterSlice";
@@ -52,9 +51,6 @@ const FilterAreaTwo = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
             </div>
 
             <div className="row">
-              <div className="col-lg-4 col-sm-6">
-                <FilterJobType />
-              </div>
               <div className="col-lg-4 col-sm-6">
                 <FilterExperience />
               </div>
