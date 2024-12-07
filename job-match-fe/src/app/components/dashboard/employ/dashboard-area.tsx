@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
+
 import icon_1 from "@/assets/dashboard/images/icon/icon_12.svg";
 import icon_2 from "@/assets/dashboard/images/icon/icon_13.svg";
 import icon_3 from "@/assets/dashboard/images/icon/icon_14.svg";
@@ -10,7 +12,9 @@ import DashboardHeader from "../candidate/dashboard-header";
 import { CardItem } from "../candidate/dashboard-area";
 import NiceSelect from "@/ui/nice-select";
 import DashboardHeaderEmployer from "./dashboard-header";
-import { useAds } from "../../company/hooks/useAds";
+import { useAdsCompany } from "../../company/hooks/useAds";
+import { getCurrentCompany } from "./data/company-data";
+import { useUser } from "@/hooks/use-user";
 
 // props type
 type IProps = {
@@ -18,7 +22,8 @@ type IProps = {
 };
 
 const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
-  const { ads, loading } = useAds();
+  const { user, loading: userLoading } = useUser();
+  const { ads, loading: adsLoading } = useAdsCompany(user?.id as string);
 
   const job_items = [...ads.reverse().slice(0, 6)];
   const handleJobs = (item: { value: string; label: string }) => {};
@@ -45,18 +50,14 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                 <div className="fw-500 pe-3">Jobs:</div>
                 <div className="flex-fill xs-mt-10">
                   <NiceSelect
-                    options={[
-                      {
-                        value: "Web-&-Mobile-Prototype-designer",
-                        label: "Web & Mobile Prototype designer....",
-                      },
-                      { value: "Document Writer", label: "Document Writer" },
-                      {
-                        value: "Outbound Call Service",
-                        label: "Outbound Call Service",
-                      },
-                      { value: "Product Designer", label: "Product Designer" },
-                    ]}
+                    options={job_items.map((j) => {
+                      return { value: j.id, label: j.title };
+                    })}
+                    placeholder={
+                      job_items.length > 0
+                        ? job_items[0].title
+                        : "No Jobs Available"
+                    }
                     defaultCurrent={0}
                     onChange={(item) => handleJobs(item)}
                     name="Search Jobs"
@@ -74,7 +75,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
           </div>
           <div className="col-xl-5 col-lg-6 d-flex">
             <div className="recent-job-tab bg-white border-20 mt-30 w-100">
-              <h4 className="dash-title-two">Posted Job</h4>
+              <h4 className="dash-title-two">Posted Job Ads</h4>
               <div className="wrapper">
                 {job_items.map((j) => (
                   <div
@@ -83,7 +84,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                   >
                     <div>
                       <Image
-                        src={j.logo}
+                        src={j.company_logo ? j.company_logo : profile_icon_1}
                         alt="logo"
                         width={40}
                         height={40}
@@ -92,10 +93,11 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                     </div>
                     <div className="job-title">
                       <h6 className="mb-5">
-                        <a href="#">{j.duration}</a>
+                        <a href="#">{j.title}</a>
                       </h6>
                       <div className="meta">
-                        <span>Fulltime</span> . <span>{j.location}</span>
+                        <span>{j.category_name}</span> .{" "}
+                        <span>{j.city_name}</span>
                       </div>
                     </div>
                     <div className="job-action">
@@ -109,7 +111,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                       </button>
                       <ul className="dropdown-menu">
                         <li>
-                          <a className="dropdown-item" href="#">
+                          <a className="dropdown-item" href="">
                             View Job
                           </a>
                         </li>

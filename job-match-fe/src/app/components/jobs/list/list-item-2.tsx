@@ -51,12 +51,11 @@ const ListItemTwo = ({ item }: { item: JobAdResponse }) => {
         </div>
         <div className="col-md-4 col-sm-6">
           <div className="job-salary">
-            <span className="fw-500 text-dark">Min Salary</span> /{" "}
-            {item.min_salary}
+            <span className="fw-500 text-dark">Min Salary</span> |{" "}
+            <span className="fw-500 text-dark">Max Salary</span>{" "}
           </div>
           <div className="job-salary">
-            <span className="fw-500 text-dark">Max Salary</span> /{" "}
-            {item.max_salary}
+            {item.min_salary} - {item.max_salary}{" "}
           </div>
         </div>
         <div className="col-md-3 col-sm-6">

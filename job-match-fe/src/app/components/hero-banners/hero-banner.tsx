@@ -39,16 +39,13 @@ const HeroBanner = () => {
                   <ul className="tags d-flex flex-wrap style-none mt-20">
                     <li className="fw-500 text-white me-2">Popular:</li>
                     <li>
-                      <a href="#">Design</a>
+                      <a href="#">IT</a>
                     </li>
                     <li>
-                      <a href="#">Art</a>
+                      <a href="#">Marketing</a>
                     </li>
                     <li>
-                      <a href="#">Business</a>
-                    </li>
-                    <li>
-                      <a href="#">Video Editing</a>
+                      <a href="#">Editing</a>
                     </li>
                   </ul>
                 </div>

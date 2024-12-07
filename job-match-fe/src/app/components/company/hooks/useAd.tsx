@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { IJobType } from "@/types/job-data-type";
-import { getJobAd } from "@/data/job-ad-data";
+import { getJobAd, JobAdResponse } from "@/data/job-ad-data";
 
 export const useAd = (id: string) => {
-  const [ad, setAd] = useState<IJobType | null>(null);
+  const [ad, setAd] = useState<JobAdResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchAd = async () => {

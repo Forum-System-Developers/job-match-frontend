@@ -7,6 +7,7 @@ import VideoPopup from "../common/video-popup";
 import { useParams } from "next/navigation";
 import { useCompany } from "../company/hooks/useCompany";
 import { useLogo } from "../dashboard/employ/hooks/useLogo";
+import Link from "next/link";
 
 const CompanyDetailsArea = () => {
   const { id } = useParams();
@@ -43,15 +44,17 @@ const CompanyDetailsArea = () => {
                 <div className="text-md text-dark text-center mt-15 mb-20 lg-mb-10">
                   {company?.name}
                 </div>
-                <div className="text-center">
-                  <a
-                    href="#"
-                    className="website-btn-two tran3s"
-                    target="_blank"
-                  >
-                    Visit our website
-                  </a>
-                </div>
+                {company?.website_url && (
+                  <div className="text-center">
+                    <Link
+                      href={company.website_url}
+                      className="website-btn-two tran3s"
+                      target="_blank"
+                    >
+                      Visit our website
+                    </Link>
+                  </div>
+                )}
 
                 <div className="border-top mt-35 lg-mt-20 pt-25">
                   <ul className="job-meta-data row style-none">
@@ -83,7 +86,7 @@ const CompanyDetailsArea = () => {
                       <span>Category: </span>
                       <div>Technology, Product, Agency</div>
                     </li>
-                    <li className="col-12">
+                    {/* <li className="col-12">
                       <span>Social: </span>
                       <div>
                         <a href="#" className="me-3">
@@ -99,7 +102,7 @@ const CompanyDetailsArea = () => {
                           <i className="bi bi-linkedin"></i>
                         </a>
                       </div>
-                    </li>
+                    </li> */}
                   </ul>
 
                   <a
@@ -142,23 +145,25 @@ const CompanyDetailsArea = () => {
                   odio tempor orci dapibus ultrices. Ipsum consequat nisl vel
                   pretium lectus quam. Dignissim sodales ut eu sem.{" "}
                 </p>
-                <h3>Intro</h3>
-                <div className="video-post d-flex align-items-center justify-content-center mb-50">
-                  <a
-                    className="fancybox rounded-circle video-icon tran3s text-center"
-                    onClick={() => setIsVideoOpen(true)}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <i className="bi bi-play-fill"></i>
-                  </a>
-                </div>
-                <div className="position-relative">
+                {company?.website_url && (
+                  <>
+                    <h3>Intro</h3>
+                    <div className="video-post d-flex align-items-center justify-content-center mb-50">
+                      <a
+                        className="fancybox rounded-circle video-icon tran3s text-center"
+                        onClick={() => setIsVideoOpen(true)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <i className="bi bi-play-fill"></i>
+                      </a>
+                    </div>
+                  </>
+                )}
+                {/* <div className="position-relative">
                   <h3>Company Reviews</h3>
 
-                  {/* CompanyReviews */}
                   <CompanyReviews />
-                  {/* CompanyReviews */}
-                </div>
+                </div> */}
 
                 <div className="share-option mt-60">
                   <ul className="style-none d-flex align-items-center">
@@ -189,7 +194,7 @@ const CompanyDetailsArea = () => {
       <VideoPopup
         isVideoOpen={isVideoOpen}
         setIsVideoOpen={setIsVideoOpen}
-        videoId={"XqZsoesa55w"}
+        videoId={company?.youtube_video_id || ""}
       />
       {/* video modal end */}
     </>

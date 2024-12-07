@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { CompanyDetails } from "@/app/components/dashboard/employ/data/company-data";
-import SERVER_URL from "@/services/server";
-import axios from "axios";
 import axiosInstance from "@/services/axiosInstance";
 
 export const useCompany = (id: string) => {
@@ -18,6 +16,8 @@ export const useCompany = (id: string) => {
         city,
         description,
         email,
+        website_url,
+        youtube_video_id,
         phone_number,
         active_job_ads,
         successful_matches,
@@ -30,6 +30,8 @@ export const useCompany = (id: string) => {
         city,
         description,
         email,
+        website_url,
+        youtube_video_id,
         phone_number,
         active_job_ads,
         successful_matches,

@@ -43,7 +43,7 @@ const SavedJobArea = ({ setIsOpenSidebar }: IProps) => {
                   <div className="job-title d-flex align-items-center">
                     <a href="#" className="logo">
                       <Image
-                        src={j.logo}
+                        src={j.company_logo}
                         alt="img"
                         className="lazy-img m-auto"
                       />
@@ -54,30 +54,25 @@ const SavedJobArea = ({ setIsOpenSidebar }: IProps) => {
                   </div>
                 </div>
                 <div className="col-lg-3 col-md-4 col-sm-6 ms-auto">
-                  <Link
+                  {/* <Link
                     href={`/job-details-v1/${j.id}`}
                     className={`job-duration fw-500 ${
-                      j.duration === "Part time" ? "part-time" : ""
+                      j.skill_level === "Part time" ? "part-time" : ""
                     }`}
                   >
-                    {j.duration}
-                  </Link>
+                    {j.skill_level}
+                  </Link> */}
                   <div className="job-salary">
-                    <span className="fw-500 text-dark">${j.salary}</span> /{" "}
-                    {j.salary_duration} . {j.experience}
+                    <span className="fw-500 text-dark">${j.min_salary}</span> /{" "}
+                    {j.min_salary} . {j.max_salary}
                   </div>
                 </div>
                 <div className="col-xxl-2 col-lg-3 col-md-4 col-sm-6 ms-auto xs-mt-10">
                   <div className="job-location">
-                    <a href="#">{j.location}</a>
+                    <a href="#">{j.city_name}</a>
                   </div>
                   <div className="job-category">
-                    {j.category.map((c, i) => (
-                      <a key={i} href="#">
-                        {c}
-                        {i < j.category.length - 1 && ", "}
-                      </a>
-                    ))}
+                    <a href="#">{j.category_name}</a>
                   </div>
                 </div>
                 <div className="col-lg-2 col-md-4">
