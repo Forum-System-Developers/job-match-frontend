@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getLocalStorage, setLocalStorage } from "@/utils/localstorage";
 import { notifyError, notifySuccess } from "@/utils/toast";
-import { IJobType } from "@/types/job-data-type";
 import { JobAdResponse } from "@/data/job-ad-data";
 
 // Check if the cookie exists

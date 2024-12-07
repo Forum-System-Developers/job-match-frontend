@@ -4,36 +4,38 @@ import { useSearchParams } from "next/navigation";
 import slugify from "slugify";
 import ListItemTwo from "../jobs/list/list-item-2";
 import JobGridItem from "../jobs/grid/job-grid-item";
-import { IJobType } from "@/types/job-data-type";
 import { useAds } from "../company/hooks/useAds";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 const SearchItems = () => {
   const searchParams = useSearchParams();
   const { ads, loading } = useAds();
   const job_data = ads;
-  const [jobs, setJobs] = useState<IJobType[]>(job_data);
+  const [jobs, setJobs] = useState<JobAdResponse[]>(job_data);
   const [jobType, setJobType] = useState<string>("list");
   const category = searchParams.get("category");
   const location = searchParams.get("location");
   const search = searchParams.get("search");
   const company = searchParams.get("company");
-  const categoryMatch = (item: IJobType) => {
-    return item.category.some(
-      (e) => slugify(e.split(",").join("-").toLowerCase(), "-") === category
+  const categoryMatch = (item: JobAdResponse) => {
+    return (
+      slugify(item.category_name.split(",").join("-").toLowerCase(), "-") ===
+      category
     );
   };
-  const locationMatch = (item: IJobType) => {
+  const locationMatch = (item: JobAdResponse) => {
     return (
-      slugify(item.location.split(",").join("-").toLowerCase(), "-") ===
+      slugify(item.city_name.split(",").join("-").toLowerCase(), "-") ===
       location
     );
   };
-  const companyMatch = (item: IJobType) => {
+  const companyMatch = (item: JobAdResponse) => {
     return (
-      slugify(item.company.split(",").join("-").toLowerCase(), "-") === company
+      slugify(item.company_name.split(",").join("-").toLowerCase(), "-") ===
+      company
     );
   };
-  const titleMatch = (item: IJobType) => {
+  const titleMatch = (item: JobAdResponse) => {
     if (search) {
       return item.title.toLowerCase().includes(search.toLowerCase());
     }

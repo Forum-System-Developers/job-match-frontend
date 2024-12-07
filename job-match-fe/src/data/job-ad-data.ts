@@ -1,5 +1,3 @@
-import { IJobType } from "@/types/job-data-type";
-
 import axiosInstance from "@/services/axiosInstance";
 import {
   CompanyDetails,
@@ -83,6 +81,8 @@ export const getCompany = async (
       city: data.detail.city,
       description: data.detail.description,
       email: data.detail.email,
+      website_url: data.detail.website_url,
+      youtube_video_id: data.detail.youtube_video_id,
       phone_number: data.detail.phone_number,
       active_job_ads: data.detail.active_job_ads,
       successful_matches: data.detail.successful_matches,
@@ -103,21 +103,24 @@ export const getJobAd = async (id: string) => {
     const photoBlob = await getLogo(jobAdData.company_id);
     const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
 
-    const Ad: IJobType = {
+    const Ad: JobAdResponse = {
       id: jobAdData.id,
-      logo: imgUrl,
+      company_id: jobAdData.company_id,
+      company_name: company?.name ?? "",
+      company_logo: imgUrl,
+      category_id: jobAdData.category_id,
+      category_name: jobAdData.category_name,
+      city_id: jobAdData.city.id,
+      city_name: jobAdData.city.name,
       title: jobAdData.title,
-      duration: "",
-      date: jobAdData.created_at,
-      company: company?.name ?? "",
-      location: "",
-      category: [],
-      tags: jobAdData.requirements,
-      experience: "",
-      salary: jobAdData.min_salary,
-      salary_duration: "",
-      english_fluency: "",
-      overview: jobAdData.description,
+      description: jobAdData.description,
+      min_salary: jobAdData.min_salary,
+      max_salary: jobAdData.max_salary,
+      status: jobAdData.status,
+      skill_level: jobAdData.skill_level,
+      requirements: jobAdData.required_skills.map((skill: any) => skill.name),
+      created_at: jobAdData.created_at,
+      updated_at: jobAdData.updated_at,
     };
 
     return Ad;
