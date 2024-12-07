@@ -281,15 +281,18 @@ export const getJobApplicationsForProfessional = async (id: string) => {
     const applications: JobApplication[] = await Promise.all(
       jobApplications.map(async (job_application: any) => {
         return {
-          id: job_application.id,
+          id: job_application.application_id,
           name: job_application.name,
           professional_id: job_application.professional_id,
+          created_at: job_application.created_at,
+          category_id: job_application.category_id,
+          category_title: job_application.category_title,
           photo: null,
           first_name: job_application.first_name,
           last_name: job_application.last_name,
           city: job_application.city,
           email: job_application.email,
-          skills: job_application.skills,
+          skills: job_application.skills.map((skill: any) => skill.name),
           status: job_application.status,
           min_salary: job_application.min_salary,
           max_salary: job_application.max_salary,
@@ -320,15 +323,18 @@ export const getMatchedApplicationsForProfessional = async (id: string) => {
     const applications: JobApplication[] = await Promise.all(
       jobApplications.map(async (job_application: any) => {
         return {
-          id: job_application.id,
+          id: job_application.application_id,
           name: job_application.name,
           professional_id: job_application.professional_id,
+          created_at: job_application.created_at,
+          category_id: job_application.category_id,
+          category_title: job_application.category_title,
           photo: null,
           first_name: job_application.first_name,
           last_name: job_application.last_name,
           city: job_application.city,
           email: job_application.email,
-          skills: job_application.skills,
+          skills: job_application.skills.map((skill: any) => skill.name),
           status: job_application.status,
           min_salary: job_application.min_salary,
           max_salary: job_application.max_salary,

@@ -4,12 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import verify from "@/assets/images/icon/icon_51.svg";
-import { useAppDispatch } from "@/redux/hook";
 import { JobApplication } from "../../../../data/job-applications-data";
 
 const ListItemThree = ({ item }: { item: JobApplication }) => {
-  const dispatch = useAppDispatch();
-
   return (
     <div className="job-list-three d-flex h-100 w-100">
       <div className="main-wrapper h-100 w-100">
@@ -23,11 +20,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
           <i className="bi bi-bookmark-dash"></i>
         </a> */}
         <div className="list-header d-flex align-items-center">
-          <Link
-            href={`/job-application
-            /${item.id}`}
-            className="logo"
-          >
+          <Link href={`/job-application/${item.id}`} className="logo">
             <Image
               src={item.photo || profile_icon_1}
               alt="logo"
@@ -46,8 +39,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
               }}
             >
               <Link
-                href={`/job-application
-                  /${item.id}`}
+                href={`/job-application/${item.id}`}
                 className="title fw-500 tran3s"
               >
                 {item.name}
@@ -61,8 +53,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
                 }}
               >
                 <Link
-                  href={`/candidate
-                    /${item.professional_id}`}
+                  href={`/candidate/${item.professional_id}`}
                   className="fw-500 text-dark"
                 >
                   {item.first_name} {item.last_name}
@@ -117,8 +108,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
             </Link> */}
           </div>
           <Link
-            href={`/job-application
-              /${item.id}`}
+            href={`/job-application/${item.id}`}
             className="apply-btn text-center tran3s xs-mt-20"
           >
             VIEW

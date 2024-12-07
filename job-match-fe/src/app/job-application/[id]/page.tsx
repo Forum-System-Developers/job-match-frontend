@@ -4,11 +4,11 @@ import Wrapper from "@/layouts/wrapper";
 import Header from "@/layouts/headers/header";
 import FooterOne from "@/layouts/footers/footer-one";
 import JobPortalIntro from "../../components/job-portal-intro/job-portal-intro";
-import JobDetailsV2Area from "../../components/job-details/job-details-v2-area";
+import JobDetailsV2Area from "../../components/job-details/job-application-details-area";
 import JobDetailsBreadcrumbTwo from "../../components/jobs/breadcrumb/job-details-breadcrumb-2";
 
 export const metadata: Metadata = {
-  title: "Job Details v2",
+  title: "Job Application",
 };
 
 const JobDetailsV2Page = () => {

@@ -1,53 +1,32 @@
+"use client";
 import React from "react";
 import shape_1 from "@/assets/images/shape/shape_02.svg";
 import shape_2 from "@/assets/images/shape/shape_03.svg";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+import { useJobApplication } from "../hooks/useJobApplications";
 
 const JobDetailsBreadcrumbTwo = () => {
+  const { id } = useParams();
+  const { jobApplication, loading } = useJobApplication(id as string);
   return (
     <div className="inner-banner-one position-relative">
       <div className="container">
         <div className="position-relative">
           <div className="row">
             <div className="col-xl-8 m-auto text-center">
+              <div className="title-two">
+                <h2 className="text-white">{jobApplication?.name}</h2>
+              </div>
               <div className="post-date">
-                18 Jul 2023 by{" "}
-                <a href="#" className="fw-500 text-white">
-                  Adobe
+                by{" "}
+                <a
+                  href={`/candidate/${jobApplication?.professional_id}`}
+                  className="fw-500 text-white"
+                >
+                  {jobApplication?.first_name} {jobApplication?.last_name}
                 </a>
               </div>
-              <div className="title-two">
-                <h2 className="text-white">Senior Product & Brand Design</h2>
-              </div>
-              <ul className="share-buttons d-flex flex-wrap justify-content-center style-none mt-10">
-                <li>
-                  <a
-                    href="#"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <i className="bi bi-facebook"></i>
-                    <span>Facebook</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <i className="bi bi-twitter"></i>
-                    <span>Twitter</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <i className="bi bi-link-45deg"></i>
-                    <span>Copy</span>
-                  </a>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
