@@ -4,11 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import verify from "@/assets/images/icon/icon_51.svg";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { useAppDispatch } from "@/redux/hook";
 import { JobApplication } from "../../../../data/job-applications-data";
 
 const ListItemThree = ({ item }: { item: JobApplication }) => {
-  // const { id, photo, min_salary, city, description, skills } = item || {};
   const dispatch = useAppDispatch();
 
   return (
@@ -30,7 +29,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
             className="logo"
           >
             <Image
-              src={item.photo ? item.photo : profile_icon_1}
+              src={item.photo || profile_icon_1}
               alt="logo"
               className="lazy-img m-auto"
               width={50}
@@ -38,21 +37,68 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
             />
           </Link>
           <div className="info-wrapper">
-            <Link
-              href={`/job-application
-                /${item.id}`}
-              className="title fw-500 tran3s"
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
             >
-              {item.first_name} {item.last_name}
-            </Link>
-            <ul className="style-none d-flex flex-wrap info-data">
-              <li>
-                ${item.min_salary ? item.min_salary : 0}/
-                {item.max_salary ? item.max_salary : 0}
-              </li>
-              <li>{item.description}</li>
-              <li>{item.city} </li>
-            </ul>
+              <Link
+                href={`/job-application
+                  /${item.id}`}
+                className="title fw-500 tran3s"
+              >
+                {item.name}
+              </Link>
+              <div
+                style={{
+                  textAlign: "right",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Link
+                  href={`/candidate
+                    /${item.professional_id}`}
+                  className="fw-500 text-dark"
+                >
+                  {item.first_name} {item.last_name}
+                </Link>
+              </div>
+            </div>
+
+            <div
+              style={{
+                textAlign: "left",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <ul
+                className="style-none d-flex flex-wrap info-data"
+                style={{
+                  width: "100%",
+                }}
+              >
+                <li>
+                  <div>
+                    <div className="job-salary">
+                      <span className="fw-500 text-dark">Min Salary</span> |{" "}
+                      {item.min_salary} BGN
+                    </div>
+                    <div className="job-salary">
+                      <span className="fw-500 text-dark">Max Salary</span> |{" "}
+                      {item.max_salary} BGN
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <div className="job-salary">{item.city}</div>
+            </div>
           </div>
         </div>
         <p>{item.description.slice(0, 138)}...</p>
@@ -75,7 +121,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
               /${item.id}`}
             className="apply-btn text-center tran3s xs-mt-20"
           >
-            APPLY
+            VIEW
           </Link>
         </div>
       </div>

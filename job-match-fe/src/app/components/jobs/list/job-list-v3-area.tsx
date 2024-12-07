@@ -6,25 +6,18 @@ import slugify from "slugify";
 import NiceSelect from "@/ui/nice-select";
 import ListItemThree from "./list-item-3";
 import JobFilterModal from "../../common/popup/job-filter-modal";
+import { JobApplication } from "@/data/job-applications-data";
 import { useJobApplications } from "../hooks/useJobApplications";
-import { JobApplication } from "../../../../data/job-applications-data";
 
 const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
   const { jobApplications, loading } = useJobApplications();
   let all_jobs = jobApplications;
   const maxPrice = jobApplications.reduce((max, job) => {
-    return job.min_salary != null && job.min_salary > max
-      ? job.min_salary
-      : max;
+    return (job.max_salary ?? 0) > max ? job.max_salary ?? 0 : max;
   }, 1);
-  const {
-    category,
-    experience,
-    job_type,
-    location,
-    english_fluency,
-    search_key,
-  } = useAppSelector((state) => state.filter);
+  const { category, location, search_key } = useAppSelector(
+    (state) => state.filter
+  );
   const [currentItems, setCurrentItems] = useState<JobApplication[] | null>(
     null
   );
@@ -36,31 +29,17 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
 
   useEffect(() => {
     // Filter the job_data array based on the selected filters
-    // .filter((item) =>
-    //   category.length !== 0
-    //     ? category.some((c) => item.category.includes(c))
-    //     : true
-    // )
-    // .filter((item) =>
-    //   experience.length !== 0
-    //     ? experience.some(
-    //         (e) =>
-    //           item.experience.trim().toLowerCase() === e.trim().toLowerCase()
-    //       )
-    //     : true
-    // )
-    // .filter((e) =>
-    //   english_fluency
-    //     ? e.english_fluency.toLowerCase() === english_fluency.toLowerCase()
-    //     : true
-    // )
     let filteredData = all_jobs
       .filter((item) =>
-        search_key
-          ? item.description.toLowerCase().includes(search_key.toLowerCase())
+        category.length !== 0
+          ? category.some((c) => item.category_title.includes(c))
           : true
       )
-      // .filter((item) => (job_type ? item.duration === job_type : true))
+      .filter((item) =>
+        search_key
+          ? item.name.toLowerCase().includes(search_key.toLowerCase())
+          : true
+      )
       .filter((l) =>
         location
           ? slugify(l.city.split(",").join("-").toLowerCase(), "-") === location
@@ -68,23 +47,22 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
       );
     // .filter(
     //   (j) =>
-    //     j.min_salary != null &&
-    //     j.min_salary >= priceValue[0] &&
-    //     j.min_salary <= priceValue[1]
+    //     (j.min_salary ?? 0) >= priceValue[0] &&
+    //     (j.max_salary ?? Infinity) <= priceValue[1]
     // );
 
     if (shortValue === "price-low-to-high") {
       filteredData = filteredData.slice().sort((a, b) => {
-        const salaryA = a.min_salary ?? Number.POSITIVE_INFINITY; // Treat null/undefined as the highest possible value
-        const salaryB = b.min_salary ?? Number.POSITIVE_INFINITY;
+        const salaryA = a.min_salary ?? 0;
+        const salaryB = b.min_salary ?? 0;
         return salaryA - salaryB;
       });
     }
 
     if (shortValue === "price-high-to-low") {
       filteredData = filteredData.slice().sort((a, b) => {
-        const salaryA = a.min_salary ?? Number.NEGATIVE_INFINITY; // Treat null/undefined as the lowest possible value
-        const salaryB = b.min_salary ?? Number.NEGATIVE_INFINITY;
+        const salaryA = a.max_salary ?? Infinity;
+        const salaryB = b.max_salary ?? Infinity;
         return salaryB - salaryA;
       });
     }
@@ -97,10 +75,7 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
     itemOffset,
     itemsPerPage,
     category,
-    experience,
-    job_type,
     location,
-    english_fluency,
     all_jobs,
     priceValue,
     shortValue,
@@ -115,10 +90,6 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
   const handleShort = (item: { value: string; label: string }) => {
     setShortValue(item.value);
   };
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
       <section className="job-listing-three bg-color pt-90 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
@@ -142,12 +113,12 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
                       <span className="text-dark fw-500">
                         {all_jobs.length}
                       </span>{" "}
-                      job applications found
+                      jobs found
                     </div>
                   </div>
                   <div className="d-flex align-items-center">
                     <div className="short-filter d-flex align-items-center">
-                      <div className="text-dark fw-500 me-2">Short:</div>
+                      <div className="text-dark fw-500 me-2">Sort:</div>
                       <NiceSelect
                         options={[
                           { value: "", label: "Price Sort" },
