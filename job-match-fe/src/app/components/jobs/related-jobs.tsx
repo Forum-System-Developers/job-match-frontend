@@ -12,6 +12,7 @@ import { useAd } from "../company/hooks/useAd";
 const slider_setting = {
   dots: false,
   arrows: false,
+  infinite: false,
   centerPadding: "0px",
   slidesToShow: 3,
   slidesToScroll: 1,
@@ -55,6 +56,7 @@ const RelatedJobs = () => {
           <div className="title-three text-center text-md-start mb-55 lg-mb-40">
             <h2 className="main-font">Related Jobs</h2>
           </div>
+
           <Slider
             {...slider_setting}
             ref={sliderRef}

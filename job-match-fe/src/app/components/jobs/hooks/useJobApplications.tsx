@@ -33,19 +33,17 @@ export const useJobApplications = () => {
   return { jobApplications, loading };
 };
 
-export const useJobApplicationsProfessional = () => {
+export const useJobApplicationsProfessional = (id: string) => {
   const [jobApplications, setjobApplications] = useState<JobApplication[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchApplications = async () => {
     setLoading(true);
     try {
-      const user = await currentUser();
-      const id = user.id;
       const jobApplications = await getJobApplicationsForProfessional(id);
       setjobApplications(jobApplications);
     } catch (error) {
-      console.error("Error fetching ads:", error);
+      console.error("Error fetching applications:", error);
     } finally {
       setLoading(false);
     }

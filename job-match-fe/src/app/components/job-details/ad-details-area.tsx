@@ -8,11 +8,16 @@ import NiceSelect from "@/ui/nice-select";
 import { sendMatchRequestToJobAd } from "@/services/matching";
 import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
 import { role } from "@/utils/auth_utils";
+import Link from "next/link";
+import { useUser } from "@/hooks/use-user";
 
 const JobDetailsV1Area = () => {
   const { id } = useParams();
   const { ad } = useAd(id as string);
-  const { jobApplications } = useJobApplicationsProfessional();
+  const { user } = useUser();
+  const { jobApplications } = useJobApplicationsProfessional(
+    user?.id as string
+  );
   const [open, setOpen] = useState(false);
   const job = ad;
 
@@ -27,11 +32,12 @@ const JobDetailsV1Area = () => {
         <div className="row">
           <div className="col-xxl-9 col-xl-8">
             <div className="details-post-data me-xxl-5 pe-xxl-4">
-              <div className="post-date">
-                {job?.created_at} by{" "}
-                <a href="#" className="fw-500 text-dark">
-                  {job?.company_name}
-                </a>
+              <div>
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                }).format(new Date(ad?.created_at || Date.now()))}{" "}
               </div>
               <h3 className="post-title">{job?.title}</h3>
               <ul className="share-buttons d-flex flex-wrap style-none">
@@ -97,87 +103,11 @@ const JobDetailsV1Area = () => {
                   <div className="block-numb text-center fw-500 text-white rounded-circle me-2">
                     3
                   </div>
-                  <h4 className="block-title">Responsibilities</h4>
+                  <h4 className="block-title">Skills required:</h4>
                 </div>
                 <ul className="list-type-one style-none mb-15">
-                  <li>
-                    Collaborate daily with a multidisciplinary team of Software
-                    Engineers, Researchers, Strategists, and Project Managers.
-                  </li>
-                  <li>
-                    Co-lead ideation sessions, workshops, demos, and
-                    presentations with clients on-site
-                  </li>
-                  <li>
-                    Push for and create inclusive, accessible design for all
-                  </li>
-                  <li>
-                    Maintain quality of the design process and ensure that when
-                    designs are translated into code they accurately reflect the
-                    design specifications.
-                  </li>
-                  <li>
-                    Sketch, wireframe, build IA, motion design, and run
-                    usability tests
-                  </li>
-                  <li>
-                    Design pixel perfect responsive UI’s and understand that
-                    adopting common interface pattern is better for UX than
-                    reinventing the wheel
-                  </li>
-                  <li>
-                    Ensure content strategy and design are perfectly in-sync
-                  </li>
-                  <li>
-                    Give and receive design critique to help constantly refine
-                    and push our work
-                  </li>
-                </ul>
-              </div>
-              <div className="post-block border-style mt-40 lg-mt-30">
-                <div className="d-flex align-items-center">
-                  <div className="block-numb text-center fw-500 text-white rounded-circle me-2">
-                    4
-                  </div>
-                  <h4 className="block-title">Required Skills:</h4>
-                </div>
-                <ul className="list-type-two style-none mb-15">
-                  <li>You’ve been designing digital products for 2+ years.</li>
-                  <li>
-                    A portfolio that exemplifies strong visual design and a
-                    focus on defining the user experience.
-                  </li>
-                  <li>You’ve proudly shipped and launched several products.</li>
-                  <li>
-                    You have some past experience working in an agile
-                    environment – Think two-week sprints.
-                  </li>
-                  <li>
-                    Experience effectively presenting and communicating your
-                    design decisions to clients and team members
-                  </li>
-                  <li>
-                    Up-to-date knowledge of design software like Figma, Sketch
-                    etc.
-                  </li>
-                </ul>
-              </div>
-              <div className="post-block border-style mt-40 lg-mt-30">
-                <div className="d-flex align-items-center">
-                  <div className="block-numb text-center fw-500 text-white rounded-circle me-2">
-                    5
-                  </div>
-                  <h4 className="block-title">Benefits:</h4>
-                </div>
-                <ul className="list-type-two style-none mb-15">
-                  <li>We are a remote-first company.</li>
-                  <li>
-                    100% company-paid health insurance premiums for you & your
-                    dependents
-                  </li>
-                  <li>Vacation stipend</li>
-                  <li>Unlimited paid vacation and paid company holidays</li>
-                  <li>Monthly wellness/gym stipend</li>
+                  {ad?.requirements &&
+                    ad.requirements.map((t, i) => <li key={i}>{t}</li>)}
                 </ul>
               </div>
             </div>
@@ -193,30 +123,59 @@ const JobDetailsV1Area = () => {
                 height={60}
               />
               <div className="text-md text-dark text-center mt-15 mb-20 text-capitalize">
-                {job?.company_name}
+                <Link
+                  href={`/company/${ad?.company_id}`}
+                  className="title fw-500 tran3s"
+                >
+                  {job?.company_name}
+                </Link>
               </div>
-              <a href="#" className="website-btn tran3s">
-                Visit website
-              </a>
+              {ad?.company_website && (
+                <a
+                  href={`${ad.company_website}`}
+                  className="website-btn tran3s"
+                >
+                  Visit website
+                </a>
+              )}
 
               <div className="border-top mt-40 pt-40">
                 <ul className="job-meta-data row style-none">
                   <li className="col-xl-7 col-md-4 col-sm-6">
-                    <span>Salary</span>
-                    <div>
-                      {job?.min_salary}/{job?.max_salary}
-                    </div>
+                    <span>Min Salary </span>
+                    <div>{job?.min_salary} BGN</div>
+                  </li>
+                  <li className="col-xl-7 col-md-4 col-sm-6">
+                    <span>Max Salary </span>
+                    <div>{job?.max_salary} BGN</div>
                   </li>
 
                   <li className="col-xl-7 col-md-4 col-sm-6">
                     <span>Location</span>
-                    <div>{job?.city_name}</div>
+                    <div>{job?.city_name} </div>
                   </li>
-                  <li className="col-xl-7 col-md-4 col-sm-6">
-                    <span>Date</span>
-                    <div>{job?.created_at} </div>
+
+                  <li
+                    className="col-xl-7 col-md-4 col-sm-6"
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    <span>Created</span>
+                    <div>
+                      {" "}
+                      {new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      }).format(new Date(ad?.created_at || Date.now()))}{" "}
+                    </div>
                   </li>
-                  <li className="col-xl-5 col-md-4 col-sm-6">
+
+                  <li
+                    className="col-xl-5 col-md-4 col-sm-6"
+                    style={{ minWidth: "100%" }}
+                  >
                     <span>Experience</span>
                     <div>{job?.skill_level}</div>
                   </li>

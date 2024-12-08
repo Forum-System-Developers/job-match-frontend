@@ -6,12 +6,16 @@ import port_1 from "@/assets/images/candidates/CP_01.jpg";
 import port_2 from "@/assets/images/candidates/CP_02.jpg";
 import port_3 from "@/assets/images/candidates/CP_03.jpg";
 import port_4 from "@/assets/images/candidates/CP_02.jpg";
+import ApplicationGridItem from "../job-application/grid/application-grid-item";
+import { useParams } from "next/navigation";
+import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
 
 const CandidateProfileSlider = () => {
   // slider setting
   const slider_setting = {
     dots: true,
     arrows: false,
+    infinite: false,
     centerPadding: "0px",
     slidesToShow: 3,
     slidesToScroll: 1,
@@ -33,19 +37,14 @@ const CandidateProfileSlider = () => {
     ],
   };
 
-  // portfolio data
-  const portfolio_data = [port_1, port_2, port_3, port_4];
+  const { id } = useParams();
+  const { jobApplications } = useJobApplicationsProfessional(id as string);
   return (
     <Slider {...slider_setting} className="candidate-portfolio-slider">
-      {portfolio_data.map((img, i) => (
+      {jobApplications.map((item, i) => (
         <div className="item" key={i}>
           <a href="#" className="w-100 d-blok">
-            <Image
-              src={img}
-              alt=""
-              className="w-100"
-              style={{ width: "100%", height: "auto" }}
-            />
+            <ApplicationGridItem item={item} />
           </a>
         </div>
       ))}

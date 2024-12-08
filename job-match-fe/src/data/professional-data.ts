@@ -233,17 +233,14 @@ export const getCV = async (id: string): Promise<CVResponse | null> => {
     return { file: response.data, filename };
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      console.error(
-        "Error fetching photo:",
-        error.response?.status,
-        error.message
+      throw new Error(
+        `Error fetching CV: ${error.response?.status} ${error.message}`
       );
     } else {
-      console.error("Unexpected error:", error);
+      throw new Error(`Error fetching CV: ${error}`);
     }
-
-    return null;
   }
+  return null;
 };
 
 export const uploadCV = async (file: File) => {
