@@ -203,6 +203,7 @@ export const getAdsCompany = async (
           company_id: ad.company_id,
           company_name: company?.name ?? "",
           company_logo: imgUrl,
+          company_website: company?.website_url ?? null,
           category_id: ad.category_id,
           category_name: ad.category_name,
           city_id: ad.city.id,
