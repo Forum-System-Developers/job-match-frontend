@@ -86,6 +86,14 @@ const CompanyDetailsArea = () => {
                       </div>
                     </li>
                     <li className="col-12">
+                      <span>Successful matches: </span>
+                      <div>
+                        <a className="me-3" href="#open-positions">
+                          {company?.successful_matches}
+                        </a>
+                      </div>
+                    </li>
+                    <li className="col-12">
                       <span>Category: </span>
                       <div>Technology, Product, Agency</div>
                     </li>
