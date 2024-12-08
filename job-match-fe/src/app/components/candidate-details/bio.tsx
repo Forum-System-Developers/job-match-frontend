@@ -19,21 +19,13 @@ const CandidateBio = ({
       <li>
         <span>Email: </span>
         <div>
-          <a href="mailto:me@support.com">{professional?.email}</a>
+          <a href={`mailto:${professional?.email}`}>{professional?.email}</a>
         </div>
       </li>
       <li>
-        <span>Qualification: </span>
-        <div>Master Degree</div>
+        <span>Active applications count: </span>
+        <div>{professional?.active_application_count}</div>
       </li>
-      <li>
-        <span>Gender: </span>
-        <div>Male</div>
-      </li>
-      {/* <li>
-        <span>Expected Min Salary: </span>
-        <div>$3k-$4k/month</div>
-      </li> */}
       <li>
         <span>Social:</span>
         <div>
