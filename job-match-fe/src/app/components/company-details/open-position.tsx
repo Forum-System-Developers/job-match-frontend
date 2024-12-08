@@ -6,7 +6,7 @@ import { useAdsCompany } from "../company/hooks/useAds";
 
 const OpenPosition = () => {
   const { id } = useParams();
-  const { ads, loading } = useAdsCompany(id as string);
+  const { ads } = useAdsCompany(id as string);
 
   const job_items = ads.slice(0, 4);
   return (

@@ -12,6 +12,7 @@ import {
   useJobApplicationsProfessional,
   useMatchedApplicationsProfessional,
 } from "../../jobs/hooks/useJobApplications";
+import { useUser } from "@/hooks/use-user";
 
 // card item
 export function CardItem({
@@ -45,8 +46,9 @@ type IProps = {
 };
 
 const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
+  const { user } = useUser();
   const { jobApplications, loading: jobApplicationsLoading } =
-    useJobApplicationsProfessional();
+    useJobApplicationsProfessional(user?.id as string);
   const { matchedApplications, loading: matchedApplicationsLoading } =
     useMatchedApplicationsProfessional();
   const job_data = jobApplications;

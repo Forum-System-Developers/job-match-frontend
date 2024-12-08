@@ -9,11 +9,15 @@ import { sendMatchRequestToJobAd } from "@/services/matching";
 import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
 import { role } from "@/utils/auth_utils";
 import Link from "next/link";
+import { useUser } from "@/hooks/use-user";
 
 const JobDetailsV1Area = () => {
   const { id } = useParams();
   const { ad } = useAd(id as string);
-  const { jobApplications } = useJobApplicationsProfessional();
+  const { user } = useUser();
+  const { jobApplications } = useJobApplicationsProfessional(
+    user?.id as string
+  );
   const [open, setOpen] = useState(false);
   const job = ad;
 
