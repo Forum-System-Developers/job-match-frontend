@@ -30,7 +30,7 @@ const JobDetailsDynamicPage = () => {
         {/* job details area end */}
 
         {/* related job start */}
-        {/* {<RelatedJobs category={job.category} />} */}
+        {<RelatedJobs />}
         {/* related job end */}
 
         {/* job portal intro start */}

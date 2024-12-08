@@ -10,6 +10,7 @@ export interface JobAdResponse {
   company_id: string;
   company_name: string;
   company_logo: string;
+  company_website: string | null;
   category_id: string;
   category_name: string;
   city_id: string;
@@ -45,6 +46,7 @@ export const getJobAds = async () => {
           company_id: ad.company_id,
           company_name: company?.name ?? "",
           company_logo: imgUrl,
+          company_website: company?.website_url ?? null,
           category_id: ad.category_id,
           category_name: ad.category_name,
           city_id: ad.city.id,
@@ -108,6 +110,7 @@ export const getJobAd = async (id: string) => {
       company_id: jobAdData.company_id,
       company_name: company?.name ?? "",
       company_logo: imgUrl,
+      company_website: company?.website_url ?? null,
       category_id: jobAdData.category_id,
       category_name: jobAdData.category_name,
       city_id: jobAdData.city.id,
