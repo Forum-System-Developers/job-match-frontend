@@ -61,10 +61,6 @@ const CompanyDetailsArea = () => {
                       <span>Location: </span>
                       <div>{company?.address_line} </div>
                     </li>
-                    {/* <li className="col-12">
-                      <span>Size:</span>
-                      <div>7000-8000, Worldwide</div>
-                    </li> */}
                     <li className="col-12">
                       <span>Email: </span>
                       <div>
@@ -79,6 +75,14 @@ const CompanyDetailsArea = () => {
                       <span>Phone:</span>
                       <div>
                         <a href="#">{company?.phone_number}</a>{" "}
+                      </div>
+                    </li>
+                    <li className="col-12">
+                      <span>Currently Open Positions: </span>
+                      <div>
+                        <a className="me-3" href="#open-positions">
+                          {company?.active_job_ads}
+                        </a>
                       </div>
                     </li>
                     <li className="col-12">
