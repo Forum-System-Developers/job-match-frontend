@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CompanyDetails } from "@/app/components/dashboard/employ/data/company-data";
+import { CompanyDetails } from "@/data/company-data";
 import axiosInstance from "@/services/axiosInstance";
 
 export const useCompany = (id: string) => {

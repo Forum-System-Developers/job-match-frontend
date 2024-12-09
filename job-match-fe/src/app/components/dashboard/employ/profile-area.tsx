@@ -9,7 +9,7 @@ import StateSelect from "../candidate/state-select";
 import DashboardHeader from "../candidate/dashboard-header";
 import { useLogo } from "./hooks/useLogo";
 import { useCompany } from "./hooks/useCompany";
-import { uploadLogo } from "./data/company-data";
+import { uploadLogo } from "../../../../data/company-data";
 
 // props type
 type IProps = {

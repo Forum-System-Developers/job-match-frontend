@@ -11,10 +11,9 @@ import Link from "next/link";
 const CompanyDetailsArea = () => {
   const { id } = useParams();
   const { company, loading: companyLoading } = useCompany(id as string);
-  const { photoUrl, loading: photoLoading } = useLogo(id as string);
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
 
-  const isLoading = companyLoading || photoLoading;
+  const isLoading = companyLoading;
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -28,7 +27,7 @@ const CompanyDetailsArea = () => {
             <div className="col-xxl-3 col-xl-4 order-xl-last">
               <div className="job-company-info ms-xl-5 ms-xxl-0 lg-mb-50">
                 <Image
-                  src={photoUrl ? photoUrl : profile_icon_1}
+                  src={company?.logo || profile_icon_1}
                   alt="logo"
                   className="lazy-img m-auto logo"
                   height={35}

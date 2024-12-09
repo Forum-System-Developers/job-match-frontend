@@ -6,6 +6,7 @@ import JobPortalIntro from "../components/job-portal-intro/job-portal-intro";
 import CompanyBreadcrumb from "../components/common/common-breadcrumb";
 import FooterOne from "@/layouts/footers/footer-one";
 import CompanyV1Area from "../components/company/company-v1-area";
+import CompanyV2Client from "../components/company/company-client";
 
 export const metadata: Metadata = {
   title: "Companies",
@@ -20,11 +21,11 @@ const CompanyV2Page = () => {
         {/* header end */}
 
         {/*breadcrumb start */}
-        <CompanyBreadcrumb title="Companies" subtitle="All companies" />
+        <CompanyBreadcrumb title="Companies" subtitle="Browse all companies" />
         {/*breadcrumb end */}
 
         {/* company v2 area start */}
-        <CompanyV1Area style_2={true} />
+        <CompanyV2Client />
         {/* company v2 area end */}
 
         {/* job portal intro start */}

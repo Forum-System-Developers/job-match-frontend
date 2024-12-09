@@ -1,8 +1,5 @@
 import axiosInstance from "@/services/axiosInstance";
-import {
-  CompanyDetails,
-  getLogo,
-} from "@/app/components/dashboard/employ/data/company-data";
+import { CompanyDetails, getLogo } from "@/data/company-data";
 import { strict } from "assert";
 
 export interface JobAdResponse {

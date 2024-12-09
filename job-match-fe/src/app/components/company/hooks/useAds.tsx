@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getJobAds, JobAdResponse } from "@/data/job-ad-data";
-import { getAdsCompany } from "../../dashboard/employ/data/company-data";
+import { getAdsCompany } from "../../../../data/company-data";
 
 export const useAds = () => {
   const [ads, setAds] = useState<JobAdResponse[]>([]);
