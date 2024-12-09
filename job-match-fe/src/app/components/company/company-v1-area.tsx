@@ -51,7 +51,11 @@ const CompanyV1Area = ({
               ></button>
               <div className="main-title fw-500 text-dark">Filter By</div>
               {/* CompanyV1Filter */}
-              <CompanyV1Filter searchTerm={searchTerm} onSearch={onSearch} />
+              <CompanyV1Filter
+                searchTerm={searchTerm}
+                onSearch={onSearch}
+                companies={companies}
+              />
               {/* CompanyV1Filter */}
             </div>
           </div>

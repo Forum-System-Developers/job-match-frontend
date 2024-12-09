@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
-import { CompanyDetails, getCurrentCompany } from "../data/company-data";
+import {
+  CompanyDetails,
+  getCurrentCompany,
+} from "../../../../../data/company-data";
 
 export const useCompany = () => {
   const [company, setCompany] = useState<CompanyDetails | null>(null);

@@ -9,7 +9,7 @@ import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
 import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
 import logout from "@/assets/dashboard/images/icon/icon_9.svg";
-import { nav_data } from "./data/company-data";
+import { nav_data } from "../../../../data/company-data";
 import { useLogo } from "./hooks/useLogo";
 import { useCompany } from "./hooks/useCompany";
 

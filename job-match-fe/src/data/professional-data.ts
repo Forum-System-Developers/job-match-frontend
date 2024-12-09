@@ -356,10 +356,10 @@ export const getMatchedApplicationsForProfessional = async (id: string) => {
 export const getProfessionals = async () => {
   try {
     const response = await axiosInstance.post(`/professionals/all`);
-    const companiesData = response.data.detail ?? [];
+    const professionalsData = response.data.detail ?? [];
 
     const professionals: ProfessionalDetails[] = await Promise.all(
-      companiesData.map(async (professional: any) => {
+      professionalsData.map(async (professional: any) => {
         const photoBlob = await getPhoto(professional.id);
         const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
 
