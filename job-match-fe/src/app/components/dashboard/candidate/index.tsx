@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { useState } from "react";
 import CandidateAside from "./aside";
 import DashboardArea from "./dashboard-area";
 import { useUser } from "@/hooks/use-user";

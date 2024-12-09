@@ -69,7 +69,8 @@ export const getUser = async (): Promise<UserDetails | null> => {
     const response = await axiosInstance.get(`/auth/me`);
     const userId = response.data.detail.id;
     const role: string = response.data.detail.role;
-    return { id: userId, role: role };
+    const user = { id: userId, role: role };
+    return user;
   } catch (error) {
     console.error("Failed to fetch user details:", error);
     return null;
@@ -88,7 +89,6 @@ export const currentUser = async (): Promise<UserDetails> => {
       console.error("An error occurred:", error);
     }
   }
-  // window.location.href = "/";
   return { id: "", role: "" };
 };
 
@@ -96,7 +96,10 @@ export const handleLogout = async () => {
   try {
     await axiosInstance.post(`/auth/logout`);
     localStorage.removeItem("role");
-    window.location.href = "/";
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1500);
   } catch (error) {
     console.error("Logout failed:", error);
   }
