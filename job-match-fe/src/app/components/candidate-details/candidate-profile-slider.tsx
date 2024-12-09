@@ -41,7 +41,7 @@ const CandidateProfileSlider = () => {
   const { jobApplications } = useJobApplicationsProfessional(id as string);
   return (
     <Slider {...slider_setting} className="candidate-portfolio-slider">
-      {jobApplications.map((item, i) => (
+      {jobApplications?.map((item, i) => (
         <div className="item" key={i}>
           <a href="#" className="w-100 d-blok">
             <ApplicationGridItem item={item} />

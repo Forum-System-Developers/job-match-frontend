@@ -1,30 +1,15 @@
-import { useState, useEffect } from "react";
-import {
-  getProfessional,
-  ProfessionalDetails,
-} from "../../../../data/professional-data";
+import { useQuery } from "@tanstack/react-query";
+import { getProfessional } from "../../../../data/professional-data";
 
 export const useProfessional = (id: string) => {
-  const [professional, setProfessional] = useState<ProfessionalDetails | null>(
-    null
-  );
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const fetchProfessional = async () => {
-    setLoading(true);
-    try {
-      const professional = await getProfessional(id);
-      setProfessional(professional);
-    } catch (error) {
-      console.error("Error fetching professional:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProfessional();
-  }, []);
-
-  return { professional, loading };
+  const {
+    data: professional,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["professional", id],
+    queryFn: ({ queryKey }) => getProfessional(queryKey[1]),
+    enabled: !!id, // This ensures the query runs only if `id` is truthy
+  });
+  return { professional, isLoading, error };
 };

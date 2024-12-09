@@ -27,10 +27,6 @@ const JobListOnePage = () => {
         <JobListThree itemsPerPage={8} />
         {/* job list three end */}
 
-        {/* job portal intro start */}
-        {/* <JobPortalIntro top_border={true} /> */}
-        {/* job portal intro end */}
-
         {/* footer start */}
         <FooterOne />
         {/* footer end */}
