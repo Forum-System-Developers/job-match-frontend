@@ -271,9 +271,16 @@ export const uploadCV = async (file: File) => {
         },
       }
     );
-    alert("CV uploaded successfully");
   } catch (error) {
     console.error("Error uploading file:", error);
+  }
+};
+
+export const deleteCV = async () => {
+  try {
+    await axiosInstance.delete(`/professionals/cv`);
+  } catch (error) {
+    console.error("Error deleting CV:", error);
   }
 };
 
