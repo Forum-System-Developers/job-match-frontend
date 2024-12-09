@@ -132,13 +132,14 @@ export const getCurrentProfessional =
     }
   };
 
-export const getPhoto = async (id: string): Promise<Blob | null> => {
+export const getPhoto = async (id: string): Promise<string | null> => {
   try {
-    const file = await axiosInstance.get<Blob>(
+    const response = await axiosInstance.get<Blob>(
       `/professionals/${id}/download-photo`,
       { responseType: "blob" }
     );
-    return file.data;
+    const photoUrl = URL.createObjectURL(response.data); // Convert Blob to URL
+    return photoUrl;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 404) {
@@ -379,8 +380,7 @@ export const getProfessionals = async () => {
 
     const professionals: ProfessionalDetails[] = await Promise.all(
       professionalsData.map(async (professional: any) => {
-        const photoBlob = await getPhoto(professional.id);
-        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+        const imgUrl = await getPhoto(professional.id);
 
         return {
           id: professional.id,
