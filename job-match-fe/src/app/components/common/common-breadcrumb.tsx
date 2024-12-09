@@ -22,10 +22,10 @@ const CommonBreadcrumb = ({
           <div className="row">
             <div className="col-xl-6 m-auto text-center">
               <div className="title-two">
-                <h2 className="text-white">{company?.name}</h2>
+                <h2 className="text-white">{company?.name || title}</h2>
               </div>
               <p className="text-lg text-white mt-30 lg-mt-20">
-                {company?.address_line}
+                {company?.address_line || subtitle}
               </p>
             </div>
           </div>

@@ -8,10 +8,20 @@ import CompanyGridItem from "./company-grid-item";
 import CompanyListItem from "./company-list-item";
 import CompanyPagination from "./company-pagination";
 import { useCompanies } from "./hooks/useCompanies";
+import { validateFieldsNatively } from "@hookform/resolvers";
 
-const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
+const CompanyV1Area = ({
+  style_2 = false,
+  companies,
+  searchTerm,
+  onSearch,
+}: {
+  style_2?: boolean;
+  companies: Array<any>;
+  searchTerm: string;
+  onSearch: (value: string) => void;
+}) => {
   const [jobType, setJobType] = useState<string>(style_2 ? "list" : "grid");
-  const { companies, loading } = useCompanies();
 
   const companiesCount = companies.length;
   const company_data = companies;
@@ -41,7 +51,7 @@ const CompanyV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
               ></button>
               <div className="main-title fw-500 text-dark">Filter By</div>
               {/* CompanyV1Filter */}
-              <CompanyV1Filter />
+              <CompanyV1Filter searchTerm={searchTerm} onSearch={onSearch} />
               {/* CompanyV1Filter */}
             </div>
           </div>

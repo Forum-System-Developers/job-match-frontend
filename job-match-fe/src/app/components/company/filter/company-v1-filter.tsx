@@ -1,7 +1,15 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import FilterCompanyLocation from "./filter-company-location";
+import { useCompanies } from "../hooks/useCompanies";
 
-const CompanyV1Filter = () => {
+const CompanyV1Filter = ({
+  searchTerm,
+  onSearch,
+}: {
+  searchTerm: string;
+  onSearch: (value: string) => void;
+}) => {
   return (
     <div className="light-bg border-20 ps-4 pe-4 pt-25 pb-30 mt-20">
       <div className="filter-block bottom-line pb-25">
@@ -17,7 +25,12 @@ const CompanyV1Filter = () => {
         <div className="collapse show" id="collapseSemploye">
           <div className="main-body">
             <form action="#" className="input-box position-relative">
-              <input type="text" placeholder="Company Name" />
+              <input
+                type="text"
+                placeholder="Company Name"
+                value={searchTerm}
+                onChange={(e) => onSearch(e.target.value)}
+              />
               <button>
                 <i className="bi bi-search"></i>
               </button>
@@ -68,7 +81,7 @@ const CompanyV1Filter = () => {
         </a>
         <div className="collapse show" id="collapseLocation">
           <div className="main-body">
-            <FilterCompanyLocation/>
+            <FilterCompanyLocation />
           </div>
         </div>
       </div>
