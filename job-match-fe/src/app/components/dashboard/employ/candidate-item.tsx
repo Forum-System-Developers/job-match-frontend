@@ -1,19 +1,20 @@
 import React from "react";
 import ActionDropdown from "../candidate/action-dropdown";
-import { ICandidate } from "@/data/candidate-data";
 import Image from "next/image";
+import { ProfessionalDetails } from "@/data/professional-data";
+import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 
-const CandidateItem = ({ item }: { item: ICandidate }) => {
+const CandidateItem = ({ item }: { item: ProfessionalDetails }) => {
   return (
     <div className="candidate-profile-card list-layout border-0 mb-25">
       <div className="d-flex">
         <div className="cadidate-avatar online position-relative d-block me-auto ms-auto">
           <a href="#" className="rounded-circle">
             <Image
-              src={item.img}
+              src={item.photo || profile_icon_1}
               alt="image"
               className="lazy-img rounded-circle"
-              style={{height:'auto'}}
+              style={{ height: "auto" }}
             />
           </a>
         </div>
@@ -23,10 +24,9 @@ const CandidateItem = ({ item }: { item: ICandidate }) => {
               <div className="position-relative">
                 <h4 className="candidate-name mb-0">
                   <a href="#" className="tran3s">
-                    {item.name}
+                    {item.first_name} {item.last_name}
                   </a>
                 </h4>
-                <div className="candidate-post">{item.post}</div>
                 <ul className="cadidate-skills style-none d-flex align-items-center">
                   <li>{item.skills[0]}</li>
                   <li>{item.skills[1]}</li>
@@ -37,14 +37,14 @@ const CandidateItem = ({ item }: { item: ICandidate }) => {
             </div>
             <div className="col-xl-3 col-md-4 col-sm-6">
               <div className="candidate-info">
-                <span>Salary</span>
-                <div>{item.salary}/{item.salary_duration}</div>
+                <span>Active Application</span>
+                <div>{item.active_application_count}</div>
               </div>
             </div>
             <div className="col-xl-3 col-md-4 col-sm-6">
               <div className="candidate-info">
                 <span>Location</span>
-                <div>{item.location}</div>
+                <div>{item.city}</div>
               </div>
             </div>
             <div className="col-xl-3 col-md-4">

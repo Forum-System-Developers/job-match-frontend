@@ -3,7 +3,7 @@ import NiceSelect from "@/ui/nice-select";
 import { useProfessionals } from "../hooks/useProfessionals";
 
 const FilterSkills = () => {
-  const { professionals, loading } = useProfessionals();
+  const { professionals } = useProfessionals();
   const candidate_data = professionals;
 
   const uniqueSkills = [...new Set(candidate_data.flatMap((c) => c.skills))];
@@ -15,6 +15,7 @@ const FilterSkills = () => {
     <NiceSelect
       options={options}
       defaultCurrent={0}
+      placeholder="Select Skills"
       onChange={(item) => handleSkills(item)}
       cls="bg-white"
       name="Category"

@@ -22,7 +22,7 @@ const CandidatePage = () => {
         {/* search breadcrumb start */}
         <JobBreadcrumb
           title="Candidates"
-          subtitle="Find you desire talents & make your work done"
+          subtitle="Explore top talent and achieve your goals"
         />
         {/* search breadcrumb end */}
 

@@ -1,20 +1,20 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ICandidate } from "@/data/candidate-data";
+import { ProfessionalDetails } from "@/data/professional-data";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 
 const CandidateGridItem = ({
   item,
   style_2 = false,
 }: {
-  item: ICandidate;
+  item: ProfessionalDetails;
   style_2?: boolean;
 }) => {
   return (
     <div
       className={`candidate-profile-card ${
-        item.favorite ? "favourite" : ""
+        false ? "favourite" : ""
       } text-center ${style_2 ? "border-0" : ""} grid-layout mb-25`}
     >
       <Link
@@ -33,15 +33,9 @@ const CandidateGridItem = ({
           className="rounded-circle"
         >
           <Image
-            src={item.img ? item.img : profile_icon_1}
-            height={85}
-            width={85}
-            // style={{
-            //   width: "100%",
-            //   height: "100%",
-            //   objectFit: "cover",
-            //   borderRadius: "50%",
-            // }}
+            src={item.photo || profile_icon_1}
+            height={65}
+            width={65}
             alt="image"
             className="lazy-img rounded-circle"
           />
@@ -54,10 +48,9 @@ const CandidateGridItem = ({
           }}
           className="tran3s"
         >
-          {item.name}
+          {item.first_name} {item.last_name}
         </Link>
       </h4>
-      <div className="candidate-post">{item.post}</div>
       <ul className="cadidate-skills style-none d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-30 sm-pt-20 pb-10">
         {item.skills?.slice(0, 3).map((s, i) => (
           <li key={i}>{s}</li>
@@ -71,16 +64,14 @@ const CandidateGridItem = ({
       <div className="row gx-1">
         <div className="col-md-6">
           <div className="candidate-info mt-10">
-            <span>Salary</span>
-            <div>
-              {item.salary}/{item.salary_duration}
-            </div>
+            <span>Applications</span>
+            <div>{item.active_application_count}</div>
           </div>
         </div>
         <div className="col-md-6">
           <div className="candidate-info mt-10">
             <span>Location</span>
-            <div>{item.location}</div>
+            <div>{item.city}</div>
           </div>
         </div>
       </div>
@@ -98,11 +89,11 @@ const CandidateGridItem = ({
         <div className="col-md-6">
           <Link
             href={{
-              pathname: `/candidate/${item.id}`,
+              pathname: `mailto:${item.email}`,
             }}
             className="msg-btn tran3s w-100 mt-5"
           >
-            Message
+            Send email
           </Link>
         </div>
       </div>

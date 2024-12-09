@@ -1,19 +1,19 @@
 import React from "react";
-import { ICandidate } from "@/data/candidate-data";
 import Image from "next/image";
 import Link from "next/link";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
+import { ProfessionalDetails } from "@/data/professional-data";
 
 const CandidateListItem = ({
   item,
   style_2 = false,
 }: {
-  item: ICandidate;
+  item: ProfessionalDetails;
   style_2?: boolean;
 }) => {
   return (
     <div
-      className={`candidate-profile-card ${item.favorite ? "favourite" : ""} ${
+      className={`candidate-profile-card ${false ? "favourite" : ""} ${
         style_2 ? "border-0" : ""
       } list-layout mb-25`}
     >
@@ -26,9 +26,9 @@ const CandidateListItem = ({
             className="rounded-circle"
           >
             <Image
-              src={item.img ? item.img : profile_icon_1}
-              height={85}
-              width={85}
+              src={item?.photo || profile_icon_1}
+              height={55}
+              width={55}
               alt="image"
               className="lazy-img rounded-circle"
             />
@@ -45,10 +45,9 @@ const CandidateListItem = ({
                     }}
                     className="tran3s"
                   >
-                    {item.name}
+                    {item.first_name} {item.last_name}
                   </Link>
                 </h4>
-                <div className="candidate-post">{item.post}</div>
                 <ul className="cadidate-skills style-none d-flex align-items-center">
                   {item.skills?.slice(0, 3).map((s, i) => (
                     <li key={i}>{s}</li>
@@ -61,18 +60,17 @@ const CandidateListItem = ({
                 </ul>
               </div>
             </div>
+
             <div className="col-xl-3 col-md-4 col-sm-6">
               <div className="candidate-info">
-                <span>Salary</span>
-                <div>
-                  {item.salary}/{item.salary_duration}
-                </div>
+                <span>Applications</span>
+                <div>{item.active_application_count}</div>
               </div>
             </div>
             <div className="col-xl-3 col-md-4 col-sm-6">
               <div className="candidate-info">
                 <span>Location</span>
-                <div>{item.location}</div>
+                <div>{item.city}</div>
               </div>
             </div>
             <div className="col-xl-3 col-md-4">

@@ -17,7 +17,6 @@ const CandidateDetailsArea = () => {
   const { id } = useParams();
   const [error, setError] = useState<string | null>(null);
 
-  const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const { professional } = useProfessional(id as string);
   const { photoUrl } = usePhoto(id as string);
 

@@ -6,7 +6,7 @@ const FilterCandidateLocation = () => {
   const { professionals, loading } = useProfessionals();
   const candidate_data = professionals;
 
-  const uniqueLocations = [...new Set(candidate_data.map((c) => c.location))];
+  const uniqueLocations = [...new Set(candidate_data.map((c) => c.city))];
   const handleLocation = (item: { value: string; label: string }) => {};
   const options = uniqueLocations.map((l) => {
     return { value: l, label: l };
@@ -15,6 +15,7 @@ const FilterCandidateLocation = () => {
     <NiceSelect
       options={options}
       defaultCurrent={0}
+      placeholder="Location"
       onChange={(item) => handleLocation(item)}
       name="Location"
     />

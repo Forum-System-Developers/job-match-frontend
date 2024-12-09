@@ -3,7 +3,7 @@ import React from "react";
 import DashboardHeader from "../candidate/dashboard-header";
 import CandidateItem from "./candidate-item";
 import EmployShortSelect from "./short-select";
-import { ICandidate } from "@/data/candidate-data";
+import { ProfessionalDetails } from "@/data/professional-data";
 
 // props type
 type IProps = {
@@ -11,7 +11,7 @@ type IProps = {
 };
 
 const SavedCandidateArea = ({ setIsOpenSidebar }: IProps) => {
-  const candidate_data: ICandidate[] = [];
+  const candidate_data: ProfessionalDetails[] = [];
   const candidate_items = candidate_data.slice(0, 4);
   return (
     <div className="dashboard-body">

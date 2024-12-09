@@ -24,7 +24,7 @@ const JobLocationSelect = ({
   return (
     <NiceSelect
       options={location_option}
-      placeholder={uniqueLocations[0]}
+      placeholder="Location"
       defaultCurrent={0}
       onChange={(item) => handleLocation(item)}
       name="looking for"

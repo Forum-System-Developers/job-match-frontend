@@ -1,8 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import nav_1 from "@/assets/dashboard/images/icon/icon_1.svg";
 import nav_1_active from "@/assets/dashboard/images/icon/icon_1_active.svg";
-import nav_2 from "@/assets/dashboard/images/icon/icon_2.svg";
-import nav_2_active from "@/assets/dashboard/images/icon/icon_2_active.svg";
 import nav_3 from "@/assets/dashboard/images/icon/icon_3.svg";
 import nav_3_active from "@/assets/dashboard/images/icon/icon_3_active.svg";
 import nav_4 from "@/assets/dashboard/images/icon/icon_4.svg";
@@ -11,8 +9,6 @@ import nav_5 from "@/assets/dashboard/images/icon/icon_5.svg";
 import nav_5_active from "@/assets/dashboard/images/icon/icon_5_active.svg";
 import nav_6 from "@/assets/dashboard/images/icon/icon_6.svg";
 import nav_6_active from "@/assets/dashboard/images/icon/icon_6_active.svg";
-import nav_7 from "@/assets/dashboard/images/icon/icon_7.svg";
-import nav_7_active from "@/assets/dashboard/images/icon/icon_7_active.svg";
 import { currentUser } from "@/utils/auth_utils";
 import axiosInstance from "@/services/axiosInstance";
 import axios from "axios";
@@ -68,9 +64,11 @@ export interface ProfessionalDetails {
   first_name: string;
   last_name: string;
   description: string;
+  photo: string | null;
   city: string;
   email: string;
   status: "active" | "busy";
+  skills: string[];
   active_application_count: number;
 }
 
@@ -93,9 +91,11 @@ export const getCurrentProfessional =
         first_name,
         last_name,
         description,
+        photo,
         city,
         email,
         status,
+        skills,
         active_application_count,
       } = data.detail;
 
@@ -104,9 +104,11 @@ export const getCurrentProfessional =
         first_name,
         last_name,
         description,
+        photo,
         city,
         email,
         status,
+        skills: skills.map((skill: any) => skill.name),
         active_application_count,
       };
       return professional;
@@ -173,9 +175,11 @@ export const getProfessional = async (
       first_name,
       last_name,
       description,
+      photo,
       city,
       email,
       status,
+      skills,
       active_application_count,
     } = data.detail;
 
@@ -184,9 +188,11 @@ export const getProfessional = async (
       first_name,
       last_name,
       description,
+      photo,
       city,
       email,
       status,
+      skills: skills.map((skill: any) => skill.name),
       active_application_count,
     };
     return professional;
@@ -343,6 +349,38 @@ export const getMatchedApplicationsForProfessional = async (id: string) => {
     return applications;
   } catch (error) {
     console.error("Error fetching applications:", error);
+    return [];
+  }
+};
+
+export const getProfessionals = async () => {
+  try {
+    const response = await axiosInstance.post(`/professionals/all`);
+    const companiesData = response.data.detail ?? [];
+
+    const professionals: ProfessionalDetails[] = await Promise.all(
+      companiesData.map(async (professional: any) => {
+        const photoBlob = await getPhoto(professional.id);
+        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+
+        return {
+          id: professional.id,
+          first_name: professional.first_name,
+          last_name: professional.last_name,
+          description: professional.description,
+          photo: imgUrl,
+          city: professional.city,
+          email: professional.email,
+          status: professional.status,
+          skills: professional.skills.map((skill: any) => skill.name),
+          active_application_count: professional.active_application_count,
+        };
+      })
+    );
+
+    return professionals;
+  } catch (error) {
+    console.error("Error fetching professionals:", error);
     return [];
   }
 };

@@ -7,7 +7,7 @@ import ShortSelect from "../common/short-select";
 import { useProfessionals } from "./hooks/useProfessionals";
 
 const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
-  const { professionals, loading } = useProfessionals();
+  const { professionals } = useProfessionals();
   const candidate_data = professionals;
   const [jobType, setJobType] = useState<string>(style_2 ? "list" : "grid");
   return (
@@ -93,7 +93,9 @@ const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                 <div className="pt-20 d-sm-flex align-items-center justify-content-between">
                   <p className="m0 order-sm-last text-center text-sm-start xs-pb-20">
                     Showing <span className="text-dark fw-500">1 to 20</span> of{" "}
-                    <span className="text-dark fw-500">1,270</span>
+                    <span className="text-dark fw-500">
+                      {candidate_data.length}
+                    </span>
                   </p>
                   <div className="d-flex justify-content-center">
                     <ul className="pagination-two d-flex align-items-center style-none">
