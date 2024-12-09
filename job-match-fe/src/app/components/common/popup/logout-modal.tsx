@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import icon from "@/assets/dashboard/images/icon/icon_22.svg";
-import { useRouter } from "next/navigation";
 import { handleLogout } from "@/utils/auth_utils";
 
 declare global {

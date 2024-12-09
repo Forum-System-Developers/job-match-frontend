@@ -15,24 +15,24 @@ import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
 import { usePhoto } from "./hooks/usePhoto";
 import { handleLogout } from "@/utils/auth_utils";
+import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 
 // props type
 type IProps = {
   isOpenSidebar: boolean;
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  professional: ProfessionalDetails | null;
 };
 
-const CandidateAside = ({
-  isOpenSidebar,
-  setIsOpenSidebar,
-  professional,
-}: IProps) => {
+const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
-  const { photoUrl, loading: photoLoading } = usePhoto(
-    professional?.id as string
-  );
+  const { professional, loading: professionalLoading } =
+    useCurrentProfessional();
+  const userId = professional?.id;
+  const { photoUrl, loading: photoLoading } = usePhoto(userId ? userId : "");
 
+  if (professionalLoading) {
+    return <div>Loading...</div>;
+  }
   if (photoLoading) {
     return <div>Loading...</div>;
   }
@@ -55,7 +55,7 @@ const CandidateAside = ({
           <div className="user-data">
             <div className="user-avatar online position-relative rounded-circle">
               <Image
-                src={photoUrl ? photoUrl : profile_icon_1}
+                src={photoUrl || profile_icon_1}
                 alt="avatar"
                 className="lazy-img"
                 height={68}
@@ -76,6 +76,7 @@ const CandidateAside = ({
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="outside"
                 aria-expanded="false"
+                style={{ whiteSpace: "normal" }}
               >
                 {professional?.first_name} {professional?.last_name}
               </button>

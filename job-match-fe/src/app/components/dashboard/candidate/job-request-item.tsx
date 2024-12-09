@@ -18,6 +18,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestAd }) => {
         request.job_ad_id,
         request.job_application_id
       );
+      window.location.reload();
       setResponse(true);
     } catch (error) {
       console.error("Error accepting match request:", error);
@@ -30,6 +31,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestAd }) => {
         request.job_ad_id,
         request.job_application_id
       );
+      window.location.reload();
       setResponse(true);
     } catch (error) {
       console.error("Error rejecting match request:", error);
