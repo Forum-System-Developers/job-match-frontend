@@ -3,13 +3,12 @@ import { getProfessional } from "../../../../data/professional-data";
 
 export const useProfessional = (id: string) => {
   const {
-    data: professional,
+    data: professional = null,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["professional", id],
-    queryFn: ({ queryKey }) => getProfessional(queryKey[1]),
-    enabled: !!id, // This ensures the query runs only if `id` is truthy
+    queryFn: () => getProfessional(id),
   });
   return { professional, isLoading, error };
 };

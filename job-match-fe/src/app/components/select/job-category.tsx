@@ -2,22 +2,21 @@ import React from "react";
 import NiceSelect from "@/ui/nice-select";
 import slugify from "slugify";
 import { useAds } from "../company/hooks/useAds";
+import { useCategories } from "@/hooks/use-categories";
 
 const JobCategorySelect = ({
   setCategoryVal,
 }: {
   setCategoryVal: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const { ads, loading } = useAds();
+  const { categories, loading } = useCategories();
 
-  const uniqueCategories = [
-    ...new Set(ads.flatMap((job) => job.category_name)),
-  ];
-  // category_option
-  const category_option = uniqueCategories.map((c) => {
+  if (loading) return <div>Loading...</div>;
+
+  const category_option = categories.map((c) => {
     return {
-      value: slugify(c.split(",").join("-").toLowerCase(), "-"),
-      label: c,
+      value: slugify(c.title.toLowerCase(), "-"),
+      label: c.title,
     };
   });
   const handleCategory = (item: { value: string; label: string }) => {
@@ -26,7 +25,7 @@ const JobCategorySelect = ({
   return (
     <NiceSelect
       options={category_option}
-      placeholder={uniqueCategories[0]}
+      placeholder={categories[0].title}
       defaultCurrent={0}
       onChange={(item) => handleCategory(item)}
       name="Category"

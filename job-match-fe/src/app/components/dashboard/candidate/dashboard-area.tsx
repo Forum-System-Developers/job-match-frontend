@@ -18,26 +18,30 @@ import {
   ProfessionalDetails,
 } from "@/data/professional-data";
 import { JobApplication } from "@/data/job-applications-data";
+import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  userId: string | undefined;
-  professional: ProfessionalDetails | null;
 };
 
-const DashboardArea = ({ setIsOpenSidebar, userId, professional }: IProps) => {
-  const active_application_count = professional?.active_application_count;
-  const sent_match_requests = professional?.sent_match_requests?.length ?? 0;
+const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
+  const { professional, loading: professionalLoading } =
+    useCurrentProfessional();
+  const userId = professional?.id;
 
   const { jobApplications, isLoading: jobLoading } =
     useJobApplicationsProfessional(userId as string);
-  const { matchedApplications, loading: matchedLoading } =
+  const { matchedApplications, isLoading: matchedLoading } =
     useMatchedApplicationsProfessional(userId as string);
 
-  if (jobLoading || matchedLoading) {
+  if (professionalLoading || jobLoading || matchedLoading) {
     return <div>Loading...</div>;
   }
+
+  const active_application_count = professional?.active_application_count;
+  const sent_match_requests = professional?.sent_match_requests?.length ?? 0;
+
   const job_items =
     jobApplications && matchedApplications
       ? [...jobApplications.slice(0, 5)]
@@ -125,41 +129,56 @@ const DashboardArea = ({ setIsOpenSidebar, userId, professional }: IProps) => {
             <div className="recent-job-tab bg-white border-20 mt-30 w-100">
               <h4 className="dash-title-two">Active Job Applications</h4>
               <div className="wrapper">
-                {job_items.map((j) => (
-                  <div
-                    key={j.id}
-                    className="job-item-list d-flex align-items-center"
-                  >
-                    <div className="job-title">
-                      <h6 className="mb-5">
-                        <a href="#">{j.name}</a>
-                      </h6>
-                      <div className="meta">
-                        <span>{j.description}</span> . <span>{j.city}</span>
+                {job_items && job_items.length > 0 ? (
+                  job_items.map((j) => (
+                    <div
+                      key={j.id}
+                      className="job-item-list d-flex align-items-center"
+                    >
+                      <div className="job-title">
+                        <h6 className="mb-5">
+                          <a href="#">{j.name}</a>
+                        </h6>
+                        <div className="meta">
+                          <span>{j.description}</span> . <span>{j.city}</span>
+                        </div>
+                      </div>
+                      <div className="job-action">
+                        <button
+                          className="action-btn dropdown-toggle"
+                          type="button"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <span></span>
+                        </button>
+                        <ul className="dropdown-menu">
+                          <li>
+                            <a
+                              className="dropdown-item"
+                              href={`/job-application/${j.id}`}
+                            >
+                              View Application
+                            </a>
+                          </li>
+                        </ul>
                       </div>
                     </div>
-                    <div className="job-action">
-                      <button
-                        className="action-btn dropdown-toggle"
-                        type="button"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <span></span>
-                      </button>
-                      <ul className="dropdown-menu">
-                        <li>
-                          <a
-                            className="dropdown-item"
-                            href={`/job-application/${j.id}`}
-                          >
-                            View Application
-                          </a>
-                        </li>
-                      </ul>
+                  ))
+                ) : (
+                  <div className="job-item-list d-flex align-items-center">
+                    <div
+                      className="job-title"
+                      style={{
+                        textAlign: "center",
+                        color: "#3f634d",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <span>No Active Applications</span>
                     </div>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </div>

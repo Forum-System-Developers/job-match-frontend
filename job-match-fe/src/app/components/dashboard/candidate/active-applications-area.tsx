@@ -4,13 +4,23 @@ import ShortSelect from "../../common/short-select";
 import JobRequestItem from "./job-request-item";
 import { useMatchRequests } from "./hooks/useMatchRequests";
 import { MatchRequestAd } from "@/data/match-data";
+import { useUser } from "@/hooks/use-user";
+import { useJobApplicationsProfessional } from "../../jobs/hooks/useJobApplications";
+import { JobApplication } from "@/data/job-applications-data";
+import JobApplicationItem from "./job-application-item";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
-  const { requests, isLoading } = useMatchRequests();
+const ActiveApplicationsArea = ({ setIsOpenSidebar }: IProps) => {
+  const { user, isLoading: UserLoading } = useUser();
+  const { jobApplications, isLoading: JobAppLoading } =
+    useJobApplicationsProfessional(user?.id as string);
+
+  if (UserLoading || JobAppLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="dashboard-body">
@@ -20,7 +30,7 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
         {/* header end */}
 
         <div className="d-flex align-items-center justify-content-between mb-40 lg-mb-30">
-          <h2 className="main-title m0">Match Requests</h2>
+          <h2 className="main-title m0">Active Applications</h2>
           <div className="short-filter d-flex align-items-center">
             <div className="text-dark fw-500 me-2">Sort by:</div>
             <ShortSelect />
@@ -32,7 +42,7 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
             <table className="table job-alert-table">
               <thead>
                 <tr>
-                  <th scope="col">Title</th>
+                  <th scope="col">Name</th>
                   <th scope="col">Description </th>
                   <th scope="col">Min Salary</th>
                   <th scope="col">Max Salary</th>
@@ -40,8 +50,11 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
                 </tr>
               </thead>
               <tbody className="border-0">
-                {requests.map((request: MatchRequestAd) => (
-                  <JobRequestItem key={request.job_ad_id} request={request} />
+                {jobApplications?.map((application: JobApplication) => (
+                  <JobApplicationItem
+                    key={application.id}
+                    application={application}
+                  />
                 ))}
               </tbody>
             </table>
@@ -77,4 +90,4 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
   );
 };
 
-export default MatchRequestsArea;
+export default ActiveApplicationsArea;

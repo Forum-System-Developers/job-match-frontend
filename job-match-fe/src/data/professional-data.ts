@@ -1,6 +1,8 @@
 import Image, { StaticImageData } from "next/image";
 import nav_1 from "@/assets/dashboard/images/icon/icon_1.svg";
 import nav_1_active from "@/assets/dashboard/images/icon/icon_1_active.svg";
+import nav_2 from "@/assets/dashboard/images/icon/icon_1.svg";
+import nav_2_active from "@/assets/dashboard/images/icon/icon_1_active.svg";
 import nav_3 from "@/assets/dashboard/images/icon/icon_3.svg";
 import nav_3_active from "@/assets/dashboard/images/icon/icon_3_active.svg";
 import nav_4 from "@/assets/dashboard/images/icon/icon_4.svg";
@@ -31,33 +33,40 @@ export const nav_data: {
     title: "Dashboard",
   },
   {
-    id: 4,
-    icon: nav_4,
-    icon_active: nav_4_active,
-    link: "/dashboard/candidate-dashboard/messages",
-    title: "Messages",
+    id: 2,
+    icon: nav_6,
+    icon_active: nav_6_active,
+    link: "/dashboard/candidate-dashboard/active-applications",
+    title: "Applications",
   },
+  // {
+  //   id: 4,
+  //   icon: nav_4,
+  //   icon_active: nav_4_active,
+  //   link: "/dashboard/candidate-dashboard/messages",
+  //   title: "Messages",
+  // },
   {
     id: 3,
     icon: nav_3,
     icon_active: nav_3_active,
     link: "/dashboard/candidate-dashboard/match-requests",
     title: "Match Requests",
+    // },
+    // {
+    //   id: 5,
+    //   icon: nav_5,
+    //   icon_active: nav_5_active,
+    //   link: "/dashboard/candidate-dashboard/job-alert",
+    //   title: "Job Alert",
   },
-  {
-    id: 5,
-    icon: nav_5,
-    icon_active: nav_5_active,
-    link: "/dashboard/candidate-dashboard/job-alert",
-    title: "Job Alert",
-  },
-  {
-    id: 6,
-    icon: nav_6,
-    icon_active: nav_6_active,
-    link: "/dashboard/candidate-dashboard/saved-job",
-    title: "Saved Job",
-  },
+  // {
+  //   id: 6,
+  //   icon: nav_6,
+  //   icon_active: nav_6_active,
+  //   link: "/dashboard/candidate-dashboard/saved-job",
+  //   title: "Saved Job",
+  // },
 ];
 
 export interface ProfessionalDetails {
@@ -86,8 +95,8 @@ interface CVResponse {
 
 export const getCurrentProfessional =
   async (): Promise<ProfessionalDetails | null> => {
-    const user = await getUser();
     try {
+      const user = await getUser();
       const { data } = await axiosInstance.get(`/professionals/${user?.id}`);
       const {
         id,
@@ -151,7 +160,7 @@ export const getPhoto = async (id: string): Promise<Blob | null> => {
 export const uploadPhoto = async (file: File) => {
   try {
     const formData = new FormData();
-    formData.append("logo", file);
+    formData.append("photo", file);
 
     const response = await axiosInstance.post(
       `/professionals/upload-photo`,
@@ -162,12 +171,8 @@ export const uploadPhoto = async (file: File) => {
         },
       }
     );
-
-    console.log("Logo uploaded successfully:", response.data);
   } catch (error) {
-    console.error("Error uploading logo:", error);
-  } finally {
-    window.location.href = "/dashboard/candidate-dashboard/profile";
+    console.error("Error uploading photo:", error);
   }
 };
 
@@ -271,9 +276,16 @@ export const uploadCV = async (file: File) => {
         },
       }
     );
-    alert("CV uploaded successfully");
   } catch (error) {
     console.error("Error uploading file:", error);
+  }
+};
+
+export const deleteCV = async () => {
+  try {
+    await axiosInstance.delete(`/professionals/cv`);
+  } catch (error) {
+    console.error("Error deleting CV:", error);
   }
 };
 
@@ -321,7 +333,6 @@ export const getJobApplicationsForProfessional = async (id: string) => {
 
 export const getMatchedApplicationsForProfessional = async (id: string) => {
   try {
-    console.log(id);
     const response = await axiosInstance.get(
       `/professionals/${id}/job-applications`,
       {

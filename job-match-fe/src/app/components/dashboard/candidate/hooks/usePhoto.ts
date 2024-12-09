@@ -1,30 +1,17 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getPhoto } from "../../../../../data/professional-data";
 
 export const usePhoto = (id: string) => {
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: photoUrl = null,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["photo", id],
+    queryFn: () => getPhoto(id),
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+  });
 
-  const fetchPhoto = async (id: string) => {
-    setLoading(true);
-    try {
-      const photo = await getPhoto(id);
-      if (photo) {
-        const url = URL.createObjectURL(photo);
-        setPhotoUrl(url);
-      }
-    } catch (error) {
-      console.error("Error fetching photo:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (id) {
-      fetchPhoto(id);
-    }
-  }, [id]);
-
-  return { photoUrl, loading };
+  return { photoUrl, loading: isLoading, error };
 };

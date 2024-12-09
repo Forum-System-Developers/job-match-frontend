@@ -1,13 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import logo from "@/assets/rephera-logo-02.gif";
-import avatar from "@/assets/dashboard/images/avatar_03.png";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
-import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
 import logout from "@/assets/dashboard/images/icon/icon_9.svg";
 import {
   nav_data,
@@ -15,27 +13,26 @@ import {
 } from "../../../../data/professional-data";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
-import { useProfessional } from "./hooks/useProfessional";
 import { usePhoto } from "./hooks/usePhoto";
 import { handleLogout } from "@/utils/auth_utils";
+import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 
 // props type
 type IProps = {
   isOpenSidebar: boolean;
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
-  professional: ProfessionalDetails | null;
 };
 
-const CandidateAside = ({
-  isOpenSidebar,
-  setIsOpenSidebar,
-  professional,
-}: IProps) => {
+const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
-  const { photoUrl, loading: photoLoading } = usePhoto(
-    professional?.id as string
-  );
+  const { professional, loading: professionalLoading } =
+    useCurrentProfessional();
+  const userId = professional?.id;
+  const { photoUrl, loading: photoLoading } = usePhoto(userId ? userId : "");
 
+  if (professionalLoading) {
+    return <div>Loading...</div>;
+  }
   if (photoLoading) {
     return <div>Loading...</div>;
   }
@@ -58,7 +55,7 @@ const CandidateAside = ({
           <div className="user-data">
             <div className="user-avatar online position-relative rounded-circle">
               <Image
-                src={photoUrl ? photoUrl : profile_icon_1}
+                src={photoUrl || profile_icon_1}
                 alt="avatar"
                 className="lazy-img"
                 height={68}
@@ -79,6 +76,7 @@ const CandidateAside = ({
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="outside"
                 aria-expanded="false"
+                style={{ whiteSpace: "normal" }}
               >
                 {professional?.first_name} {professional?.last_name}
               </button>

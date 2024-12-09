@@ -7,26 +7,30 @@ import DashboardHeader from "./dashboard-header";
 import CountrySelect from "./country-select";
 import CitySelect from "./city-select";
 import StateSelect from "./state-select";
-import { useProfessional } from "./hooks/useProfessional";
+import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 import { usePhoto } from "./hooks/usePhoto";
 import {
+  deleteCV,
   getCV,
   uploadCV,
   uploadPhoto,
 } from "../../../../data/professional-data";
-import { currentUser } from "@/utils/auth_utils";
+import { currentUser, UserDetails } from "@/utils/auth_utils";
+import { set } from "react-hook-form";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
-  const { professional, loading: professionalLoading } = useProfessional();
+  const { professional, loading: professionalLoading } =
+    useCurrentProfessional();
   const { photoUrl, loading: photoLoading } = usePhoto(
     professional?.id as string
   );
   const [filename, setFilename] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
+  const isUploaded = false;
 
   const fetchCV = async () => {
     try {
@@ -51,11 +55,24 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
   const handleFileUpload = async (file: File) => {
     if (!file) {
-      alert("Please select a file first.");
       return;
     }
     await uploadCV(file);
+    setFile(null);
+    setFilename(file.name);
   };
+
+  const handleDelete = async () => {
+    try {
+      await deleteCV();
+      setFile(null);
+      setFilename(null);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error: Photo could not be deleted.");
+    }
+  };
+
   const isLoading = professionalLoading || photoLoading;
 
   if (isLoading) {
@@ -85,7 +102,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
             <Image
-              src={photoUrl ? photoUrl : profile_icon_1}
+              src={photoUrl || profile_icon_1}
               alt="avatar"
               className="lazy-img user-img"
               height={68}
@@ -103,7 +120,6 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
                 type="file"
                 id="uploadImg"
                 name="uploadImg"
-                placeholder=""
                 onChange={handlePhotoUpload}
               />
             </div>
@@ -133,8 +149,17 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
               <div className="attached-file d-flex align-items-center justify-content-between mb-15">
                 <span>{filename}</span>
-                <a href="#" className="remove-btn">
+                <a
+                  href=""
+                  className="remove-btn"
+                  onClick={() => handleDelete()}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
                   <i className="bi bi-x"></i>
+                  <span>Delete</span>
                 </a>
               </div>
             </div>
