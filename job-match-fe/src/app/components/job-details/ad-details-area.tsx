@@ -21,10 +21,11 @@ const JobDetailsV1Area = () => {
   const [open, setOpen] = useState(false);
   const job = ad;
 
-  const options = jobApplications.map((application) => ({
-    value: application.id,
-    label: application.name,
-  }));
+  const options =
+    jobApplications?.map((application) => ({
+      value: application.id,
+      label: application.name,
+    })) || [];
 
   return (
     <section className="job-details pt-100 lg-pt-80 pb-130 lg-pb-80">

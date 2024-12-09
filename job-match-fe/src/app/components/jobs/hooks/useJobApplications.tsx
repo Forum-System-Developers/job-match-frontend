@@ -1,3 +1,5 @@
+import { useQuery } from "@tanstack/react-query";
+
 import { useState, useEffect } from "react";
 import {
   getJobApplications,
@@ -15,8 +17,8 @@ export const useJobApplications = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchApplications = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const jobApplications = await getJobApplications();
       setjobApplications(jobApplications);
     } catch (error) {
@@ -34,39 +36,28 @@ export const useJobApplications = () => {
 };
 
 export const useJobApplicationsProfessional = (id: string) => {
-  const [jobApplications, setjobApplications] = useState<JobApplication[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: jobApplications,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["jobApplications", id],
+    queryFn: ({ queryKey }) =>
+      getJobApplicationsForProfessional(queryKey[1] as string),
+    enabled: !!id,
+  });
 
-  const fetchApplications = async () => {
-    setLoading(true);
-    try {
-      const jobApplications = await getJobApplicationsForProfessional(id);
-      setjobApplications(jobApplications);
-    } catch (error) {
-      console.error("Error fetching applications:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchApplications();
-  }, []);
-
-  return { jobApplications, loading };
+  return { jobApplications, isLoading, error };
 };
 
-export const useMatchedApplicationsProfessional = () => {
+export const useMatchedApplicationsProfessional = (id: string) => {
   const [matchedApplications, setjobApplications] = useState<JobApplication[]>(
     []
   );
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchApplications = async () => {
-    setLoading(true);
+  const fetchApplications = async (id: string) => {
     try {
-      const user = await currentUser();
-      const id = user.id;
       const jobApplications = await getMatchedApplicationsForProfessional(id);
       setjobApplications(jobApplications);
     } catch (error) {
@@ -77,8 +68,11 @@ export const useMatchedApplicationsProfessional = () => {
   };
 
   useEffect(() => {
-    fetchApplications();
-  }, []);
+    if (id) {
+      setLoading(true);
+      fetchApplications(id);
+    }
+  }, [id]);
 
   return { matchedApplications, loading };
 };

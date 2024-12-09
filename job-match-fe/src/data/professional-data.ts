@@ -9,10 +9,11 @@ import nav_5 from "@/assets/dashboard/images/icon/icon_5.svg";
 import nav_5_active from "@/assets/dashboard/images/icon/icon_5_active.svg";
 import nav_6 from "@/assets/dashboard/images/icon/icon_6.svg";
 import nav_6_active from "@/assets/dashboard/images/icon/icon_6_active.svg";
-import { currentUser } from "@/utils/auth_utils";
+import { getUser } from "@/utils/auth_utils";
 import axiosInstance from "@/services/axiosInstance";
 import axios from "axios";
 import { JobApplication } from "./job-applications-data";
+import { MatchRequestAd } from "./match-data";
 
 // nav data
 export const nav_data: {
@@ -70,6 +71,7 @@ export interface ProfessionalDetails {
   status: "active" | "busy";
   skills: string[];
   active_application_count: number;
+  sent_match_requests: MatchRequestAd[] | null;
 }
 
 export interface Skills {
@@ -84,10 +86,11 @@ interface CVResponse {
 
 export const getCurrentProfessional =
   async (): Promise<ProfessionalDetails | null> => {
-    const user = await currentUser();
+    const user = await getUser();
     try {
-      const { data } = await axiosInstance.get(`/professionals/${user.id}`);
+      const { data } = await axiosInstance.get(`/professionals/${user?.id}`);
       const {
+        id,
         first_name,
         last_name,
         description,
@@ -97,10 +100,11 @@ export const getCurrentProfessional =
         status,
         skills,
         active_application_count,
+        sent_match_requests,
       } = data.detail;
 
       const professional = {
-        id: user.id,
+        id,
         first_name,
         last_name,
         description,
@@ -108,8 +112,9 @@ export const getCurrentProfessional =
         city,
         email,
         status,
-        skills: skills.map((skill: any) => skill.name),
+        skills,
         active_application_count,
+        sent_match_requests,
       };
       return professional;
     } catch (error) {
@@ -172,6 +177,7 @@ export const getProfessional = async (
   try {
     const { data } = await axiosInstance.get(`/professionals/${id}`);
     const {
+      user_id,
       first_name,
       last_name,
       description,
@@ -181,10 +187,11 @@ export const getProfessional = async (
       status,
       skills,
       active_application_count,
+      sent_match_requests,
     } = data.detail;
 
     const professional = {
-      id: id,
+      id: user_id,
       first_name,
       last_name,
       description,
@@ -192,8 +199,9 @@ export const getProfessional = async (
       city,
       email,
       status,
-      skills: skills.map((skill: any) => skill.name),
+      skills,
       active_application_count,
+      sent_match_requests,
     };
     return professional;
   } catch (error) {
@@ -295,7 +303,7 @@ export const getJobApplicationsForProfessional = async (id: string) => {
           last_name: job_application.last_name,
           city: job_application.city,
           email: job_application.email,
-          skills: job_application.skills.map((skill: any) => skill.name),
+          skills: job_application.skills,
           status: job_application.status,
           min_salary: job_application.min_salary,
           max_salary: job_application.max_salary,
@@ -313,6 +321,7 @@ export const getJobApplicationsForProfessional = async (id: string) => {
 
 export const getMatchedApplicationsForProfessional = async (id: string) => {
   try {
+    console.log(id);
     const response = await axiosInstance.get(
       `/professionals/${id}/job-applications`,
       {
@@ -322,7 +331,6 @@ export const getMatchedApplicationsForProfessional = async (id: string) => {
       }
     );
     const jobApplications = response.data.detail ?? [];
-
     const applications: JobApplication[] = await Promise.all(
       jobApplications.map(async (job_application: any) => {
         return {
@@ -337,7 +345,7 @@ export const getMatchedApplicationsForProfessional = async (id: string) => {
           last_name: job_application.last_name,
           city: job_application.city,
           email: job_application.email,
-          skills: job_application.skills.map((skill: any) => skill.name),
+          skills: job_application.skills,
           status: job_application.status,
           min_salary: job_application.min_salary,
           max_salary: job_application.max_salary,
@@ -372,8 +380,9 @@ export const getProfessionals = async () => {
           city: professional.city,
           email: professional.email,
           status: professional.status,
-          skills: professional.skills.map((skill: any) => skill.name),
+          skills: professional.skills,
           active_application_count: professional.active_application_count,
+          sent_match_requests: professional.sent_match_requests,
         };
       })
     );

@@ -8,6 +8,8 @@ import { ToastContainer } from "react-toastify";
 import { isAuthenticated, role } from "@/utils/auth_utils";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
+import queryClient from "@/react-query/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import path from "path";
 
 if (typeof window !== "undefined") {
@@ -65,10 +67,11 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
+      {" "}
       {children}
       <ToastContainer />
-    </>
+    </QueryClientProvider>
   );
 };
 

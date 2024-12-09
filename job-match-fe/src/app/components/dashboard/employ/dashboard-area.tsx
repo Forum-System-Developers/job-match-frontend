@@ -7,7 +7,7 @@ import icon_2 from "@/assets/dashboard/images/icon/icon_13.svg";
 import icon_3 from "@/assets/dashboard/images/icon/icon_14.svg";
 import icon_4 from "@/assets/dashboard/images/icon/icon_15.svg";
 import main_graph from "@/assets/dashboard/images/main-graph.png";
-import { CardItem } from "../candidate/dashboard-area";
+import { CardItem } from "../common/card-item";
 import NiceSelect from "@/ui/nice-select";
 import DashboardHeaderEmployer from "./dashboard-header";
 import { useAdsCompany } from "../../company/hooks/useAds";

@@ -9,7 +9,10 @@ import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
 import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
 import logout from "@/assets/dashboard/images/icon/icon_9.svg";
-import { nav_data } from "../../../../data/professional-data";
+import {
+  nav_data,
+  ProfessionalDetails,
+} from "../../../../data/professional-data";
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
 import { useProfessional } from "./hooks/useProfessional";
@@ -20,15 +23,22 @@ import { handleLogout } from "@/utils/auth_utils";
 type IProps = {
   isOpenSidebar: boolean;
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+  professional: ProfessionalDetails | null;
 };
 
-const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
+const CandidateAside = ({
+  isOpenSidebar,
+  setIsOpenSidebar,
+  professional,
+}: IProps) => {
   const pathname = usePathname();
-
-  const { professional, loading: professionalLoading } = useProfessional();
   const { photoUrl, loading: photoLoading } = usePhoto(
     professional?.id as string
   );
+
+  if (photoLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

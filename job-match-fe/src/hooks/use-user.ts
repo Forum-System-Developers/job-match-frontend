@@ -1,25 +1,13 @@
-import { useState, useEffect } from "react";
-import { currentUser, UserDetails } from "@/utils/auth_utils";
+import { useQuery } from "@tanstack/react-query";
+
+import { currentUser } from "@/utils/auth_utils";
 
 export const useUser = () => {
-  const [user, setUser] = useState<UserDetails | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useQuery({ queryKey: ["user"], queryFn: currentUser });
 
-  const fetchUser = async () => {
-    setLoading(true);
-    try {
-      const user = await currentUser();
-      setUser(user);
-    } catch (error) {
-      console.error("Error fetching company:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
-
-  return { user, loading };
+  return { user, loading: isLoading, error };
 };
