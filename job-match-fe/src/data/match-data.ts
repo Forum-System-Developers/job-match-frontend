@@ -25,11 +25,9 @@ export interface MatchRequestApplication {
   max_salary: string;
 }
 
-export const getMatchRequestsForProfessional = async (id: string) => {
+export const getMatchRequestsForProfessional = async () => {
   try {
-    const response = await axiosInstance.get(
-      `/professionals/${id}/match-requests`
-    );
+    const response = await axiosInstance.get(`/professionals/match-requests`);
     const jobAds = response.data.detail ?? [];
 
     const requests: MatchRequestAd[] = await Promise.all(

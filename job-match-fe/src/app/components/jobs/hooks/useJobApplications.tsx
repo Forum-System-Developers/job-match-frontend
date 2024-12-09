@@ -42,8 +42,7 @@ export const useJobApplicationsProfessional = (id: string) => {
     error,
   } = useQuery({
     queryKey: ["jobApplications", id],
-    queryFn: ({ queryKey }) =>
-      getJobApplicationsForProfessional(queryKey[1] as string),
+    queryFn: () => getJobApplicationsForProfessional(id),
     enabled: !!id,
   });
 
@@ -51,30 +50,17 @@ export const useJobApplicationsProfessional = (id: string) => {
 };
 
 export const useMatchedApplicationsProfessional = (id: string) => {
-  const [matchedApplications, setjobApplications] = useState<JobApplication[]>(
-    []
-  );
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: matchedApplications = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["matchedApplications", id],
+    queryFn: () => getMatchedApplicationsForProfessional(id),
+    enabled: !!id,
+  });
 
-  const fetchApplications = async (id: string) => {
-    try {
-      const jobApplications = await getMatchedApplicationsForProfessional(id);
-      setjobApplications(jobApplications);
-    } catch (error) {
-      console.error("Error fetching ads:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (id) {
-      setLoading(true);
-      fetchApplications(id);
-    }
-  }, [id]);
-
-  return { matchedApplications, loading };
+  return { matchedApplications, isLoading, error };
 };
 
 export const useJobApplication = (id: string) => {

@@ -19,7 +19,7 @@ type IProps = {
 };
 
 const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
-  const { user, loading: userLoading } = useUser();
+  const { user, isLoading: userLoading } = useUser();
   const { ads, loading: adsLoading } = useAdsCompany(user?.id as string);
 
   const job_items = [...ads.reverse().slice(0, 6)];

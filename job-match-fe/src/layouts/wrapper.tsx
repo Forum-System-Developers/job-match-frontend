@@ -7,9 +7,8 @@ import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
 import { isAuthenticated, role } from "@/utils/auth_utils";
 import { redirect } from "next/navigation";
-import { useRouter } from "next/router";
 import queryClient from "@/react-query/react-query";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import path from "path";
 
 if (typeof window !== "undefined") {
@@ -28,6 +27,7 @@ const PUBLIC_PATHS = [
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch();
   const pathname = usePathname();
+
   //  handle reset first time render this page
   const handleReset = () => {
     dispatch(resetFilter());
@@ -68,7 +68,6 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {" "}
       {children}
       <ToastContainer />
     </QueryClientProvider>

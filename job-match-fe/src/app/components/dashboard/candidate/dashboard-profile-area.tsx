@@ -7,7 +7,7 @@ import DashboardHeader from "./dashboard-header";
 import CountrySelect from "./country-select";
 import CitySelect from "./city-select";
 import StateSelect from "./state-select";
-import { useProfessional } from "./hooks/useProfessional";
+import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 import { usePhoto } from "./hooks/usePhoto";
 import {
   deleteCV,
@@ -23,8 +23,8 @@ type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
-  const { professional, loading: professionalLoading } = useProfessional();
-  const [user, setUser] = useState<UserDetails | null>(null);
+  const { professional, loading: professionalLoading } =
+    useCurrentProfessional();
   const { photoUrl, loading: photoLoading } = usePhoto(
     professional?.id as string
   );
@@ -35,7 +35,6 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
   const fetchCV = async () => {
     try {
       const user = await currentUser();
-      setUser(user);
       const response = await getCV(user.id as string);
       setFilename(response?.filename ?? null);
     } catch (error) {
@@ -56,7 +55,6 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
   const handleFileUpload = async (file: File) => {
     if (!file) {
-      alert("Please select a file first.");
       return;
     }
     await uploadCV(file);
@@ -104,7 +102,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         <div className="bg-white card-box border-20">
           <div className="user-avatar-setting d-flex align-items-center mb-30">
             <Image
-              src={photoUrl ? photoUrl : profile_icon_1}
+              src={photoUrl || profile_icon_1}
               alt="avatar"
               className="lazy-img user-img"
               height={68}
@@ -122,7 +120,6 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
                 type="file"
                 id="uploadImg"
                 name="uploadImg"
-                placeholder=""
                 onChange={handlePhotoUpload}
               />
             </div>

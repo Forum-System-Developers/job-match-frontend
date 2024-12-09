@@ -10,7 +10,7 @@ type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
-  const { requests, loading } = useMatchRequests();
+  const { requests, isLoading } = useMatchRequests();
 
   return (
     <div className="dashboard-body">
