@@ -95,11 +95,10 @@ export const currentUser = async (): Promise<UserDetails> => {
 export const handleLogout = async () => {
   try {
     await axiosInstance.post(`/auth/logout`);
-    localStorage.removeItem("role");
-
     setTimeout(() => {
       window.location.href = "/";
-    }, 1500);
+    }, 500);
+    localStorage.removeItem("role");
   } catch (error) {
     console.error("Logout failed:", error);
   }
