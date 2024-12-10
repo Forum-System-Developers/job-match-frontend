@@ -2,11 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
-import search from "@/assets/dashboard/images/icon/icon_16.svg";
 import DashboardHeader from "./dashboard-header";
-import CountrySelect from "./country-select";
 import CitySelect from "./city-select";
-import StateSelect from "./state-select";
 import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 import { usePhoto } from "./hooks/usePhoto";
 import {
@@ -15,22 +12,23 @@ import {
   uploadCV,
   uploadPhoto,
 } from "../../../../data/professional-data";
-import { currentUser, UserDetails } from "@/utils/auth_utils";
-import { set } from "react-hook-form";
+import { currentUser } from "@/utils/auth_utils";
+import StatusSelect from "./status-select";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
+  const [status, setStatus] = useState<string | null>(null);
+  const [filename, setFilename] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+
   const { professional, loading: professionalLoading } =
     useCurrentProfessional();
   const { photoUrl, loading: photoLoading } = usePhoto(
     professional?.id as string
   );
-  const [filename, setFilename] = useState<string | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-  const isUploaded = false;
 
   const fetchCV = async () => {
     try {
@@ -90,6 +88,13 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     }
   };
 
+  const handleStatusChange = (selectedStatus: {
+    value: string;
+    label: string;
+  }) => {
+    setStatus(selectedStatus.value);
+  };
+
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -126,8 +131,12 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
             <button className="delete-btn tran3s">Delete</button>
           </div>
           <div className="dash-input-wrapper mb-30">
-            <label htmlFor="">Full Name*</label>
-            <input type="text" placeholder="Md James Brower" />
+            <label htmlFor="">First Name*</label>
+            <input type="text" placeholder={professional?.first_name} />
+          </div>
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Last Name*</label>
+            <input type="text" placeholder={professional?.last_name} />
           </div>
           <div className="dash-input-wrapper">
             <label htmlFor="">Bio*</label>
@@ -190,58 +199,16 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         </div>
 
         <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Social Media</h4>
-
-          <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 1</label>
-            <input type="text" placeholder="#" />
-          </div>
-          <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 2</label>
-            <input type="text" placeholder="#" />
-          </div>
-          <a href="#" className="dash-btn-one">
-            <i className="bi bi-plus"></i> Add more link
-          </a>
-        </div>
-
-        <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Address & Location</h4>
+          <h4 className="dash-title-three">City*</h4>
           <div className="row">
-            <div className="col-12">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Address*</label>
-                <input
-                  type="text"
-                  placeholder="Cowrasta, Chandana, Gazipur Sadar"
-                />
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Country*</label>
-                <CountrySelect />
-              </div>
-            </div>
             <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">City*</label>
                 <CitySelect />
               </div>
             </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Zip Code*</label>
-                <input type="number" placeholder="1708" />
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">State*</label>
-                <StateSelect />
-              </div>
-            </div>
-            <div className="col-12">
+
+            {/* <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Map Location*</label>
                 <div className="position-relative">
@@ -262,6 +229,18 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
                     ></iframe>
                   </div>
                 </div>
+              </div>
+            </div> */}
+          </div>
+        </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Status*</h4>
+          <div className="row">
+            <div className="col-lg-3">
+              <div className="dash-input-wrapper mb-25">
+                <label htmlFor="">Select Profile Status*</label>
+                <StatusSelect onChange={handleStatusChange} />
               </div>
             </div>
           </div>
