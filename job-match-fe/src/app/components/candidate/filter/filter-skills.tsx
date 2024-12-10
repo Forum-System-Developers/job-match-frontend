@@ -6,7 +6,13 @@ const FilterSkills = () => {
   const { professionals } = useProfessionals();
   const candidate_data = professionals;
 
-  const uniqueSkills = [...new Set(candidate_data.flatMap((c) => c.skills))];
+  const uniqueSkills = [
+    ...new Set(
+      candidate_data.flatMap((c) =>
+        c.skills.map((skill: { name: string }) => skill.name)
+      )
+    ),
+  ];
   const options = uniqueSkills.map((c) => {
     return { value: c, label: c };
   });

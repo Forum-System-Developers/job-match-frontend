@@ -1,21 +1,35 @@
+import { useCities } from "@/hooks/use-cities";
 import NiceSelect from "@/ui/nice-select";
+import { on } from "events";
 import React from "react";
 
-const CitySelect = () => {
-  const handleCity = (item: { value: string; label: string }) => {};
+type CitySelectProps = {
+  onChange: (selectedCity: { value: string; label: string }) => void;
+  selectedCity: { value: string; label: string } | null;
+  defaultCity: string;
+};
+
+const CitySelect = ({ onChange, defaultCity }: CitySelectProps) => {
+  const handleCityChange = (item: { value: string; label: string }) => {
+    onChange(item);
+  };
+  const { cities, loading, error } = useCities();
+  const cities_data = cities.map((city) => ({
+    value: city.id,
+    label: city.name,
+  }));
+
+  if (loading) {
+    return <p>Loading cities...</p>;
+  }
+
   return (
     <NiceSelect
-      options={[
-        { value: "Sydney", label: "Sydney" },
-        { value: "Tokyo", label: "Tokyo" },
-        { value: "Delhi", label: "Delhi" },
-        { value: "Shanghai", label: "Shanghai" },
-        { value: "Mumbai", label: "Mumbai" },
-        { value: "Bangalore", label: "Bangalore" },
-      ]}
-      defaultCurrent={0}
-      onChange={(item) => handleCity(item)}
+      options={cities_data}
+      defaultCurrent={defaultCity}
+      onChange={(item) => handleCityChange(item)}
       name="City"
+      placeholder={defaultCity}
     />
   );
 };

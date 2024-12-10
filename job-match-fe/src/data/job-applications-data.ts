@@ -13,7 +13,7 @@ export interface JobApplication {
   city: string;
   email: string;
   description: string;
-  photo: Blob | string | null;
+  photo: string | null;
   min_salary: number | null;
   max_salary: number | null;
   status: "active" | "archived";
@@ -31,8 +31,7 @@ export const getJobApplications = async () => {
 
     const applications: JobApplication[] = await Promise.all(
       jobApplications.map(async (job_application: any) => {
-        const photoBlob = await getPhoto(job_application.professional_id);
-        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+        const imgUrl = await getPhoto(job_application.professional_id);
 
         return {
           id: job_application.application_id,
@@ -67,8 +66,7 @@ export const getJobApplication = async (
 ): Promise<JobApplication | null> => {
   try {
     const { data } = await axiosInstance.get(`/job-applications/${id}`);
-    const photoBlob = await getPhoto(data.detail.professional_id);
-    const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+    const imgUrl = await getPhoto(data.detail.professional_id);
 
     const job_application = {
       id: data.detail.id,

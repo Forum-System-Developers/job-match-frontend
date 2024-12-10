@@ -50,7 +50,7 @@ const CandidateListItem = ({
                 </h4>
                 <ul className="cadidate-skills style-none d-flex align-items-center">
                   {item.skills?.slice(0, 3).map((s, i) => (
-                    <li key={i}>{s}</li>
+                    <li key={i}>{s.name}</li>
                   ))}
                   {item.skills?.length > 3 && (
                     <li className="more">

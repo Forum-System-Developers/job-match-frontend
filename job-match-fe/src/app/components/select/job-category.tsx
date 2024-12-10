@@ -11,7 +11,7 @@ const JobCategorySelect = ({
 }) => {
   const { categories, loading } = useCategories();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>Select Category</div>;
 
   const category_option = categories.map((c) => {
     return {

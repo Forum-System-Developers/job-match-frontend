@@ -2,11 +2,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
-import search from "@/assets/dashboard/images/icon/icon_16.svg";
 import DashboardHeader from "./dashboard-header";
-import CountrySelect from "./country-select";
 import CitySelect from "./city-select";
-import StateSelect from "./state-select";
 import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 import { usePhoto } from "./hooks/usePhoto";
 import {
@@ -14,23 +11,45 @@ import {
   getCV,
   uploadCV,
   uploadPhoto,
+  updateProfessional,
 } from "../../../../data/professional-data";
-import { currentUser, UserDetails } from "@/utils/auth_utils";
-import { set } from "react-hook-form";
+import { currentUser } from "@/utils/auth_utils";
+import StatusSelect from "./status-select";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
+  const [status, setStatus] = useState<"active" | "busy">("active");
+  const [firstName, setFirstName] = useState<string | null>(null);
+  const [lastName, setLastName] = useState<string | null>(null);
+  const [bio, setBio] = useState<string | null>(null);
+  const [city, setCity] = useState<{ value: string; label: string } | null>(
+    null
+  );
+  const [filename, setFilename] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+
   const { professional, loading: professionalLoading } =
     useCurrentProfessional();
   const { photoUrl, loading: photoLoading } = usePhoto(
     professional?.id as string
   );
-  const [filename, setFilename] = useState<string | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-  const isUploaded = false;
+
+  useEffect(() => {
+    if (professional) {
+      setFirstName(professional.first_name || "");
+      setLastName(professional.last_name || "");
+      setBio(professional.description || "");
+      setCity(
+        professional.city
+          ? { value: professional.city, label: professional.city }
+          : null
+      );
+      setStatus(professional.status || null);
+    }
+  }, [professional]);
 
   const fetchCV = async () => {
     try {
@@ -70,6 +89,27 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
       window.location.reload();
     } catch (error) {
       console.error("Error: Photo could not be deleted.");
+    }
+  };
+
+  const handleSave = async (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    try {
+      const updatedData = {
+        professional: {
+          first_name: firstName,
+          last_name: lastName,
+          description: bio,
+          city: city?.label as string,
+        },
+        status: status.toLowerCase(),
+      };
+
+      await updateProfessional(professional?.id as string, updatedData);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating profile:", error);
     }
   };
 
@@ -126,14 +166,30 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
             <button className="delete-btn tran3s">Delete</button>
           </div>
           <div className="dash-input-wrapper mb-30">
-            <label htmlFor="">Full Name*</label>
-            <input type="text" placeholder="Md James Brower" />
+            <label htmlFor="">First Name*</label>
+            <input
+              type="text"
+              placeholder={professional?.first_name}
+              value={firstName || ""}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="dash-input-wrapper mb-30">
+            <label htmlFor="">Last Name*</label>
+            <input
+              type="text"
+              placeholder={professional?.last_name}
+              value={lastName || ""}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </div>
           <div className="dash-input-wrapper">
             <label htmlFor="">Bio*</label>
             <textarea
               className="size-lg"
               placeholder="Write something interesting about you...."
+              value={bio || ""}
+              onChange={(e) => setBio(e.target.value)}
             ></textarea>
             <div className="alert-text">
               Brief description for your profile. URLs are hyperlinked.
@@ -190,58 +246,20 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         </div>
 
         <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Social Media</h4>
-
-          <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 1</label>
-            <input type="text" placeholder="#" />
-          </div>
-          <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 2</label>
-            <input type="text" placeholder="#" />
-          </div>
-          <a href="#" className="dash-btn-one">
-            <i className="bi bi-plus"></i> Add more link
-          </a>
-        </div>
-
-        <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Address & Location</h4>
+          <h4 className="dash-title-three">City*</h4>
           <div className="row">
-            <div className="col-12">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Address*</label>
-                <input
-                  type="text"
-                  placeholder="Cowrasta, Chandana, Gazipur Sadar"
-                />
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Country*</label>
-                <CountrySelect />
-              </div>
-            </div>
             <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">City*</label>
-                <CitySelect />
+                <CitySelect
+                  onChange={(selectedCity) => setCity(selectedCity)}
+                  selectedCity={city}
+                  defaultCity={professional?.city || ""}
+                />
               </div>
             </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Zip Code*</label>
-                <input type="number" placeholder="1708" />
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">State*</label>
-                <StateSelect />
-              </div>
-            </div>
-            <div className="col-12">
+
+            {/* <div className="col-12">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Map Location*</label>
                 <div className="position-relative">
@@ -263,12 +281,31 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
                   </div>
                 </div>
               </div>
+            </div> */}
+          </div>
+        </div>
+
+        <div className="bg-white card-box border-20 mt-40">
+          <h4 className="dash-title-three">Status*</h4>
+          <div className="row">
+            <div className="col-lg-3">
+              <div className="dash-input-wrapper mb-25">
+                <label htmlFor="">Select Profile Status*</label>
+                <StatusSelect
+                  onChange={(item) =>
+                    setStatus(item.label as "active" | "busy")
+                  }
+                  default={
+                    professional?.status === "active" ? "Active" : "Busy"
+                  }
+                />
+              </div>
             </div>
           </div>
         </div>
 
         <div className="button-group d-inline-flex align-items-center mt-30">
-          <a href="#" className="dash-btn-two tran3s me-3">
+          <a href="" className="dash-btn-two tran3s me-3" onClick={handleSave}>
             Save
           </a>
           <a href="#" className="dash-cancel-btn tran3s">

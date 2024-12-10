@@ -69,6 +69,11 @@ export const nav_data: {
   // },
 ];
 
+export interface Skills {
+  id: string;
+  name: string;
+  category_id: string;
+}
 export interface ProfessionalDetails {
   id: string;
   first_name: string;
@@ -78,19 +83,24 @@ export interface ProfessionalDetails {
   city: string;
   email: string;
   status: "active" | "busy";
-  skills: string[];
+  skills: Skills[];
   active_application_count: number;
   sent_match_requests: MatchRequestAd[] | null;
-}
-
-export interface Skills {
-  name: string;
-  level: string;
 }
 
 interface CVResponse {
   file: Blob | null;
   filename: string | null;
+}
+
+interface ProfessinalUpdate {
+  professional: {
+    first_name: string | null;
+    last_name: string | null;
+    description: string | null;
+    city: string | null;
+  };
+  status: string;
 }
 
 export const getCurrentProfessional =
@@ -132,13 +142,14 @@ export const getCurrentProfessional =
     }
   };
 
-export const getPhoto = async (id: string): Promise<Blob | null> => {
+export const getPhoto = async (id: string): Promise<string | null> => {
   try {
-    const file = await axiosInstance.get<Blob>(
+    const response = await axiosInstance.get<Blob>(
       `/professionals/${id}/download-photo`,
       { responseType: "blob" }
     );
-    return file.data;
+    const photoUrl = URL.createObjectURL(response.data);
+    return photoUrl;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 404) {
@@ -379,8 +390,7 @@ export const getProfessionals = async () => {
 
     const professionals: ProfessionalDetails[] = await Promise.all(
       professionalsData.map(async (professional: any) => {
-        const photoBlob = await getPhoto(professional.id);
-        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+        const imgUrl = await getPhoto(professional.id);
 
         return {
           id: professional.id,
@@ -402,5 +412,16 @@ export const getProfessionals = async () => {
   } catch (error) {
     console.error("Error fetching professionals:", error);
     return [];
+  }
+};
+
+export const updateProfessional = async (
+  id: string,
+  data: ProfessinalUpdate
+) => {
+  try {
+    await axiosInstance.put(`/professionals/${id}`, data);
+  } catch (error) {
+    console.error("Error updating professional:", error);
   }
 };
