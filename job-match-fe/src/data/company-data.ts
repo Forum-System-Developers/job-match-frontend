@@ -16,7 +16,6 @@ import nav_7_active from "@/assets/dashboard/images/icon/icon_7_active.svg";
 import nav_9 from "@/assets/dashboard/images/icon/icon_40.svg";
 import nav_9_active from "@/assets/dashboard/images/icon/icon_40_active.svg";
 import { currentUser } from "@/utils/auth_utils";
-import SERVER_URL from "@/services/server";
 import axios from "axios";
 import axiosInstance from "@/services/axiosInstance";
 import { JobAdResponse } from "@/data/job-ad-data";
@@ -74,7 +73,7 @@ export interface CompanyDetails {
   city: string;
   description: string;
   email: string;
-  logo: string;
+  logo: string | null;
   phone_number: string;
   website_url: string;
   youtube_video_id: string;
@@ -86,8 +85,7 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
   const user = await currentUser();
   try {
     const { data } = await axiosInstance.get(`/companies/${user.id}`);
-    const photoBlob = await getLogo(user.id);
-    const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+    const imgUrl = await getLogo(user.id);
 
     const company = {
       id: user.id,
@@ -110,13 +108,14 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
   }
 };
 
-export const getLogo = async (id: string): Promise<Blob | null> => {
+export const getLogo = async (id: string): Promise<string | null> => {
   try {
-    const file = await axiosInstance.get<Blob>(
+    const response = await axiosInstance.get<Blob>(
       `/companies/${id}/download-logo`,
       { responseType: "blob" }
     );
-    return file.data;
+    const photoUrl = URL.createObjectURL(response.data);
+    return photoUrl;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 404) {
@@ -159,9 +158,6 @@ export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
 
     const companies: CompanyDetails[] = await Promise.all(
       companiesData.map(async (company: any) => {
-        const photoBlob = await getLogo(company.id);
-        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
-
         return {
           id: company.id,
           name: company.name,
@@ -169,7 +165,7 @@ export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
           city: company.city,
           description: company.description,
           email: company.email,
-          logo: imgUrl,
+          logo: company.logo,
           phone_number: company.phone_number,
           website_url: company.website_url,
           youtube_video_id: company.youtube_video_id,
@@ -190,8 +186,7 @@ export const getCompany = async (
 ): Promise<CompanyDetails | null> => {
   try {
     const { data } = await axiosInstance.get(`/companies/${id}`);
-    const photoBlob = await getLogo(id);
-    const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
+    const imgUrl = await getLogo(id);
 
     const company = {
       id: id,
@@ -227,14 +222,12 @@ export const getAdsCompany = async (
     const Ads: JobAdResponse[] = await Promise.all(
       jobAdsData.map(async (ad: any) => {
         const company = await getCompany(ad.company_id);
-        const photoBlob = await getLogo(ad.company_id);
-        const imgUrl = photoBlob ? URL.createObjectURL(photoBlob) : "";
 
         return {
           id: ad.id,
           company_id: ad.company_id,
           company_name: company?.name ?? "",
-          company_logo: imgUrl,
+          company_logo: company?.logo ?? "",
           company_website: company?.website_url ?? null,
           category_id: ad.category_id,
           category_name: ad.category_name,
