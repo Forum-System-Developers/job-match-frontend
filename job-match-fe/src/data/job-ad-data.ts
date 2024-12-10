@@ -23,6 +23,28 @@ export interface JobAdResponse {
   updated_at: string;
 }
 
+export type SkillLevel = "intern" | "intermediate" | "advanced" | "expert";
+
+export interface JobAdCreate {
+  title: string;
+  description: string;
+  skill_level: SkillLevel;
+  category_id: string;
+  location_id: string;
+  min_salary: number;
+  max_salary: number;
+  skills: string[];
+}
+
+export const createJobAd = async (jobAd: JobAdCreate) => {
+  try {
+    await axiosInstance.post(`/job-ads`, jobAd);
+  } catch (error) {
+    throw new Error("Error creating job ad: " + error);
+    return null;
+  }
+};
+
 export const getJobAds = async () => {
   try {
     const response = await axiosInstance.post(`/job-ads/all`, {

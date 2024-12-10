@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getSkills, type Skills } from "../../../data/professional-data";
+import {
+  getSkillsProfessional,
+  type Skills,
+} from "../../../data/professional-data";
 
 const Skills = ({ itemId }: { itemId: string }) => {
   const [skills, setSkills] = useState<Skills[]>([]);
@@ -8,7 +11,7 @@ const Skills = ({ itemId }: { itemId: string }) => {
   const fetchSkills = async () => {
     setLoading(true);
     try {
-      const skills = await getSkills(itemId as string);
+      const skills = await getSkillsProfessional(itemId as string);
       setSkills(skills);
     } catch (error) {
       console.error("Error fetching skills:", error);
