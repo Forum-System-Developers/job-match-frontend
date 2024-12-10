@@ -7,7 +7,7 @@ export const useMatchRequests = () => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["requests"],
+    queryKey: ["match_requests_for_professional"],
     queryFn: getMatchRequestsForProfessional,
   });
 

@@ -11,7 +11,7 @@ export const useCurrentProfessional = () => {
     isLoading,
     error,
   } = useQuery<ProfessionalDetails | null>({
-    queryKey: ["professional"],
+    queryKey: ["current_professional"],
     queryFn: getCurrentProfessional,
   });
 
