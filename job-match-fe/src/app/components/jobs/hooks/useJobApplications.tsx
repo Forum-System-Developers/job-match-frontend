@@ -10,7 +10,7 @@ import {
   getJobApplicationsForProfessional,
   getMatchedApplicationsForProfessional,
 } from "@/data/professional-data";
-import { currentUser } from "@/utils/auth_utils";
+import { currentUser } from "@/services/auth_service";
 
 export const useJobApplications = () => {
   const [jobApplications, setjobApplications] = useState<JobApplication[]>([]);
@@ -41,7 +41,7 @@ export const useJobApplicationsProfessional = (id: string) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["jobApplications", id],
+    queryKey: ["job_applications_professional", id],
     queryFn: () => getJobApplicationsForProfessional(id),
     enabled: !!id,
   });
@@ -55,7 +55,7 @@ export const useMatchedApplicationsProfessional = (id: string) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["matchedApplications", id],
+    queryKey: ["matched_applications_professional", id],
     queryFn: () => getMatchedApplicationsForProfessional(id),
     enabled: !!id,
   });
@@ -64,26 +64,15 @@ export const useMatchedApplicationsProfessional = (id: string) => {
 };
 
 export const useJobApplication = (id: string) => {
-  const [jobApplication, setjobApplication] = useState<JobApplication | null>(
-    null
-  );
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: jobApplication,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["job_application", id],
+    queryFn: () => getJobApplication(id),
+    enabled: !!id,
+  });
 
-  const fetchApplication = async () => {
-    setLoading(true);
-    try {
-      const jobApplication = await getJobApplication(id as string);
-      setjobApplication(jobApplication);
-    } catch (error) {
-      console.error("Error fetching application:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchApplication();
-  }, []);
-
-  return { jobApplication, loading };
+  return { jobApplication, isLoading, error };
 };

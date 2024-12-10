@@ -7,14 +7,13 @@ import { useAd } from "../company/hooks/useAd";
 import NiceSelect from "@/ui/nice-select";
 import { sendMatchRequestToJobAd } from "@/services/matching";
 import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
-import { role } from "@/utils/auth_utils";
+import { getUserLocal, role } from "@/services/auth_service";
 import Link from "next/link";
-import { useUser } from "@/hooks/use-user";
 
 const JobDetailsV1Area = () => {
   const { id } = useParams();
   const { ad } = useAd(id as string);
-  const { user } = useUser();
+  const user = getUserLocal();
   const { jobApplications } = useJobApplicationsProfessional(
     user?.id as string
   );
@@ -189,7 +188,7 @@ const JobDetailsV1Area = () => {
                       </a>
                     ))}
                 </div>
-                {role === "professional" && (
+                {role() === "professional" && (
                   <>
                     <a
                       href="#"

@@ -7,7 +7,7 @@ import google from "@/assets/images/icon/google.png";
 import facebook from "@/assets/images/icon/facebook.png";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { setRole } from "@/utils/auth_utils";
+import { setUser } from "@/services/auth_service";
 
 const LoginModal = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);

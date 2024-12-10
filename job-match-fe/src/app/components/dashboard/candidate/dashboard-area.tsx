@@ -12,12 +12,6 @@ import {
   useJobApplicationsProfessional,
   useMatchedApplicationsProfessional,
 } from "../../jobs/hooks/useJobApplications";
-import {
-  getJobApplicationsForProfessional,
-  getMatchedApplicationsForProfessional,
-  ProfessionalDetails,
-} from "@/data/professional-data";
-import { JobApplication } from "@/data/job-applications-data";
 import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 
 // props type

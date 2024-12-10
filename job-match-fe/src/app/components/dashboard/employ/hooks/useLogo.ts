@@ -8,7 +8,7 @@ export const useLogo = (id: string | null) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["photo", id],
+    queryKey: ["logo", id],
     queryFn: () => getLogo(id as string),
   });
 

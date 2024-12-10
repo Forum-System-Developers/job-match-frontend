@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import icon from "@/assets/dashboard/images/icon/icon_22.svg";
-import { handleLogout } from "@/utils/auth_utils";
+import { handleLogout } from "@/services/auth_service";
 
 declare global {
   interface Window {

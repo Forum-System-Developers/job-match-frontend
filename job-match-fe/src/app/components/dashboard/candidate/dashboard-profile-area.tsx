@@ -13,7 +13,7 @@ import {
   uploadPhoto,
   updateProfessional,
 } from "../../../../data/professional-data";
-import { currentUser } from "@/utils/auth_utils";
+import { getUserLocal } from "@/services/auth_service";
 import StatusSelect from "./status-select";
 
 // props type
@@ -53,8 +53,8 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
   const fetchCV = async () => {
     try {
-      const user = await currentUser();
-      const response = await getCV(user.id as string);
+      const user = getUserLocal();
+      const response = await getCV(user?.id as string);
       setFilename(response?.filename ?? null);
     } catch (error) {
       console.error("Error: CV could not be fetched.");
@@ -106,7 +106,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         status: status.toLowerCase(),
       };
 
-      await updateProfessional(professional?.id as string, updatedData);
+      await updateProfessional(updatedData);
       window.location.reload();
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -258,30 +258,6 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
                 />
               </div>
             </div>
-
-            {/* <div className="col-12">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Map Location*</label>
-                <div className="position-relative">
-                  <input type="text" placeholder="XC23+6XC, Moiran, N105" />
-                  <button className="location-pin tran3s">
-                    <Image
-                      src={search}
-                      alt="icon"
-                      className="lazy-img m-auto"
-                    />
-                  </button>
-                </div>
-                <div className="map-frame mt-30">
-                  <div className="gmap_canvas h-100 w-100">
-                    <iframe
-                      className="gmap_iframe h-100 w-100"
-                      src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                    ></iframe>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
 

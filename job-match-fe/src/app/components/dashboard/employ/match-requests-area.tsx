@@ -2,15 +2,15 @@ import React from "react";
 import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
 import JobRequestItem from "./job-request-item";
-import { useMatchRequests } from "./hooks/useMatchRequests";
-import { MatchRequestAd, MatchRequestApplication } from "@/data/match-data";
+import { useMatchRequestsCompany } from "./hooks/useMatchRequestsCompany";
+import { MatchRequestApplication } from "@/data/match-data";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
-  const { requests, loading } = useMatchRequests();
+  const { matchRequests, isLoading } = useMatchRequestsCompany();
 
   return (
     <div className="dashboard-body">
@@ -40,7 +40,7 @@ const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
                 </tr>
               </thead>
               <tbody className="border-0">
-                {requests.map((request: MatchRequestApplication) => (
+                {matchRequests.map((request: MatchRequestApplication) => (
                   <JobRequestItem key={request.job_ad_id} request={request} />
                 ))}
               </tbody>

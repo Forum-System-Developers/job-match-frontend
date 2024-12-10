@@ -15,7 +15,7 @@ import nav_7 from "@/assets/dashboard/images/icon/icon_7.svg";
 import nav_7_active from "@/assets/dashboard/images/icon/icon_7_active.svg";
 import nav_9 from "@/assets/dashboard/images/icon/icon_40.svg";
 import nav_9_active from "@/assets/dashboard/images/icon/icon_40_active.svg";
-import { currentUser } from "@/utils/auth_utils";
+import { currentUser, getUserLocal } from "@/services/auth_service";
 import axios from "axios";
 import axiosInstance from "@/services/axiosInstance";
 import { JobAdResponse } from "@/data/job-ad-data";
@@ -43,27 +43,27 @@ export const nav_data: {
     link: "/dashboard/employ-dashboard/match-requests",
     title: "Match Requests",
   },
-  {
-    id: 4,
-    icon: nav_4,
-    icon_active: nav_4_active,
-    link: "/dashboard/employ-dashboard/messages",
-    title: "Messages",
-  },
+  // {
+  //   id: 4,
+  //   icon: nav_4,
+  //   icon_active: nav_4_active,
+  //   link: "/dashboard/employ-dashboard/messages",
+  //   title: "Messages",
+  // },
   {
     id: 6,
     icon: nav_6,
     icon_active: nav_6_active,
-    link: "/dashboard/employ-dashboard/saved-candidate",
-    title: "Saved Candidate",
+    link: "/dashboard/employ-dashboard/jobs",
+    title: "Job Ads",
   },
-  {
-    id: 7,
-    icon: nav_9,
-    icon_active: nav_9_active,
-    link: "/dashboard/employ-dashboard/membership",
-    title: "Membership",
-  },
+  // {
+  //   id: 7,
+  //   icon: nav_9,
+  //   icon_active: nav_9_active,
+  //   link: "/dashboard/employ-dashboard/membership",
+  //   title: "Membership",
+  // },
 ];
 
 export interface CompanyDetails {
@@ -81,14 +81,25 @@ export interface CompanyDetails {
   successful_matches: number;
 }
 
+interface CompanyUpdate {
+  name: string | null;
+  address_line: string | null;
+  city: string | null;
+  description: string | null;
+  email: string | null;
+  phone_number: string | null;
+  website_url: string | null;
+  youtube_video_id: string | null;
+}
+
 export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
-  const user = await currentUser();
+  const user = getUserLocal();
   try {
-    const { data } = await axiosInstance.get(`/companies/${user.id}`);
-    const imgUrl = await getLogo(user.id);
+    const { data } = await axiosInstance.get(`/companies/${user?.id}`);
+    const imgUrl = await getLogo(user?.id as string);
 
     const company = {
-      id: user.id,
+      id: user?.id || "",
       name: data.detail.name,
       address_line: data.detail.address_line,
       city: data.detail.city,
@@ -103,7 +114,7 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
     };
     return company;
   } catch (error) {
-    console.error("An error occurred:", error);
+    throw new Error("An error occurred:" + error);
     return null;
   }
 };
@@ -246,5 +257,13 @@ export const getAdsCompany = async (
   } catch (error) {
     console.error("Error fetching Ads:", error);
     return [];
+  }
+};
+
+export const updateCompany = async (data: CompanyUpdate) => {
+  try {
+    await axiosInstance.put(`/companies/`, data);
+  } catch (error) {
+    throw new Error("An error occurred:" + error);
   }
 };

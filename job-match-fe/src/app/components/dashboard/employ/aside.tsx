@@ -10,8 +10,7 @@ import profile_icon_2 from "@/assets/dashboard/images/icon/icon_24.svg";
 import profile_icon_3 from "@/assets/dashboard/images/icon/icon_25.svg";
 import logout from "@/assets/dashboard/images/icon/icon_9.svg";
 import { nav_data } from "../../../../data/company-data";
-import { useLogo } from "./hooks/useLogo";
-import { useCompany } from "./hooks/useCompany";
+import { useCurrentCompany } from "./hooks/useCurrentCompany";
 
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
@@ -23,12 +22,9 @@ type IProps = {
 };
 const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
   const pathname = usePathname();
-  const { company, loading: companyLoading } = useCompany();
-  const { photoUrl, loading: photoLoading } = useLogo(company?.id || null);
+  const { company, isLoading: companyLoading } = useCurrentCompany();
 
-  const isLoading = companyLoading || photoLoading;
-
-  if (isLoading) {
+  if (companyLoading) {
     return <div>Loading...</div>;
   }
 
@@ -50,7 +46,7 @@ const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
           <div className="user-data">
             <div className="user-avatar online position-relative rounded-circle">
               <Image
-                src={photoUrl ? photoUrl : profile_icon_1}
+                src={company?.logo || profile_icon_1}
                 alt="avatar"
                 className="lazy-img"
                 height={68}

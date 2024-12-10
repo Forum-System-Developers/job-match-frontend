@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import video_bg from "@/assets/dashboard/images/video_post.jpg";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import icon from "@/assets/dashboard/images/icon/icon_16.svg";
 import CountrySelect from "../candidate/country-select";
@@ -8,21 +9,45 @@ import CitySelect from "../candidate/city-select";
 import StateSelect from "../candidate/state-select";
 import DashboardHeader from "../candidate/dashboard-header";
 import { useLogo } from "./hooks/useLogo";
-import { useCompany } from "./hooks/useCompany";
-import { uploadLogo } from "../../../../data/company-data";
+import { useCurrentCompany } from "./hooks/useCurrentCompany";
+import { updateCompany, uploadLogo } from "../../../../data/company-data";
+import VideoPopup from "../../common/video-popup";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
-  const { company, loading: companyLoading } = useCompany();
+  const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+  const [name, setName] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
+  const [website, setWebsite] = useState<string | null>(null);
+  const [youTubeURL, setYouTubeURL] = useState<string | null>(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
+  const [description, setDescription] = useState<string | null>(null);
+  const [address, setAddress] = useState<string | null>(null);
+  const [city, setCity] = useState<{ value: string; label: string } | null>(
+    null
+  );
+
+  const { company, isLoading: companyLoading } = useCurrentCompany();
   const { photoUrl, loading: photoLoading } = useLogo(company?.id || null);
   const isLoading = companyLoading || photoLoading;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (company) {
+      setName(company.name || null);
+      setEmail(company.email || null);
+      setWebsite(company.website_url || null);
+      setCity(
+        company.city ? { value: company.city, label: company.city } : null
+      );
+      setAddress(company.address_line || null);
+      setYouTubeURL(null);
+      setPhoneNumber(company.phone_number || null);
+      setDescription(company.description || null);
+    }
+  }, [company]);
 
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -35,258 +60,240 @@ const EmployProfileArea = ({ setIsOpenSidebar }: IProps) => {
     }
   };
 
+  const handleSave = async (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    try {
+      const updatedData = {
+        name: name,
+        address_line: address,
+        city: city?.label as string,
+        description: description,
+        email: email,
+        phone_number: phoneNumber,
+        website_url: website,
+        youtube_video_id: youTubeURL,
+      };
+
+      await updateCompany(updatedData);
+      window.location.reload();
+    } catch (error) {
+      throw new Error("Error updating profile:" + error);
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="dashboard-body">
-      <div className="position-relative">
-        {/* header start */}
-        <DashboardHeader setIsOpenSidebar={setIsOpenSidebar} />
-        {/* header end */}
+    <>
+      <div className="dashboard-body">
+        <div className="position-relative">
+          {/* header start */}
+          <DashboardHeader setIsOpenSidebar={setIsOpenSidebar} />
+          {/* header end */}
 
-        <h2 className="main-title">Profile</h2>
+          <h2 className="main-title">Profile</h2>
 
-        <div className="bg-white card-box border-20">
-          <div className="user-avatar-setting d-flex align-items-center mb-30">
-            <Image
-              src={photoUrl ? photoUrl : profile_icon_1}
-              alt="avatar"
-              className="lazy-img user-img"
-              height={68}
-              width={68}
-              style={{
-                width: "10%",
-                height: "10%",
-                objectFit: "cover",
-                borderRadius: "50%",
-              }}
-            />
-            <div className="upload-btn position-relative tran3s ms-4 me-3">
-              Upload new photo
-              <input
-                type="file"
-                id="uploadImg"
-                name="uploadImg"
-                placeholder=""
-                onChange={handleUpload}
+          <div className="bg-white card-box border-20">
+            <div className="user-avatar-setting d-flex align-items-center mb-30">
+              <Image
+                src={photoUrl || profile_icon_1}
+                alt="avatar"
+                className="lazy-img user-img"
+                height={58}
+                width={58}
+                style={{
+                  width: "10%",
+                  height: "10%",
+                  objectFit: "cover",
+                  borderRadius: "50%",
+                }}
               />
-            </div>
-            <button className="delete-btn tran3s">Delete</button>
-          </div>
-          <div className="dash-input-wrapper mb-30">
-            <label htmlFor="">Employer Name*</label>
-            <input type="text" placeholder="John Doe" />
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Email*</label>
-                <input type="email" placeholder="companyinc@gmail.com" />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Website*</label>
-                <input type="text" placeholder="http://somename.come" />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Founded Date*</label>
-                <input type="date" />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Company Size*</label>
-                <input type="text" placeholder="700" />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Phone Number*</label>
-                <input type="tel" placeholder="+880 01723801729" />
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="dash-input-wrapper mb-30">
-                <label htmlFor="">Category*</label>
-                <input type="text" placeholder="Account, Finance, Marketing" />
-              </div>
-            </div>
-          </div>
-          <div className="dash-input-wrapper">
-            <label htmlFor="">About Company*</label>
-            <textarea
-              className="size-lg"
-              placeholder="Write something interesting about you...."
-            ></textarea>
-            <div className="alert-text">
-              Brief description for your company. URLs are hyperlinked.
-            </div>
-          </div>
-        </div>
-
-        <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Social Media</h4>
-          <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 1</label>
-            <input type="text" placeholder="https://www.facebook.com/" />
-          </div>
-          <div className="dash-input-wrapper mb-20">
-            <label htmlFor="">Network 2</label>
-            <input type="text" placeholder="https://twitter.com/FIFAcom" />
-          </div>
-          <a href="#" className="dash-btn-one">
-            <i className="bi bi-plus"></i> Add more link
-          </a>
-        </div>
-
-        <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Address & Location</h4>
-          <div className="row">
-            <div className="col-12">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Address*</label>
+              <div className="upload-btn position-relative tran3s ms-4 me-3">
+                Upload new photo
                 <input
-                  type="text"
-                  placeholder="Cowrasta, Chandana, Gazipur Sadar"
+                  type="file"
+                  id="uploadImg"
+                  name="uploadImg"
+                  placeholder=""
+                  onChange={handleUpload}
                 />
               </div>
             </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Country*</label>
-                <CountrySelect />
-              </div>
+            <div className="dash-input-wrapper mb-30">
+              <label htmlFor="">Company Name*</label>
+              <input
+                type="text"
+                placeholder="Company Name"
+                value={name || ""}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">City*</label>
-                <CitySelect />
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Zip Code*</label>
-                <input type="number" placeholder="1708" />
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">State*</label>
-                <StateSelect />
-              </div>
-            </div>
-            <div className="col-12">
-              <div className="dash-input-wrapper mb-25">
-                <label htmlFor="">Map Location*</label>
-                <div className="position-relative">
-                  <input type="text" placeholder="XC23+6XC, Moiran, N105" />
-                  <button className="location-pin tran3s">
-                    <Image src={icon} alt="icon" className="lazy-img m-auto" />
-                  </button>
-                </div>
-                <div className="map-frame mt-30">
-                  <div className="gmap_canvas h-100 w-100">
-                    <iframe
-                      className="gmap_iframe h-100 w-100"
-                      src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                    ></iframe>
-                  </div>
+            <div className="row">
+              <div className="col-md-6">
+                <div className="dash-input-wrapper mb-30">
+                  <label htmlFor="">Email*</label>
+                  <input
+                    type="email"
+                    placeholder="your-company@email.com"
+                    value={email || ""}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+              <div className="col-md-6">
+                <div className="dash-input-wrapper mb-30">
+                  <label htmlFor="">Website (not required)</label>
+                  <input
+                    type="text"
+                    placeholder="http://your-website.com"
+                    value={website || ""}
+                    onChange={(e) => setWebsite(e.target.value)}
+                  />
+                </div>
+              </div>
 
-        <div className="bg-white card-box border-20 mt-40">
-          <h4 className="dash-title-three">Members</h4>
-          <div className="dash-input-wrapper">
-            <label htmlFor="">Add & Remove Member</label>
-          </div>
-          <div className="accordion dash-accordion-one" id="accordionOne">
-            <div className="accordion-item">
-              <div className="accordion-header" id="headingOne">
-                <button
-                  className="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="false"
-                  aria-controls="collapseOne"
-                >
-                  Add Member 1
-                </button>
+              <div className="col-md-6">
+                <div className="dash-input-wrapper mb-30">
+                  <label htmlFor="">Phone Number*</label>
+                  <input
+                    type="tel"
+                    placeholder="+123 456 789"
+                    value={phoneNumber || ""}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
+                </div>
               </div>
+              <div className="col-md-6">
+                <div className="dash-input-wrapper mb-30">
+                  <label htmlFor="">Youtube URL (not required)</label>
+                  <input
+                    type="text"
+                    placeholder="https://www.youtube.com/watch?v=example"
+                    value={youTubeURL || ""}
+                    onChange={(e) => setYouTubeURL(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="dash-input-wrapper">
+              <label htmlFor="">About Company*</label>
+              <textarea
+                className="size-lg"
+                placeholder="Tell us about your company...."
+                value={description || ""}
+                onChange={(e) => setDescription(e.target.value)}
+              ></textarea>
+              <div className="alert-text">
+                Brief description of your company. URLs are hyperlinked.
+              </div>
+            </div>
+          </div>
+          {/* 
+          <div
+            className="row"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div className="col-sm-6 d-flex">
               <div
-                id="collapseOne"
-                className="accordion-collapse collapse"
-                aria-labelledby="headingOne"
-                data-bs-parent="#accordionOne"
+                className="intro-video-post position-relative mt-20"
+                style={{ backgroundImage: `url(${video_bg.src})` }}
               >
-                <div className="accordion-body">
-                  <div className="row">
-                    <div className="col-lg-2">
-                      <div className="dash-input-wrapper mb-30 md-mb-10">
-                        <label htmlFor="">Name*</label>
-                      </div>
-                    </div>
-                    <div className="col-lg-10">
-                      <div className="dash-input-wrapper mb-30">
-                        <input
-                          type="text"
-                          placeholder="Product Designer (Google)"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-2">
-                      <div className="dash-input-wrapper mb-30 md-mb-10">
-                        <label htmlFor="">Designation*</label>
-                      </div>
-                    </div>
-                    <div className="col-lg-10">
-                      <div className="dash-input-wrapper mb-30">
-                        <input type="text" placeholder="Account Manager" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-2">
-                      <div className="dash-input-wrapper mb-30 md-mb-10">
-                        <label htmlFor="">Email*</label>
-                      </div>
-                    </div>
-                    <div className="col-lg-10">
-                      <div className="dash-input-wrapper mb-30">
-                        <input type="email" placeholder="newmmwber@gmail.com" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-end mb-20">
-                    <a href="#" className="dash-btn-one">
-                      Remove
-                    </a>
-                  </div>
-                </div>
+                <a
+                  className="fancybox rounded-circle video-icon tran3s text-center"
+                  onClick={() => setIsVideoOpen(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <i className="bi bi-play"></i>
+                </a>
+                <a href="#" className="close">
+                  <i className="bi bi-x"></i>
+                </a>
               </div>
             </div>
-          </div>
-          <a href="#" className="dash-btn-one">
-            <i className="bi bi-plus"></i> Add Another Member
-          </a>
-        </div>
+          </div> */}
 
-        <div className="button-group d-inline-flex align-items-center mt-30">
-          <a href="#" className="dash-btn-two tran3s me-3">
-            Save
-          </a>
-          <a href="#" className="dash-cancel-btn tran3s">
-            Cancel
-          </a>
+          <div className="bg-white card-box border-20 mt-40">
+            <h4 className="dash-title-three">Address & Location</h4>
+            <div className="row">
+              <div className="col-12">
+                <div className="dash-input-wrapper mb-25">
+                  <label htmlFor="">Address*</label>
+                  <input
+                    type="text"
+                    placeholder="Cowrasta, Chandana, Gazipur Sadar"
+                    value={address || ""}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="col-lg-3">
+                <div className="dash-input-wrapper mb-25">
+                  <label htmlFor="">City*</label>
+                  <CitySelect
+                    onChange={(city) => setCity(city)}
+                    selectedCity={city}
+                    defaultCity={company?.city || ""}
+                  />
+                </div>
+              </div>
+
+              {/* <div className="col-12">
+                <div className="dash-input-wrapper mb-25">
+                  <label htmlFor="">Map Location*</label>
+                  <div className="position-relative">
+                    <input type="text" placeholder="XC23+6XC, Moiran, N105" />
+                    <button className="location-pin tran3s">
+                      <Image
+                        src={icon}
+                        alt="icon"
+                        className="lazy-img m-auto"
+                      />
+                    </button>
+                  </div>
+                  <div className="map-frame mt-30">
+                    <div className="gmap_canvas h-100 w-100">
+                      <iframe
+                        className="gmap_iframe h-100 w-100"
+                        src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div> */}
+            </div>
+          </div>
+
+          <div className="button-group d-inline-flex align-items-center mt-30">
+            <a
+              href=""
+              className="dash-btn-two tran3s me-3"
+              onClick={handleSave}
+            >
+              Save
+            </a>
+            <a href="#" className="dash-cancel-btn tran3s">
+              Cancel
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* video modal start */}
+      <VideoPopup
+        isVideoOpen={isVideoOpen}
+        setIsVideoOpen={setIsVideoOpen}
+        videoId={"-6ZbrfSRWKc"}
+      />
+      {/* video modal end */}
+    </>
   );
 };
 

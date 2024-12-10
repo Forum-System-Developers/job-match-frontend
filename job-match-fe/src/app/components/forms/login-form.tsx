@@ -7,7 +7,7 @@ import ErrorMsg from "../common/error-msg";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
 import SERVER_URL from "@/services/server";
-import { IFormData, login, setRole } from "@/utils/auth_utils";
+import { IFormData, login, setUser } from "@/services/auth_service";
 import axios from "axios";
 
 // schema

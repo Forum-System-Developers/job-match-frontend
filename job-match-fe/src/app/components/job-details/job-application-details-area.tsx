@@ -8,17 +8,16 @@ import icon_3 from "@/assets/images/icon/icon_54.svg";
 import icon_4 from "@/assets/images/icon/icon_55.svg";
 import icon_5 from "@/assets/images/icon/icon_56.svg";
 import { useJobApplication } from "../jobs/hooks/useJobApplications";
-import { role } from "@/utils/auth_utils";
+import { getUserLocal, role } from "@/services/auth_service";
 import { useAdsCompany } from "../company/hooks/useAds";
 import NiceSelect from "@/ui/nice-select";
 import { sendMatchRequestToJobApplication } from "@/services/matching";
-import { useUser } from "@/hooks/use-user";
 
 const JobDetailsV2Area = () => {
   const { id } = useParams();
   const { jobApplication } = useJobApplication(id as string);
   const [open, setOpen] = useState(false);
-  const { user } = useUser();
+  const user = getUserLocal();
   const { ads } = useAdsCompany(user?.id as string);
 
   const options = ads.map((ad) => ({
@@ -231,7 +230,7 @@ const JobDetailsV2Area = () => {
                   <li>Monthly wellness/gym stipend</li>
                 </ul>
               </div>
-              {role === "company" && (
+              {role() === "company" && (
                 <>
                   <a
                     href="#"
