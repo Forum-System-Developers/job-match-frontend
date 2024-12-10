@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import FilterSkills from "./filter-skills";
 import FilterCandidateLocation from "./filter-location";
-import FilterCandidateExperience from "./filter-experince";
 import JobPrices from "../../jobs/filter/job-prices";
 
 const CandidateV1FilterArea = () => {

@@ -43,7 +43,7 @@ const CompanyFilterModal = () => {
                       <div className="filter-title fw-500 text-dark">
                         Location
                       </div>
-                      <FilterCompanyLocation />
+                      {/* <FilterCompanyLocation /> */}
                     </div>
                   </div>
                   <div className="col-lg-4">

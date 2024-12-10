@@ -10,10 +10,8 @@ import Link from "next/link";
 
 const CompanyDetailsArea = () => {
   const { id } = useParams();
-  const { company, loading: companyLoading } = useCompany(id as string);
+  const { company, isLoading } = useCompany(id as string);
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
-
-  const isLoading = companyLoading;
 
   if (isLoading) {
     return <div>Loading...</div>;

@@ -28,9 +28,9 @@ const CandidateItem = ({ item }: { item: ProfessionalDetails }) => {
                   </a>
                 </h4>
                 <ul className="cadidate-skills style-none d-flex align-items-center">
-                  <li>{item.skills[0]}</li>
+                  {/* <li>{item.skills[0]}</li>
                   <li>{item.skills[1]}</li>
-                  <li>{item.skills[2]}</li>
+                  <li>{item.skills[2]}</li> */}
                   <li className="more">2+</li>
                 </ul>
               </div>
@@ -64,7 +64,7 @@ const CandidateItem = ({ item }: { item: ProfessionalDetails }) => {
                   >
                     <span></span>
                   </button>
-                  <ActionDropdown />
+                  {/* <ActionDropdown /> */}
                 </div>
               </div>
             </div>
