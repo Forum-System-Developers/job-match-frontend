@@ -11,7 +11,7 @@ import { CardItem } from "../common/card-item";
 import NiceSelect from "@/ui/nice-select";
 import DashboardHeaderEmployer from "./dashboard-header";
 import { useAdsCompany } from "../../company/hooks/useAds";
-import { useUser } from "@/hooks/use-user";
+import { getUserLocal } from "@/services/auth_service";
 
 // props type
 type IProps = {
@@ -19,8 +19,8 @@ type IProps = {
 };
 
 const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
-  const { user, isLoading: userLoading } = useUser();
-  const { ads, loading: adsLoading } = useAdsCompany(user?.id as string);
+  const user = getUserLocal();
+  const { ads, isLoading: adsLoading } = useAdsCompany(user?.id as string);
 
   const job_items = [...ads.reverse().slice(0, 6)];
   const handleJobs = (item: { value: string; label: string }) => {};

@@ -1,5 +1,5 @@
 import { IMenuData } from "@/types/menu-data-type";
-import { isAuthenticated, role } from "@/utils/auth_utils";
+import { isAuthenticated, role } from "@/services/auth_service";
 
 const isUserAuthenticated = isAuthenticated();
 
@@ -107,7 +107,7 @@ const menu_data: IMenuData[] = [
   {
     id: 6,
     link:
-      role === "company"
+      role() === "company"
         ? "/dashboard/employ-dashboard"
         : "/dashboard/candidate-dashboard",
     title: "Dashboard",

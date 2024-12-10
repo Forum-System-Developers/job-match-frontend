@@ -11,7 +11,7 @@ import nav_5 from "@/assets/dashboard/images/icon/icon_5.svg";
 import nav_5_active from "@/assets/dashboard/images/icon/icon_5_active.svg";
 import nav_6 from "@/assets/dashboard/images/icon/icon_6.svg";
 import nav_6_active from "@/assets/dashboard/images/icon/icon_6_active.svg";
-import { getUser } from "@/utils/auth_utils";
+import { getUserLocal } from "@/services/auth_service";
 import axiosInstance from "@/services/axiosInstance";
 import axios from "axios";
 import { JobApplication } from "./job-applications-data";
@@ -106,7 +106,7 @@ interface ProfessinalUpdate {
 export const getCurrentProfessional =
   async (): Promise<ProfessionalDetails | null> => {
     try {
-      const user = await getUser();
+      const user = getUserLocal();
       const { data } = await axiosInstance.get(`/professionals/${user?.id}`);
       const {
         id,
@@ -415,12 +415,9 @@ export const getProfessionals = async () => {
   }
 };
 
-export const updateProfessional = async (
-  id: string,
-  data: ProfessinalUpdate
-) => {
+export const updateProfessional = async (data: ProfessinalUpdate) => {
   try {
-    await axiosInstance.put(`/professionals/${id}`, data);
+    await axiosInstance.put(`/professionals/`, data);
   } catch (error) {
     console.error("Error updating professional:", error);
   }

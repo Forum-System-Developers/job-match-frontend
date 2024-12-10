@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { animationCreate } from "@/utils/utils";
 import { usePathname } from "next/navigation";
 import { ToastContainer } from "react-toastify";
-import { isAuthenticated, role } from "@/utils/auth_utils";
+import { isAuthenticated, role } from "@/services/auth_service";
 import { redirect } from "next/navigation";
 import queryClient from "@/react-query/react-query";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -40,12 +40,12 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
 
   const validateRole = () => {
     if (
-      role === "professional" &&
+      role() === "professional" &&
       pathname.includes("/dashboard/employ-dashboard")
     ) {
       redirect("/");
     } else if (
-      role === "company" &&
+      role() === "company" &&
       pathname.includes("/dashboard/candidate-dashboard")
     ) {
       redirect("/");

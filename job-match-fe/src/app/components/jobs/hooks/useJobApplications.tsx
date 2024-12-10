@@ -10,7 +10,7 @@ import {
   getJobApplicationsForProfessional,
   getMatchedApplicationsForProfessional,
 } from "@/data/professional-data";
-import { currentUser } from "@/utils/auth_utils";
+import { currentUser } from "@/services/auth_service";
 
 export const useJobApplications = () => {
   const [jobApplications, setjobApplications] = useState<JobApplication[]>([]);
@@ -41,7 +41,7 @@ export const useJobApplicationsProfessional = (id: string) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["jobApplications", id],
+    queryKey: ["job_applications_professional", id],
     queryFn: () => getJobApplicationsForProfessional(id),
     enabled: !!id,
   });
@@ -55,7 +55,7 @@ export const useMatchedApplicationsProfessional = (id: string) => {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ["matchedApplications", id],
+    queryKey: ["matched_applications_professional", id],
     queryFn: () => getMatchedApplicationsForProfessional(id),
     enabled: !!id,
   });

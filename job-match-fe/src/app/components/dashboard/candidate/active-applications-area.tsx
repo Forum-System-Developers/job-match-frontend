@@ -1,24 +1,22 @@
 import React from "react";
 import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
-import JobRequestItem from "./job-request-item";
-import { useMatchRequests } from "./hooks/useMatchRequests";
-import { MatchRequestAd } from "@/data/match-data";
-import { useUser } from "@/hooks/use-user";
 import { useJobApplicationsProfessional } from "../../jobs/hooks/useJobApplications";
 import { JobApplication } from "@/data/job-applications-data";
 import JobApplicationItem from "./job-application-item";
+import { getUserLocal } from "@/services/auth_service";
 
 // props type
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 const ActiveApplicationsArea = ({ setIsOpenSidebar }: IProps) => {
-  const { user, isLoading: UserLoading } = useUser();
+  const user = getUserLocal();
   const { jobApplications, isLoading: JobAppLoading } =
     useJobApplicationsProfessional(user?.id as string);
 
-  if (UserLoading || JobAppLoading) {
+  if (JobAppLoading) {
     return <div>Loading...</div>;
   }
 

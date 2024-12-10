@@ -13,7 +13,7 @@ import {
   uploadPhoto,
   updateProfessional,
 } from "../../../../data/professional-data";
-import { currentUser } from "@/utils/auth_utils";
+import { getUserLocal } from "@/services/auth_service";
 import StatusSelect from "./status-select";
 
 // props type
@@ -53,8 +53,8 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
   const fetchCV = async () => {
     try {
-      const user = await currentUser();
-      const response = await getCV(user.id as string);
+      const user = getUserLocal();
+      const response = await getCV(user?.id as string);
       setFilename(response?.filename ?? null);
     } catch (error) {
       console.error("Error: CV could not be fetched.");
@@ -106,7 +106,7 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
         status: status.toLowerCase(),
       };
 
-      await updateProfessional(professional?.id as string, updatedData);
+      await updateProfessional(updatedData);
       window.location.reload();
     } catch (error) {
       console.error("Error updating profile:", error);

@@ -14,7 +14,7 @@ import {
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
 import { usePhoto } from "./hooks/usePhoto";
-import { handleLogout } from "@/utils/auth_utils";
+import { handleLogout } from "@/services/auth_service";
 import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
 
 // props type

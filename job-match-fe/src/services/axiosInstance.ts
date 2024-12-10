@@ -5,7 +5,7 @@ import axios, {
   AxiosInstance,
 } from "axios";
 import SERVER_URL from "@/services/server";
-import { isAuthenticated } from "@/utils/auth_utils";
+import { isAuthenticated } from "@/services/auth_service";
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;

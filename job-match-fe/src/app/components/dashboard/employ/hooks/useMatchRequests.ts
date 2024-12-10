@@ -3,7 +3,7 @@ import {
   getMatchRequestsForCompany,
   MatchRequestApplication,
 } from "@/data/match-data";
-import { currentUser, UserDetails } from "@/utils/auth_utils";
+import { currentUser, UserDetails } from "@/services/auth_service";
 
 export const useMatchRequests = () => {
   const [requests, setRequests] = useState<MatchRequestApplication[]>([]);
