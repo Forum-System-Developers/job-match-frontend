@@ -11,5 +11,5 @@ export const useCategories = () => {
     queryFn: getCategories,
   });
 
-  return { categories, loading: isLoading, error };
+  return { categories, isLoading, error };
 };

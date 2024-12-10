@@ -226,7 +226,9 @@ export const getProfessional = async (
   }
 };
 
-export const getSkills = async (id: string | null): Promise<Skills[] | []> => {
+export const getSkillsProfessional = async (
+  id: string | null
+): Promise<Skills[] | []> => {
   try {
     const response = await axiosInstance.get(`/professionals/${id}/skills`);
     const skillsResponse = response.data.detail ?? [];

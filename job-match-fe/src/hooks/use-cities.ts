@@ -11,5 +11,5 @@ export const useCities = () => {
     queryFn: getCities,
   });
 
-  return { cities, loading: isLoading, error };
+  return { cities, isLoading, error };
 };

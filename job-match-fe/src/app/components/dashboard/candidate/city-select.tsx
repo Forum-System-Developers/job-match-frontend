@@ -13,13 +13,13 @@ const CitySelect = ({ onChange, defaultCity }: CitySelectProps) => {
   const handleCityChange = (item: { value: string; label: string }) => {
     onChange(item);
   };
-  const { cities, loading, error } = useCities();
+  const { cities, isLoading, error } = useCities();
   const cities_data = cities.map((city) => ({
     value: city.id,
     label: city.name,
   }));
 
-  if (loading) {
+  if (isLoading) {
     return <p>Loading cities...</p>;
   }
 

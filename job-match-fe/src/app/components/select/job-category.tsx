@@ -9,9 +9,9 @@ const JobCategorySelect = ({
 }: {
   setCategoryVal: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const { categories, loading } = useCategories();
+  const { categories, isLoading } = useCategories();
 
-  if (loading) return <div>Select Category</div>;
+  if (isLoading) return <div>Select Category</div>;
 
   const category_option = categories.map((c) => {
     return {
@@ -25,8 +25,8 @@ const JobCategorySelect = ({
   return (
     <NiceSelect
       options={category_option}
-      placeholder={categories[0].title}
-      defaultCurrent={0}
+      placeholder="Select Category"
+      defaultCurrent={null}
       onChange={(item) => handleCategory(item)}
       name="Category"
       cls="category"
