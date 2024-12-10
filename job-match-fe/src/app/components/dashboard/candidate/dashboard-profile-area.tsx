@@ -11,6 +11,7 @@ import {
   getCV,
   uploadCV,
   uploadPhoto,
+  updateProfessional,
 } from "../../../../data/professional-data";
 import { currentUser } from "@/utils/auth_utils";
 import StatusSelect from "./status-select";
@@ -20,7 +21,13 @@ type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<"active" | "busy">("active");
+  const [firstName, setFirstName] = useState<string | null>(null);
+  const [lastName, setLastName] = useState<string | null>(null);
+  const [bio, setBio] = useState<string | null>(null);
+  const [city, setCity] = useState<{ value: string; label: string } | null>(
+    null
+  );
   const [filename, setFilename] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
 
@@ -29,6 +36,20 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
   const { photoUrl, loading: photoLoading } = usePhoto(
     professional?.id as string
   );
+
+  useEffect(() => {
+    if (professional) {
+      setFirstName(professional.first_name || "");
+      setLastName(professional.last_name || "");
+      setBio(professional.description || "");
+      setCity(
+        professional.city
+          ? { value: professional.city, label: professional.city }
+          : null
+      );
+      setStatus(professional.status || null);
+    }
+  }, [professional]);
 
   const fetchCV = async () => {
     try {
@@ -71,6 +92,27 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
     }
   };
 
+  const handleSave = async (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    try {
+      const updatedData = {
+        professional: {
+          first_name: firstName,
+          last_name: lastName,
+          description: bio,
+          city: city?.label as string,
+        },
+        status: status.toLowerCase(),
+      };
+
+      await updateProfessional(professional?.id as string, updatedData);
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   const isLoading = professionalLoading || photoLoading;
 
   if (isLoading) {
@@ -86,13 +128,6 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
 
       uploadPhoto(file);
     }
-  };
-
-  const handleStatusChange = (selectedStatus: {
-    value: string;
-    label: string;
-  }) => {
-    setStatus(selectedStatus.value);
   };
 
   return (
@@ -132,17 +167,29 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">First Name*</label>
-            <input type="text" placeholder={professional?.first_name} />
+            <input
+              type="text"
+              placeholder={professional?.first_name}
+              value={firstName || ""}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Last Name*</label>
-            <input type="text" placeholder={professional?.last_name} />
+            <input
+              type="text"
+              placeholder={professional?.last_name}
+              value={lastName || ""}
+              onChange={(e) => setLastName(e.target.value)}
+            />
           </div>
           <div className="dash-input-wrapper">
             <label htmlFor="">Bio*</label>
             <textarea
               className="size-lg"
               placeholder="Write something interesting about you...."
+              value={bio || ""}
+              onChange={(e) => setBio(e.target.value)}
             ></textarea>
             <div className="alert-text">
               Brief description for your profile. URLs are hyperlinked.
@@ -204,7 +251,11 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
             <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">City*</label>
-                <CitySelect />
+                <CitySelect
+                  onChange={(selectedCity) => setCity(selectedCity)}
+                  selectedCity={city}
+                  defaultCity={professional?.city || ""}
+                />
               </div>
             </div>
 
@@ -240,14 +291,21 @@ const DashboardProfileArea = ({ setIsOpenSidebar }: IProps) => {
             <div className="col-lg-3">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">Select Profile Status*</label>
-                <StatusSelect onChange={handleStatusChange} />
+                <StatusSelect
+                  onChange={(item) =>
+                    setStatus(item.label as "active" | "busy")
+                  }
+                  default={
+                    professional?.status === "active" ? "Active" : "Busy"
+                  }
+                />
               </div>
             </div>
           </div>
         </div>
 
         <div className="button-group d-inline-flex align-items-center mt-30">
-          <a href="#" className="dash-btn-two tran3s me-3">
+          <a href="" className="dash-btn-two tran3s me-3" onClick={handleSave}>
             Save
           </a>
           <a href="#" className="dash-cancel-btn tran3s">

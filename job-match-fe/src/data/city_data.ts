@@ -7,7 +7,7 @@ export interface City {
 
 export const getCities = async (): Promise<City[]> => {
   try {
-    const response = await axiosInstance.get("/cities");
+    const response = await axiosInstance.get("/cities/");
     const cities: City[] = response.data.detail;
     return cities;
   } catch (error) {

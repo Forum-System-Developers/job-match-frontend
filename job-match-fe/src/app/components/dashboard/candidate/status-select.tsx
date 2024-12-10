@@ -3,23 +3,27 @@ import React from "react";
 
 type StatusSelectProps = {
   onChange: (selectedStatus: { value: string; label: string }) => void;
+  default: string;
 };
 
-const StatusSelect = ({ onChange }: StatusSelectProps) => {
-  const handleCity = (item: any) => {
-    console.log(item);
+const StatusSelect = ({
+  onChange,
+  default: defaultValue,
+}: StatusSelectProps) => {
+  const handleStatusChange = (item: { value: string; label: string }) => {
+    onChange(item);
   };
 
   return (
     <NiceSelect
       options={[
         { value: "1", label: "Active" },
-        { value: "2", label: "Inactive" },
+        { value: "2", label: "Busy" },
       ]}
-      defaultCurrent={0}
-      onChange={(item) => handleCity(item)}
+      defaultCurrent={defaultValue}
+      onChange={(item) => handleStatusChange(item)}
       name="City"
-      placeholder="Select City"
+      placeholder={defaultValue}
     />
   );
 };

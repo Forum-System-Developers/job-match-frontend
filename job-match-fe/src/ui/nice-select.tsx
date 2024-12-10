@@ -9,7 +9,7 @@ type Option = {
 
 type IPropType = {
   options: Option[];
-  defaultCurrent: number;
+  defaultCurrent: any;
   placeholder?: string;
   cls?: string | undefined;
   onChange: (item: Option) => void;

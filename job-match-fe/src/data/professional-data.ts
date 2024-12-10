@@ -93,6 +93,16 @@ interface CVResponse {
   filename: string | null;
 }
 
+interface ProfessinalUpdate {
+  professional: {
+    first_name: string | null;
+    last_name: string | null;
+    description: string | null;
+    city: string | null;
+  };
+  status: string;
+}
+
 export const getCurrentProfessional =
   async (): Promise<ProfessionalDetails | null> => {
     try {
@@ -402,5 +412,16 @@ export const getProfessionals = async () => {
   } catch (error) {
     console.error("Error fetching professionals:", error);
     return [];
+  }
+};
+
+export const updateProfessional = async (
+  id: string,
+  data: ProfessinalUpdate
+) => {
+  try {
+    await axiosInstance.put(`/professionals/${id}`, data);
+  } catch (error) {
+    console.error("Error updating professional:", error);
   }
 };
