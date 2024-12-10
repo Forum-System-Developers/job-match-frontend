@@ -1,7 +1,7 @@
 import React from "react";
 import menu_data from "@/data/menu-data";
 import Link from "next/link";
-import { isAuthenticated } from "@/utils/auth_utils";
+import { isAuthenticated } from "@/services/auth_service";
 
 const Menus = () => {
   const isUserAuthenticated = isAuthenticated();

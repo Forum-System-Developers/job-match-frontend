@@ -28,7 +28,6 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
   const { matchRequests, isLoading } = useMatchRequestsCompany();
 
   const job_items = [...ads.reverse().slice(0, 6)];
-  const handleJobs = (item: { value: string; label: string }) => {};
   return (
     <div className="dashboard-body">
       <div className="position-relative">
@@ -52,7 +51,10 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
           />
         </div>
 
-        <div className="row d-flex pt-50 lg-pt-10">
+        <div
+          className="row d-flex pt-50 lg-pt-10"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           {/* <div className="col-xl-7 col-lg-6 d-flex flex-column">
             <div className="user-activity-chart bg-white border-20 mt-30 h-100">
               <h4 className="dash-title-two">Job Views</h4>
@@ -86,7 +88,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
 
           <div className="col-xl-5 col-lg-6 d-flex">
             <div className="recent-job-tab bg-white border-20 mt-30 w-100">
-              <h4 className="dash-title-two">Posted Job Ads</h4>
+              <h4 className="dash-title-two">Matched Job Ads</h4>
               <div className="wrapper">
                 {matchRequests && matchRequests.length > 0 ? (
                   matchRequests.map((j) => (
