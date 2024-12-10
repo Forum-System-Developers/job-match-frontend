@@ -1,6 +1,5 @@
 import { useCities } from "@/hooks/use-cities";
 import NiceSelect from "@/ui/nice-select";
-import { on } from "events";
 import React from "react";
 
 type CitySelectProps = {

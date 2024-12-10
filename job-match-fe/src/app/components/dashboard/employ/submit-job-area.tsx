@@ -1,19 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import DashboardHeader from "../candidate/dashboard-header";
-import StateSelect from "../candidate/state-select";
 import CitySelect from "../candidate/city-select";
-import CountrySelect from "../candidate/country-select";
 import EmployExperience from "./employ-experience";
-import icon from "@/assets/dashboard/images/icon/icon_16.svg";
 import NiceSelect from "@/ui/nice-select";
 import DashboardHeaderEmployer from "./dashboard-header";
 import { createJobAd, SkillLevel } from "@/data/job-ad-data";
-import { useCities } from "@/hooks/use-cities";
 import { useCategories } from "@/hooks/use-categories";
 import { getSkillsCategory } from "@/data/category-data";
-import { set } from "react-hook-form";
 
 // props type
 type IProps = {
@@ -31,7 +24,6 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
   const [skills, setSkills] = useState<string[]>([]);
   const [availableSkills, setAvailableSkills] = useState<string[]>([]);
 
-  const { cities, isLoading: CitiesLoading } = useCities();
   const { categories, isLoading: CategoriesLoading } = useCategories();
   const categoryOptions =
     categories?.map((category) => ({

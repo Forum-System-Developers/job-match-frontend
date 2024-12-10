@@ -24,6 +24,31 @@ export interface JobApplication {
   }[];
 }
 
+export type JobApplicationStatus = "active" | "hidden" | "private";
+
+export interface JobApplicationCreate {
+  name: string;
+  category_id: string;
+  description: string;
+  min_salary: number;
+  max_salary: number;
+  city: string;
+  is_main: boolean;
+  skills: { name: string }[];
+  status: JobApplicationStatus;
+}
+
+export const createJobApplication = async (
+  jobApplicationData: JobApplicationCreate
+) => {
+  try {
+    await axiosInstance.post("/job-applications/", jobApplicationData);
+  } catch (error) {
+    throw new Error("Error creating job application: " + error);
+    return null;
+  }
+};
+
 export const getJobApplications = async () => {
   try {
     const response = await axiosInstance.post(`/job-applications/all`);
