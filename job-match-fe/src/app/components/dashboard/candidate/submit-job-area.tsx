@@ -168,7 +168,7 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
             <div className="col-lg-4">
               <div className="dash-input-wrapper mb-25">
                 <label htmlFor="">City*</label>
-                <CitySelect />
+                {/* <CitySelect /> */}
               </div>
             </div>
             <div className="col-lg-4">

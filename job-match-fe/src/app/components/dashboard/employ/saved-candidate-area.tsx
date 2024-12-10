@@ -24,7 +24,7 @@ const SavedCandidateArea = ({ setIsOpenSidebar }: IProps) => {
           <h2 className="main-title m0">Saved Candidate</h2>
           <div className="short-filter d-flex align-items-center">
             <div className="text-dark fw-500 me-2">Short by:</div>
-            <EmployShortSelect />
+            {/* <EmployShortSelect /> */}
           </div>
         </div>
 
