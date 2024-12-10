@@ -81,6 +81,17 @@ export interface CompanyDetails {
   successful_matches: number;
 }
 
+interface CompanyUpdate {
+  name: string | null;
+  address_line: string | null;
+  city: string | null;
+  description: string | null;
+  email: string | null;
+  phone_number: string | null;
+  website_url: string | null;
+  youtube_video_id: string | null;
+}
+
 export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
   const user = getUserLocal();
   try {
@@ -246,5 +257,13 @@ export const getAdsCompany = async (
   } catch (error) {
     console.error("Error fetching Ads:", error);
     return [];
+  }
+};
+
+export const updateCompany = async (data: CompanyUpdate) => {
+  try {
+    await axiosInstance.put(`/companies/`, data);
+  } catch (error) {
+    throw new Error("An error occurred:" + error);
   }
 };
