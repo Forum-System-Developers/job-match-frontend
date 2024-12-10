@@ -1,8 +1,20 @@
 import NiceSelect from "@/ui/nice-select";
 import React from "react";
 
-const EmployExperience = () => {
-  const handleExperience = (item: { value: string; label: string }) => {};
+type ExperienceSelectProps = {
+  onChange: (selectedLevel: { value: string; label: string }) => void;
+  selectedLevel: { value: string; label: string } | null;
+  defaultLevel: string;
+};
+
+const EmployExperience = ({
+  onChange,
+  selectedLevel,
+  defaultLevel,
+}: ExperienceSelectProps) => {
+  const handleExperience = (item: { value: string; label: string }) => {
+    onChange(item);
+  };
 
   return (
     <div className="row align-items-end">

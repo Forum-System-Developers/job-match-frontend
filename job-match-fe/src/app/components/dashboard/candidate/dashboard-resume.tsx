@@ -5,6 +5,13 @@ import DashboardHeader from "./dashboard-header";
 import DashboardPortfolio from "./dashboard-portfolio";
 import SelectYear from "./select-year";
 import VideoPopup from "../../common/video-popup";
+import { SkillLevel } from "@/data/job-ad-data";
+import { useCategories } from "@/hooks/use-categories";
+import { getSkillsCategory } from "@/data/category-data";
+import {
+  createJobApplication,
+  JobApplicationStatus,
+} from "@/data/job-applications-data";
 
 // props type
 type IProps = {
@@ -13,6 +20,75 @@ type IProps = {
 
 const DashboardResume = ({ setIsOpenSidebar }: IProps) => {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [applicationStatus, setApplicationStatus] =
+    useState<JobApplicationStatus>("active");
+  const [categoryId, setCategoryId] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [isMain, setIsMain] = useState<boolean>(false);
+  const [minSalary, setMinSalary] = useState<number>(1);
+  const [maxSalary, setMaxSalary] = useState<number>(1);
+  const [skills, setSkills] = useState<string[]>([]);
+  const [availableSkills, setAvailableSkills] = useState<string[]>([]);
+
+  const { categories, isLoading: CategoriesLoading } = useCategories();
+  const categoryOptions =
+    categories?.map((category) => ({
+      value: category.id,
+      label: category.title,
+    })) || [];
+
+  const handleAddSkill = (skill: string) => {
+    if (!skills.includes(skill)) {
+      setSkills([...skills, skill]);
+      setAvailableSkills(availableSkills.filter((s) => s !== skill));
+    }
+  };
+
+  const handleRemoveSkill = (skill: string) => {
+    setSkills(skills.filter((s) => s !== skill));
+    setAvailableSkills([...availableSkills, skill]);
+  };
+
+  const handleCreate = async (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    try {
+      const jobAppData = {
+        name: name,
+        category_id: categoryId,
+        is_main: isMain,
+        description: description,
+        status: applicationStatus,
+        city: city,
+        min_salary: minSalary,
+        max_salary: maxSalary,
+        skills: skills,
+      };
+
+      await createJobApplication(jobAppData);
+      window.location.reload();
+    } catch (error) {
+      throw new Error("Error updating profile:" + error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        let fetchedSkills = await getSkillsCategory(categoryId);
+        fetchedSkills = fetchedSkills.map((skill: any) => skill.name);
+        setAvailableSkills(fetchedSkills);
+      } catch (error) {
+        console.error("Failed to fetch skills:", error);
+      }
+    };
+
+    if (categoryId) {
+      fetchSkills();
+    }
+  }, [categoryId]);
 
   return (
     <>

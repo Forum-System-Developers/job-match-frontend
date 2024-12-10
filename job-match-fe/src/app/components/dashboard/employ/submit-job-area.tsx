@@ -1,19 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import DashboardHeader from "../candidate/dashboard-header";
-import StateSelect from "../candidate/state-select";
 import CitySelect from "../candidate/city-select";
-import CountrySelect from "../candidate/country-select";
 import EmployExperience from "./employ-experience";
-import icon from "@/assets/dashboard/images/icon/icon_16.svg";
 import NiceSelect from "@/ui/nice-select";
 import DashboardHeaderEmployer from "./dashboard-header";
 import { createJobAd, SkillLevel } from "@/data/job-ad-data";
-import { useCities } from "@/hooks/use-cities";
 import { useCategories } from "@/hooks/use-categories";
 import { getSkillsCategory } from "@/data/category-data";
-import { set } from "react-hook-form";
 
 // props type
 type IProps = {
@@ -31,7 +24,6 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
   const [skills, setSkills] = useState<string[]>([]);
   const [availableSkills, setAvailableSkills] = useState<string[]>([]);
 
-  const { cities, isLoading: CitiesLoading } = useCities();
   const { categories, isLoading: CategoriesLoading } = useCategories();
   const categoryOptions =
     categories?.map((category) => ({
@@ -102,13 +94,18 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
           <h4 className="dash-title-three">Job Details</h4>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Job Title*</label>
-            <input type="text" placeholder="Ex: Product Designer" />
+            <input
+              type="text"
+              placeholder="Ex: Product Designer"
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Job Description*</label>
             <textarea
               className="size-lg"
               placeholder="Write about the job in details..."
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
           <div className="row align-items-end">
@@ -197,7 +194,11 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
             </div>
           </div>
 
-          <EmployExperience />
+          <EmployExperience
+            onChange={(item) => setSkillLevel(item.value as SkillLevel)}
+            selectedLevel={null}
+            defaultLevel={"Select Experience"}
+          />
 
           <div className="button-group d-inline-flex align-items-center mt-30">
             <a
