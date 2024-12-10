@@ -55,37 +55,6 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
           className="row d-flex pt-50 lg-pt-10"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          {/* <div className="col-xl-7 col-lg-6 d-flex flex-column">
-            <div className="user-activity-chart bg-white border-20 mt-30 h-100">
-              <h4 className="dash-title-two">Job Views</h4>
-              <div className="d-sm-flex align-items-center job-list">
-                <div className="fw-500 pe-3">Jobs:</div>
-                <div className="flex-fill xs-mt-10">
-                  <NiceSelect
-                    options={matchRequests.map((j) => {
-                      return { value: j.job_ad_id, label: j.name };
-                    })}
-                    placeholder={
-                      matchRequests.length > 0
-                        ? matchRequests[0].name
-                        : "No Jobs Available"
-                    }
-                    defaultCurrent={0}
-                    onChange={(item) => handleJobs(item)}
-                    name="Search Jobs"
-                  />
-                </div>
-              </div>
-              <div className="ps-5 pe-5 mt-50">
-                <Image
-                  src={main_graph}
-                  alt="main-graph"
-                  className="lazy-img m-auto"
-                />
-              </div>
-            </div>
-          </div> */}
-
           <div className="col-xl-5 col-lg-6 d-flex">
             <div className="recent-job-tab bg-white border-20 mt-30 w-100">
               <h4 className="dash-title-two">Matched Job Ads</h4>
@@ -165,15 +134,6 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                       key={j.id}
                       className="job-item-list d-flex align-items-center"
                     >
-                      <div>
-                        <Image
-                          src={j.company_logo ? j.company_logo : profile_icon_1}
-                          alt="logo"
-                          width={40}
-                          height={40}
-                          className="lazy-img logo"
-                        />
-                      </div>
                       <div className="job-title">
                         <h6 className="mb-5">
                           <a href="#">{j.title}</a>

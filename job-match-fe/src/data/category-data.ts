@@ -31,3 +31,20 @@ export const getCategories = async () => {
     return [];
   }
 };
+
+export const getSkillsCategory = async (id: string) => {
+  try {
+    const response = await axiosInstance.get(`/skills/${id}`);
+    const skillsData = response.data.detail ?? [];
+
+    const skills = skillsData.map((skill: any) => ({
+      id: skill.id,
+      name: skill.name,
+    }));
+
+    return skills;
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+    return [];
+  }
+};

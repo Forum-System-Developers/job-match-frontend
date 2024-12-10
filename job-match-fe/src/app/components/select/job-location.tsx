@@ -9,13 +9,13 @@ const JobLocationSelect = ({
 }: {
   setLocationVal: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-  const { cities, loading, error } = useCities();
+  const { cities, isLoading, error } = useCities();
   const cities_data = cities.map((city) => ({
     value: city.id,
     label: city.name,
   }));
 
-  if (loading) {
+  if (isLoading) {
     return <p>Select Location</p>;
   }
   const handleLocation = (item: { value: string; label: string }) => {
@@ -25,7 +25,7 @@ const JobLocationSelect = ({
     <NiceSelect
       options={cities_data}
       placeholder="Select Location"
-      defaultCurrent={0}
+      defaultCurrent={null}
       onChange={(item) => handleLocation(item)}
       name="looking for"
       cls="location"
