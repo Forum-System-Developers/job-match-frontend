@@ -69,6 +69,11 @@ export const nav_data: {
   // },
 ];
 
+export interface Skills {
+  id: string;
+  name: string;
+  category_id: string;
+}
 export interface ProfessionalDetails {
   id: string;
   first_name: string;
@@ -78,14 +83,9 @@ export interface ProfessionalDetails {
   city: string;
   email: string;
   status: "active" | "busy";
-  skills: string[];
+  skills: Skills[];
   active_application_count: number;
   sent_match_requests: MatchRequestAd[] | null;
-}
-
-export interface Skills {
-  name: string;
-  level: string;
 }
 
 interface CVResponse {
@@ -138,7 +138,7 @@ export const getPhoto = async (id: string): Promise<string | null> => {
       `/professionals/${id}/download-photo`,
       { responseType: "blob" }
     );
-    const photoUrl = URL.createObjectURL(response.data); // Convert Blob to URL
+    const photoUrl = URL.createObjectURL(response.data);
     return photoUrl;
   } catch (error) {
     if (axios.isAxiosError(error)) {

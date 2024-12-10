@@ -53,7 +53,7 @@ const CandidateGridItem = ({
       </h4>
       <ul className="cadidate-skills style-none d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-30 sm-pt-20 pb-10">
         {item.skills?.slice(0, 3).map((s, i) => (
-          <li key={i}>{s}</li>
+          <li key={i}>{s.name}</li>
         ))}
         {item.skills?.length > 3 && (
           <li className="more">
