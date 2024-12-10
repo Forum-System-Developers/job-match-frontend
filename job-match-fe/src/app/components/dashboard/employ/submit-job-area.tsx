@@ -102,13 +102,18 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
           <h4 className="dash-title-three">Job Details</h4>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Job Title*</label>
-            <input type="text" placeholder="Ex: Product Designer" />
+            <input
+              type="text"
+              placeholder="Ex: Product Designer"
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
           <div className="dash-input-wrapper mb-30">
             <label htmlFor="">Job Description*</label>
             <textarea
               className="size-lg"
               placeholder="Write about the job in details..."
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
           <div className="row align-items-end">
@@ -197,7 +202,11 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
             </div>
           </div>
 
-          <EmployExperience />
+          <EmployExperience
+            onChange={(item) => setSkillLevel(item.value as SkillLevel)}
+            selectedLevel={null}
+            defaultLevel={"Select Experience"}
+          />
 
           <div className="button-group d-inline-flex align-items-center mt-30">
             <a
