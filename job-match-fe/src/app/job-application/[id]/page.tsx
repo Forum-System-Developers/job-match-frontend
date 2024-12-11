@@ -27,10 +27,6 @@ const JobDetailsV2Page = () => {
         <JobDetailsV2Area />
         {/* job details area end */}
 
-        {/* job portal intro start */}
-        <JobPortalIntro />
-        {/* job portal intro end */}
-
         {/* footer start */}
         <FooterOne />
         {/* footer end */}

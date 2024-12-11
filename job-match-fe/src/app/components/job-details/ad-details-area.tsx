@@ -9,6 +9,7 @@ import { sendMatchRequestToJobAd } from "@/services/matching";
 import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
 import { getUserLocal, role } from "@/services/auth_service";
 import Link from "next/link";
+import { useCompany } from "../company/hooks/useCompany";
 
 const JobDetailsV1Area = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const JobDetailsV1Area = () => {
   const { jobApplications } = useJobApplicationsProfessional(
     user?.id as string
   );
+  const { company } = useCompany(ad?.company_id as string);
   const [open, setOpen] = useState(false);
   const job = ad;
 
@@ -40,44 +42,23 @@ const JobDetailsV1Area = () => {
                 }).format(new Date(ad?.created_at || Date.now()))}{" "}
               </div>
               <h3 className="post-title">{job?.title}</h3>
-              <ul className="share-buttons d-flex flex-wrap style-none">
-                <li>
-                  <a
-                    href="#"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <i className="bi bi-facebook"></i>
-                    <span>Facebook</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <i className="bi bi-twitter"></i>
-                    <span>Twitter</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="d-flex align-items-center justify-content-center"
-                  >
-                    <i className="bi bi-link-45deg"></i>
-                    <span>Copy</span>
-                  </a>
-                </li>
-              </ul>
 
               <div className="post-block border-style mt-50 lg-mt-30">
                 <div className="d-flex align-items-center">
                   <div className="block-numb text-center fw-500 text-white rounded-circle me-2">
                     1
                   </div>
-                  <h4 className="block-title">Overview</h4>
+                  <h4 className="block-title">Company Description</h4>
                 </div>
-                <p>{job?.description}</p>
+                {company?.description ? (
+                  company.description
+                    .split(/\n+/)
+                    .map((paragraph, index) => (
+                      <p key={index}>{paragraph.trim()}</p>
+                    ))
+                ) : (
+                  <p>No description provided</p>
+                )}
               </div>
               <div className="post-block border-style mt-30">
                 <div className="d-flex align-items-center">
@@ -86,17 +67,15 @@ const JobDetailsV1Area = () => {
                   </div>
                   <h4 className="block-title">Job Description</h4>
                 </div>
-                <p>
-                  As a <a href="#">Product Designer</a> at WillowTree, you’ll
-                  give form to ideas by being the voice and owner of product
-                  decisions. You’ll drive the design direction, and then make it
-                  happen!
-                </p>
-                <p>
-                  We understand our responsibility to create a diverse,
-                  equitable, and inclusive place within the tech industry, while
-                  pushing to make our industry more representative.{" "}
-                </p>
+                {ad?.description ? (
+                  ad.description
+                    .split(/\n+/)
+                    .map((paragraph, index) => (
+                      <p key={index}>{paragraph.trim()}</p>
+                    ))
+                ) : (
+                  <p>No description provided</p>
+                )}
               </div>
               <div className="post-block border-style mt-40 lg-mt-30">
                 <div className="d-flex align-items-center">
@@ -156,23 +135,6 @@ const JobDetailsV1Area = () => {
                   </li>
 
                   <li
-                    className="col-xl-7 col-md-4 col-sm-6"
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <span>Created</span>
-                    <div>
-                      {" "}
-                      {new Intl.DateTimeFormat("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      }).format(new Date(ad?.created_at || Date.now()))}{" "}
-                    </div>
-                  </li>
-
-                  <li
                     className="col-xl-5 col-md-4 col-sm-6"
                     style={{ minWidth: "100%" }}
                   >
@@ -183,7 +145,7 @@ const JobDetailsV1Area = () => {
                 <div className="job-tags d-flex flex-wrap pt-15">
                   {job?.requirements &&
                     job?.requirements.map((t, i) => (
-                      <a key={i} href="#">
+                      <a key={i} href="" style={{ cursor: "default" }}>
                         {t}
                       </a>
                     ))}

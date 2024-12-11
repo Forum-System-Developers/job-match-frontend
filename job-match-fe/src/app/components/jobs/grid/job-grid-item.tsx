@@ -77,7 +77,7 @@ const JobGridItem = ({
       <div className="job-salary">
         <span className="fw-500 text-dark">Min Salary | Max Salary</span>
         <div className="job-salary">
-          {min_salary} - {max_salary}
+          {min_salary} BGN - {max_salary} BGN
         </div>{" "}
       </div>
       <div className="d-flex align-items-center justify-content-between mt-auto">

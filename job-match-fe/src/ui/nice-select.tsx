@@ -2,7 +2,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import { useClickAway } from "react-use";
 
-type Option = {
+export type Option = {
   value: string;
   label: string;
 };
