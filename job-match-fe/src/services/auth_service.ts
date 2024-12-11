@@ -38,7 +38,21 @@ export const setUser = async (): Promise<boolean> => {
       `Failed to set role due to an error: ${(error as any).message}`
     );
   }
+};
 
+export const setGoogleUser = (id: string): boolean => {
+  if (typeof window !== "undefined") {
+    try {
+      const user = { id: id, role: "professional" };
+      const encrypted = encryptData(JSON.stringify(user));
+      localStorage.setItem("user", encrypted);
+      return true;
+    } catch (error) {
+      throw new Error(
+        `Failed to set role due to an error: ${(error as any).message}`
+      );
+    }
+  }
   return false;
 };
 
@@ -109,10 +123,10 @@ export const currentUser = async (): Promise<UserDetails> => {
 export const handleLogout = async () => {
   try {
     await axiosInstance.post(`/auth/logout`);
+    localStorage.removeItem("user");
     setTimeout(() => {
       window.location.href = "/";
     }, 500);
-    localStorage.removeItem("user");
   } catch (error) {
     console.error("Logout failed:", error);
   }
