@@ -13,7 +13,6 @@ import { useAdsCompany } from "../company/hooks/useAds";
 import NiceSelect, { Option } from "@/ui/nice-select";
 import { sendMatchRequestToJobApplication } from "@/services/matching";
 import { useProfessional } from "../candidate-details/hooks/useProfessional";
-import { set } from "react-hook-form";
 
 const JobDetailsV2Area = () => {
   const [selectedJobAd, setSelectedJobAd] = useState<Option | null>(null);

@@ -4,10 +4,14 @@ import NiceSelect from "@/ui/nice-select";
 import { useAppDispatch } from "@/redux/hook";
 import { setLocation } from "@/redux/features/filterSlice";
 import { useAds } from "../../company/hooks/useAds";
+import { JobAdResponse } from "@/data/job-ad-data";
 
-const JobLocations = () => {
-  const { ads, loading } = useAds();
-  const uniqueLocations = [...new Set(ads.map((job) => job.city_name))];
+type JobLocationsProps = {
+  items: JobAdResponse[];
+};
+
+const JobLocations = ({ items }: JobLocationsProps) => {
+  const uniqueLocations = [...new Set(items.map((job) => job.city_name))];
   const dispatch = useAppDispatch();
   const handleLocation = (item: { value: string; label: string }) => {
     dispatch(setLocation(item.value));

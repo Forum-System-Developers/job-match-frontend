@@ -70,7 +70,7 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
       };
 
       await createJobApplication(jobAppData);
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       throw new Error("Error updating profile:" + error);
     }

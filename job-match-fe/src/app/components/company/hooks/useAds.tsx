@@ -4,26 +4,16 @@ import { getAdsCompany } from "../../../../data/company-data";
 import { useQuery } from "@tanstack/react-query";
 
 export const useAds = () => {
-  const [ads, setAds] = useState<JobAdResponse[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: ads = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["all_ads"],
+    queryFn: getJobAds,
+  });
 
-  const fetchAds = async () => {
-    setLoading(true);
-    try {
-      const ads = await getJobAds();
-      setAds(ads);
-    } catch (error) {
-      console.error("Error fetching ads:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAds();
-  }, []);
-
-  return { ads, loading };
+  return { ads, isLoading, error };
 };
 
 export const useAdsCompany = (id: string) => {

@@ -7,16 +7,25 @@ import FilterCategory from "../../jobs/filter/job-filter-2/filter-category";
 import FilterLocation from "../../jobs/filter/job-filter-2/filter-location";
 import FilterExperience from "../../jobs/filter/job-filter-2/filter-experience";
 import { SalaryRangeSlider } from "../../jobs/filter/job-prices";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 // prop type
 type IProps = {
   priceValue: number[];
   setPriceValue: React.Dispatch<React.SetStateAction<number[]>>;
   maxPrice: number;
+  items: JobAdResponse[] | any[];
 };
 
-const JobFilterModal = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
+const JobFilterModal = ({
+  priceValue,
+  setPriceValue,
+  maxPrice,
+  items,
+}: IProps) => {
   const dispatch = useAppDispatch();
+  const isJobAd = items && items.every((item) => item.skill_level);
+
   // handleReset
   const handleReset = () => {
     dispatch(resetFilter());
@@ -52,7 +61,7 @@ const JobFilterModal = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
                     {/* <FilterCategory /> */}
                   </div>
                   <div className="col-lg-3 col-sm-6">
-                    <FilterLocation />
+                    <FilterLocation items={items} />
                   </div>
                   <div className="col-lg-3 col-sm-6">
                     {/* <FilterEnglishFluency /> */}
@@ -61,7 +70,7 @@ const JobFilterModal = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
 
                 <div className="row">
                   <div className="col-lg-4 col-sm-6">
-                    <FilterExperience />
+                    {isJobAd && <FilterExperience items={items} />}
                   </div>
                   <div className="col-lg-4">
                     <div className="filter-block d-xl-flex pb-25">

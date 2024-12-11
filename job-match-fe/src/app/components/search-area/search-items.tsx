@@ -9,7 +9,7 @@ import { JobAdResponse } from "@/data/job-ad-data";
 
 const SearchItems = () => {
   const searchParams = useSearchParams();
-  const { ads, loading } = useAds();
+  const { ads, isLoading } = useAds();
   const job_data = ads;
   const [jobs, setJobs] = useState<JobAdResponse[]>(job_data);
   const [jobType, setJobType] = useState<string>("list");
