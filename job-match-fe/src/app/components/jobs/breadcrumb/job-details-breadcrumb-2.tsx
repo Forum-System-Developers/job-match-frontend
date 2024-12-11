@@ -8,7 +8,7 @@ import { useJobApplication } from "../hooks/useJobApplications";
 
 const JobDetailsBreadcrumbTwo = () => {
   const { id } = useParams();
-  const { jobApplication, isLoading } = useJobApplication(id as string);
+  const { jobApplication } = useJobApplication(id as string);
   return (
     <div className="inner-banner-one position-relative">
       <div className="container">

@@ -1,14 +1,8 @@
 import Image, { StaticImageData } from "next/image";
 import nav_1 from "@/assets/dashboard/images/icon/icon_1.svg";
 import nav_1_active from "@/assets/dashboard/images/icon/icon_1_active.svg";
-import nav_2 from "@/assets/dashboard/images/icon/icon_1.svg";
-import nav_2_active from "@/assets/dashboard/images/icon/icon_1_active.svg";
 import nav_3 from "@/assets/dashboard/images/icon/icon_3.svg";
 import nav_3_active from "@/assets/dashboard/images/icon/icon_3_active.svg";
-import nav_4 from "@/assets/dashboard/images/icon/icon_4.svg";
-import nav_4_active from "@/assets/dashboard/images/icon/icon_4_active.svg";
-import nav_5 from "@/assets/dashboard/images/icon/icon_5.svg";
-import nav_5_active from "@/assets/dashboard/images/icon/icon_5_active.svg";
 import nav_6 from "@/assets/dashboard/images/icon/icon_6.svg";
 import nav_6_active from "@/assets/dashboard/images/icon/icon_6_active.svg";
 import { getUserLocal } from "@/services/auth_service";
