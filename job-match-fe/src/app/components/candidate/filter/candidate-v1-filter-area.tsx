@@ -64,7 +64,7 @@ const CandidateV1FilterArea = ({ items }: IPropsProfessionals) => {
           </a>
           <div className="collapse show" id="collapseCategory">
             <div className="main-body">
-              <FilterSkills />
+              <FilterSkills items={items} />
             </div>
           </div>
         </div>

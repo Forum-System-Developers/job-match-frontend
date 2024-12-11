@@ -114,7 +114,7 @@ const FilterArea = ({ priceValue, setPriceValue, maxPrice, ads }: IProps) => {
             Skills
           </a>
           <div className="collapse" id="collapseTag">
-            <JobTags />
+            <JobTags ads={ads} />
           </div>
         </div>
         {/* <!-- /.filter-block --> */}

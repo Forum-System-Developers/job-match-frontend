@@ -1,11 +1,13 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { setTags } from "@/redux/features/filterSlice";
-import { useAds } from "../../company/hooks/useAds";
+import { JobAdResponse } from "@/data/job-ad-data";
 
-const JobTags = () => {
-  const { ads, isLoading } = useAds();
+type IProps = {
+  ads: JobAdResponse[];
+};
 
+const JobTags = ({ ads }: IProps) => {
   const uniqueTags = [...new Set(ads.flatMap((job) => job.requirements))];
   const { tags } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
