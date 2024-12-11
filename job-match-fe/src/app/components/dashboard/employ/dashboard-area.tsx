@@ -10,11 +10,13 @@ import main_graph from "@/assets/dashboard/images/main-graph.png";
 import { CardItem } from "../common/card-item";
 import NiceSelect from "@/ui/nice-select";
 import DashboardHeaderEmployer from "./dashboard-header";
-import { useAdsCompany } from "../../company/hooks/useAds";
+import {
+  useAdsCompany,
+  useMatchedAdsCompany,
+} from "../../company/hooks/useAds";
 import { getUserLocal } from "@/services/auth_service";
 import { useCurrentCompany } from "./hooks/useCurrentCompany";
 import { useMatchRequestsCompany } from "./hooks/useMatchRequestsCompany";
-import { match } from "assert";
 
 // props type
 type IProps = {
@@ -26,6 +28,9 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
   const { company, isLoading: companyLoading } = useCurrentCompany();
   const { ads, isLoading: adsLoading } = useAdsCompany(user?.id as string);
   const { matchRequests } = useMatchRequestsCompany();
+  const { ads: MatchedAds, isLoading } = useMatchedAdsCompany(
+    user?.id as string
+  );
   const match_requests = matchRequests.length;
 
   const job_items = [...ads.reverse().slice(0, 6)];
@@ -69,50 +74,20 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
             <div className="recent-job-tab bg-white border-20 mt-30 w-100">
               <h4 className="dash-title-two">Matched Job Ads</h4>
               <div className="wrapper">
-                {matchRequests && matchRequests.length > 0 ? (
-                  matchRequests.map((j) => (
+                {MatchedAds && MatchedAds.length > 0 ? (
+                  MatchedAds.map((j) => (
                     <div
-                      key={j.job_application_id}
+                      key={j.id}
                       className="job-item-list d-flex align-items-center"
                     >
                       <div className="job-title">
                         <h6 className="mb-5">
-                          <a href="#">{j.name}</a>
+                          <a href="#">{j.title}</a>
                         </h6>
                         <div className="meta">
-                          <span>{j.description}</span> .{" "}
-                          <span>
-                            {j.professional_first_name}{" "}
-                            {j.professional_last_name}
-                          </span>
+                          <span>{j.category_name} | </span> .
+                          <span>{j.description.slice(0, 54)}...</span>
                         </div>
-                      </div>
-                      <div className="job-action">
-                        <button
-                          className="action-btn dropdown-toggle"
-                          type="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <span></span>
-                        </button>
-                        <ul className="dropdown-menu">
-                          <li>
-                            <a className="dropdown-item" href="">
-                              View Job
-                            </a>
-                          </li>
-                          <li>
-                            <a className="dropdown-item" href="#">
-                              Archive
-                            </a>
-                          </li>
-                          <li>
-                            <a className="dropdown-item" href="#">
-                              Delete
-                            </a>
-                          </li>
-                        </ul>
                       </div>
                     </div>
                   ))
@@ -136,7 +111,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
 
           <div className="col-xl-5 col-lg-6 d-flex">
             <div className="recent-job-tab bg-white border-20 mt-30 w-100">
-              <h4 className="dash-title-two">Posted Job Ads</h4>
+              <h4 className="dash-title-two">Active Job Ads</h4>
               <div className="wrapper">
                 {job_items && job_items.length > 0 ? (
                   job_items.map((j) => (
@@ -149,7 +124,8 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                           <a href={`/job-ad/${j.id}`}>{j.title}</a>
                         </h6>
                         <div className="meta">
-                          <span>{j.category_name}</span> . <span>{j.city}</span>
+                          <span>{j.category_name} | </span>
+                          <span>{j.description.slice(0, 54)}...</span>
                         </div>
                       </div>
                       <div className="job-action">

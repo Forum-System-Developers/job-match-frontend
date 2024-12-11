@@ -1,25 +1,14 @@
-import Image, { StaticImageData } from "next/image";
+import { StaticImageData } from "next/image";
 import nav_1 from "@/assets/dashboard/images/icon/icon_1.svg";
 import nav_1_active from "@/assets/dashboard/images/icon/icon_1_active.svg";
-import nav_2 from "@/assets/dashboard/images/icon/icon_2.svg";
-import nav_2_active from "@/assets/dashboard/images/icon/icon_2_active.svg";
 import nav_3 from "@/assets/dashboard/images/icon/icon_3.svg";
 import nav_3_active from "@/assets/dashboard/images/icon/icon_3_active.svg";
-import nav_4 from "@/assets/dashboard/images/icon/icon_4.svg";
-import nav_4_active from "@/assets/dashboard/images/icon/icon_4_active.svg";
-import nav_5 from "@/assets/dashboard/images/icon/icon_39.svg";
-import nav_5_active from "@/assets/dashboard/images/icon/icon_39_active.svg";
 import nav_6 from "@/assets/dashboard/images/icon/icon_6.svg";
 import nav_6_active from "@/assets/dashboard/images/icon/icon_6_active.svg";
-import nav_7 from "@/assets/dashboard/images/icon/icon_7.svg";
-import nav_7_active from "@/assets/dashboard/images/icon/icon_7_active.svg";
-import nav_9 from "@/assets/dashboard/images/icon/icon_40.svg";
-import nav_9_active from "@/assets/dashboard/images/icon/icon_40_active.svg";
-import { currentUser, getUserLocal } from "@/services/auth_service";
+import { getUserLocal } from "@/services/auth_service";
 import axios from "axios";
 import axiosInstance from "@/services/axiosInstance";
 import { JobAdResponse } from "@/data/job-ad-data";
-import { log } from "console";
 
 // nav data
 export const nav_data: {
@@ -43,13 +32,6 @@ export const nav_data: {
     link: "/dashboard/employ-dashboard/match-requests",
     title: "Match Requests",
   },
-  // {
-  //   id: 4,
-  //   icon: nav_4,
-  //   icon_active: nav_4_active,
-  //   link: "/dashboard/employ-dashboard/messages",
-  //   title: "Messages",
-  // },
   {
     id: 6,
     icon: nav_6,
@@ -57,13 +39,6 @@ export const nav_data: {
     link: "/dashboard/employ-dashboard/jobs",
     title: "Job Ads",
   },
-  // {
-  //   id: 7,
-  //   icon: nav_9,
-  //   icon_active: nav_9_active,
-  //   link: "/dashboard/employ-dashboard/membership",
-  //   title: "Membership",
-  // },
 ];
 
 export interface CompanyDetails {
@@ -115,7 +90,6 @@ export const getCurrentCompany = async (): Promise<CompanyDetails | null> => {
     return company;
   } catch (error) {
     throw new Error("An error occurred:" + error);
-    return null;
   }
 };
 
@@ -263,6 +237,46 @@ export const getAdsCompany = async (
 export const updateCompany = async (data: CompanyUpdate) => {
   try {
     await axiosInstance.put(`/companies/`, data);
+  } catch (error) {
+    throw new Error("An error occurred:" + error);
+  }
+};
+
+export const getMatchedJobAds = async (
+  companyId: string
+): Promise<JobAdResponse[] | []> => {
+  try {
+    const response = await axiosInstance.post(`/job-ads/all`, {
+      job_ad_status: "archived",
+      company_id: companyId,
+    });
+    const jobAdsData = response.data.detail ?? [];
+
+    const Ads: JobAdResponse[] = await Promise.all(
+      jobAdsData.map(async (ad: any) => {
+        const company = await getCompany(ad.company_id);
+
+        return {
+          id: ad.id,
+          company_id: ad.company_id,
+          company_name: company?.name ?? "",
+          company_logo: company?.logo ?? "",
+          company_website: company?.website_url ?? null,
+          category_id: ad.category_id,
+          category_name: ad.category_name,
+          city_id: ad.city.id,
+
+          city: ad.city.name,
+          title: ad.title,
+          description: ad.description,
+          min_salary: ad.min_salary,
+          max_salary: ad.max_salary,
+          status: ad.status,
+          updated_at: ad.updated_at,
+        };
+      })
+    );
+    return Ads;
   } catch (error) {
     throw new Error("An error occurred:" + error);
   }
