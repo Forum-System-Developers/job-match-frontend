@@ -3,9 +3,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { add_to_wishlist } from "@/redux/features/wishlist";
-import { JobAdResponse } from "@/data/job-ad-data";
 import { JobApplication } from "@/data/job-applications-data";
 
 const ApplicationGridItem = ({
@@ -50,7 +47,6 @@ const ApplicationGridItem = ({
             }}
           />
         </Link>
-        {/* <div> */}
         <Link
           href={`/job-ad/${id}`}
           className="title fw-500 tran3s"
@@ -72,7 +68,6 @@ const ApplicationGridItem = ({
           }}
         >
           <Link href={`/job-ad/${id}`}>{city}</Link>
-          {/* </div> */}
         </div>
       </div>
       <div
