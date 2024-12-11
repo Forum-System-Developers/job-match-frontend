@@ -57,13 +57,15 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
             img={icon_1}
             title="Applications"
             value={`${active_application_count}`}
+            link={null}
           />
-          <CardItem img={icon_2} title="Shortlisted" value="03" />
-          <CardItem img={icon_3} title="Views" value="2.1k" />
+          <CardItem img={icon_2} title="Shortlisted" value="03" link={null} />
+          <CardItem img={icon_3} title="Views" value="2.1k" link={null} />
           <CardItem
             img={icon_4}
             title="Sent Requests"
             value={`${sent_match_requests}`}
+            link={null}
           />
         </div>
 
@@ -92,7 +94,7 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
                     >
                       <div className="job-title">
                         <h6 className="mb-5">
-                          <a href="#">{j.name}</a>
+                          <a href={`/job-application/${j.id}`}>{j.name}</a>
                         </h6>
                         <div className="meta">
                           <span>{j.description}</span> . <span>{j.city}</span>
@@ -131,7 +133,7 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
                     >
                       <div className="job-title">
                         <h6 className="mb-5">
-                          <a href="#">{j.name}</a>
+                          <a href={`/job-application/${j.id}`}>{j.name}</a>
                         </h6>
                         <div className="meta">
                           <span>{j.description}</span> . <span>{j.city}</span>
@@ -151,6 +153,7 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
                             <a
                               className="dropdown-item"
                               href={`/job-application/${j.id}`}
+                              style={{ color: "#3f634d" }}
                             >
                               View Application
                             </a>

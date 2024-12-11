@@ -60,7 +60,6 @@ const FilterAreaAds = ({
           </div>
         </div>
         {/* <!-- /.filter-block --> */}
-        {/* <!-- /.filter-block --> */}
         <div className="filter-block bottom-line pb-25 mt-25">
           <a
             className="filter-title fw-500 text-dark"
@@ -73,25 +72,6 @@ const FilterAreaAds = ({
           </a>
           <div className="collapse show" id="collapseExp">
             <JobExperience ads={items} />
-          </div>
-        </div>
-        {/* <!-- /.filter-block --> */}
-        <div className="filter-block bottom-line pb-25 mt-25">
-          <a
-            className="filter-title fw-500 text-dark"
-            data-bs-toggle="collapse"
-            href="#collapseSalary"
-            role="button"
-            aria-expanded="false"
-          >
-            Salary
-          </a>
-          <div className="collapse show" id="collapseSalary">
-            <JobPrices
-              priceValue={priceValue}
-              setPriceValue={setPriceValue}
-              maxPrice={maxPrice}
-            />
           </div>
         </div>
         {/* <!-- /.filter-block --> */}
@@ -121,7 +101,7 @@ const FilterAreaAds = ({
             Skills
           </a>
           <div className="collapse" id="collapseTag">
-            <JobTags ads={items} />
+            <JobTags items={items} />
           </div>
         </div>
         {/* <!-- /.filter-block --> */}

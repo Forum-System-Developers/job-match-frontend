@@ -5,14 +5,12 @@ import { JobAdResponse } from "@/data/job-ad-data";
 import { JobApplication } from "@/data/job-applications-data";
 
 type IProps = {
-  ads: JobAdResponse[] | JobApplication[];
+  items: JobAdResponse[] | JobApplication[];
 };
 
-const JobTags = ({ ads }: IProps) => {
+const JobTags = ({ items }: IProps) => {
   const uniqueTags = [
-    ...new Set(
-      ads.flatMap((job) => job.skills.map((skill) => skill.name)) // Get the name of each skill
-    ),
+    ...new Set(items.flatMap((job) => job.skills.map((skill) => skill.name))),
   ];
   const { tags } = useAppSelector((state) => state.filter);
 

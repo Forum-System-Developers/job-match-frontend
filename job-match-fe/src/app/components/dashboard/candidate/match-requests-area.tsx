@@ -9,6 +9,7 @@ import { MatchRequestAd } from "@/data/match-data";
 type IProps = {
   setIsOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 const MatchRequestsArea = ({ setIsOpenSidebar }: IProps) => {
   const { requests, isLoading } = useMatchRequests();
 

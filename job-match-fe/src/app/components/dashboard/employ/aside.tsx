@@ -14,6 +14,7 @@ import { useCurrentCompany } from "./hooks/useCurrentCompany";
 
 import nav_8 from "@/assets/dashboard/images/icon/icon_8.svg";
 import LogoutModal from "../../common/popup/logout-modal";
+import { handleLogout } from "@/services/auth_service";
 
 // props type
 type IProps = {
@@ -143,7 +144,11 @@ const EmployAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
             <p>Profile Complete</p>
           </div>
 
-          <a href="#" className="d-flex w-100 align-items-center logout-btn">
+          <a
+            href=""
+            className="d-flex w-100 align-items-center logout-btn"
+            onClick={handleLogout}
+          >
             <Image src={logout} alt="icon" className="lazy-img" />
             <span>Logout</span>
           </a>
