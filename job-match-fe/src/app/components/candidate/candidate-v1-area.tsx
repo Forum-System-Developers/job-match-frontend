@@ -1,15 +1,74 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CandidateGridItem from "./candidate-grid-item";
 import CandidateListItem from "./candidate-list-item";
 import CandidateV1FilterArea from "./filter/candidate-v1-filter-area";
 import ShortSelect from "../common/short-select";
 import { useProfessionals } from "./hooks/useProfessionals";
+import { ProfessionalDetails } from "@/data/professional-data";
+import { useAppSelector } from "@/redux/hook";
+import slugify from "slugify";
 
-const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
-  const { professionals } = useProfessionals();
+const CandidateV1Area = ({
+  itemsPerPage,
+  style_2 = false,
+}: {
+  itemsPerPage: number;
+  style_2?: boolean;
+}) => {
+  const { professionals, isLoading } = useProfessionals();
   const candidate_data = professionals;
   const [jobType, setJobType] = useState<string>(style_2 ? "list" : "grid");
+  const { location, tags } = useAppSelector((state) => state.filter);
+  const [currentItems, setCurrentItems] = useState<
+    ProfessionalDetails[] | null
+  >(null);
+  const [filterItems, setFilterItems] = useState<ProfessionalDetails[]>([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const [shortValue, setShortValue] = useState("");
+
+  const filteredData = useMemo(() => {
+    return candidate_data
+      .filter((l) =>
+        location
+          ? slugify(l.city.split(",").join("-").toLowerCase(), "-") === location
+          : true
+      )
+      .filter((item) =>
+        tags.length !== 0
+          ? tags.some((tag) => item.skills.some((skill) => skill.name === tag))
+          : true
+      );
+  }, [candidate_data, location, tags]);
+
+  useEffect(() => {
+    let sortedData = [...filteredData];
+
+    // if (shortValue === "price-high-to-low") {
+    //   sortedData = sortedData.sort(
+    //     (a, b) => Number(b.min_salary) - Number(a.min_salary)
+    //   );
+    // }
+
+    const endOffset = itemOffset + itemsPerPage;
+    setFilterItems(sortedData);
+    setCurrentItems(sortedData.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(sortedData.length / itemsPerPage));
+  }, [filteredData, itemOffset, itemsPerPage, shortValue]);
+
+  const handlePageClick = (event: { selected: number }) => {
+    const newOffset = (event.selected * itemsPerPage) % candidate_data.length;
+    setItemOffset(newOffset);
+  };
+  // handleShort
+  const handleShort = (item: { value: string; label: string }) => {
+    setShortValue(item.value);
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <section className="candidates-profile pt-110 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
@@ -26,7 +85,7 @@ const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                 Filter
               </button>
               {/* filter area start */}
-              <CandidateV1FilterArea />
+              <CandidateV1FilterArea items={professionals} />
               {/* filter area end */}
             </div>
 
@@ -72,11 +131,15 @@ const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                   }`}
                 >
                   <div className="row">
-                    {candidate_data.map((item) => (
-                      <div key={item.id} className="col-xxl-4 col-sm-6 d-flex">
-                        <CandidateGridItem item={item} />
-                      </div>
-                    ))}
+                    {currentItems &&
+                      currentItems.map((item) => (
+                        <div
+                          key={item.id}
+                          className="col-xxl-4 col-sm-6 d-flex"
+                        >
+                          <CandidateGridItem item={item} />
+                        </div>
+                      ))}
                   </div>
                 </div>
 
@@ -85,9 +148,10 @@ const CandidateV1Area = ({ style_2 = false }: { style_2?: boolean }) => {
                     jobType === "list" ? "show" : ""
                   }`}
                 >
-                  {candidate_data.map((item) => (
-                    <CandidateListItem key={item.id} item={item} />
-                  ))}
+                  {currentItems &&
+                    currentItems.map((item) => (
+                      <CandidateListItem key={item.id} item={item} />
+                    ))}
                 </div>
 
                 <div className="pt-20 d-sm-flex align-items-center justify-content-between">

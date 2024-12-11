@@ -3,9 +3,21 @@ import React, { useState } from "react";
 import FilterSkills from "./filter-skills";
 import FilterCandidateLocation from "./filter-location";
 import JobPrices from "../../jobs/filter/job-prices";
+import { ProfessionalDetails } from "@/data/professional-data";
 
-const CandidateV1FilterArea = () => {
-  const [priceValue, setPriceValue] = useState<number[]>([0, 50000]);
+import { useAppDispatch } from "@/redux/hook";
+import { resetFilter } from "@/redux/features/filterSlice";
+
+export type IPropsProfessionals = {
+  items: ProfessionalDetails[];
+};
+
+const CandidateV1FilterArea = ({ items }: IPropsProfessionals) => {
+  const dispatch = useAppDispatch();
+  // handleReset
+  const handleReset = () => {
+    dispatch(resetFilter());
+  };
   return (
     <div
       className="filter-area-tab offcanvas offcanvas-start"
@@ -69,11 +81,11 @@ const CandidateV1FilterArea = () => {
           </a>
           <div className="collapse show" id="collapseLocation">
             <div className="main-body">
-              <FilterCandidateLocation />
+              <FilterCandidateLocation items={items} />
             </div>
           </div>
         </div>
-
+        {/* 
         <div className="filter-block bottom-line pb-25 mt-25">
           <a
             className="filter-title fw-500 text-dark collapsed"
@@ -91,14 +103,14 @@ const CandidateV1FilterArea = () => {
               maxPrice={50000}
             />
           </div>
-        </div>
+        </div> */}
 
-        <a
-          href="#"
+        <button
+          onClick={handleReset}
           className="btn-ten fw-500 text-white w-100 text-center tran3s mt-30"
         >
-          Apply Filter
-        </a>
+          Reset Filter
+        </button>
       </div>
     </div>
   );

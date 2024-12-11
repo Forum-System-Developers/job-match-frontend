@@ -73,7 +73,6 @@ const JobListThree = ({
       );
     }
 
-    // Apply pagination
     const endOffset = itemOffset + itemsPerPage;
     setFilterItems(sortedData);
     setCurrentItems(sortedData.slice(itemOffset, endOffset));

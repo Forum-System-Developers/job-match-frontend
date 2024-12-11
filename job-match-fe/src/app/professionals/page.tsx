@@ -27,7 +27,7 @@ const CandidatePage = () => {
         {/* search breadcrumb end */}
 
         {/* candidate area start */}
-        <CandidateV1Area />
+        <CandidateV1Area itemsPerPage={5} />
         {/* candidate area end */}
 
         {/* job portal intro start */}
