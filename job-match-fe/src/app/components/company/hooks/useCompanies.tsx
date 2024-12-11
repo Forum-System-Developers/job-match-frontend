@@ -1,25 +1,15 @@
-import { useState, useEffect } from "react";
-import { getAllCompanies, CompanyDetails } from "@/data/company-data";
+import { useQuery } from "@tanstack/react-query";
+import { getAllCompanies } from "@/data/company-data";
 
 export const useCompanies = () => {
-  const [companies, setCompanies] = useState<CompanyDetails[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: companies = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["all_companies"],
+    queryFn: getAllCompanies,
+  });
 
-  const fetchCompanies = async () => {
-    setLoading(true);
-    try {
-      const companies = await getAllCompanies();
-      setCompanies(companies);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCompanies();
-  }, []);
-
-  return { companies, loading };
+  return { companies, isLoading, error };
 };

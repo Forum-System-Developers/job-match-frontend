@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { getJobAds, JobAdResponse } from "@/data/job-ad-data";
+import { getJobAds } from "@/data/job-ad-data";
 import { getAdsCompany } from "../../../../data/company-data";
 import { useQuery } from "@tanstack/react-query";
 
