@@ -30,7 +30,10 @@ const JobApplicationItem = ({
           </button>
           <ul className="dropdown-menu dropdown-menu-end">
             <li>
-              <a className="dropdown-item" href={`/job-ad/${application.id}`}>
+              <a
+                className="dropdown-item"
+                href={`/job-application/${application.id}`}
+              >
                 <Image src={view} alt="icon" className="lazy-img" /> View
               </a>
             </li>
