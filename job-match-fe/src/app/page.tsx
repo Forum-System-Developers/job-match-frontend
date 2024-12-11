@@ -1,10 +1,7 @@
 import Header from "@/layouts/headers/header";
 import HeroBanner from "./components/hero-banners/hero-banner";
 import CategorySection from "./components/category/category-section";
-import FeatureOne from "./components/features/feature-one";
 import HowItWorks from "./components/how-it-works/how-it-works";
-import ExpertsOne from "./components/experts/experts-one";
-import FeedbackOne from "./components/feedBacks/feedback-one";
 import FeatureTwo from "./components/features/feature-two";
 import FancyBanner from "./components/fancy-banner/fancy-banner";
 import JobPortalIntro from "./components/job-portal-intro/job-portal-intro";
@@ -33,14 +30,6 @@ export default function Home() {
       {/* how works start */}
       <HowItWorks />
       {/* how works end */}
-
-      {/* expert one section start */}
-      {/* <ExpertsOne /> */}
-      {/* expert one section end */}
-
-      {/* feedback one start */}
-      {/* <FeedbackOne /> */}
-      {/* feedback one end */}
 
       {/* text feature two start */}
       <FeatureTwo />

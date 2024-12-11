@@ -27,6 +27,6 @@ export const how_works_data: how_works_type[] = [
     icon_white: icon_W_3,
     title: "Send a Match request",
     sub_title:
-      "You can request a match with the selected job ad or job application.",
+      "You can request a match with the job ad or job application of your choice.",
   },
 ];

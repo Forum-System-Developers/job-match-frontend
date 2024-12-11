@@ -10,21 +10,21 @@ const counter_data: {
 }[] = [
   {
     id: 1,
-    number: 7,
-    title: "million",
-    subtitle: "Completed Jobs",
+    number: 2,
+    title: " ",
+    subtitle: "Mutual projects",
   },
   {
     id: 2,
     number: 30,
     title: "k+",
-    subtitle: "Worldwide Client",
+    subtitle: "Lines of code",
   },
   {
     id: 3,
-    number: 13,
-    title: "billion",
-    subtitle: "Dollar Payout",
+    number: 60,
+    title: "+",
+    subtitle: "Sleepless nights",
   },
 ];
 
@@ -45,7 +45,11 @@ const CounterOne = ({
             } text-center wow fadeInUp`}
           >
             {!style_3 && (
-              <div className={`main-count fw-500 ${style_2 ? "text-white" : "text-dark"}`}>
+              <div
+                className={`main-count fw-500 ${
+                  style_2 ? "text-white" : "text-dark"
+                }`}
+              >
                 <span className="counter">
                   <CounterUp
                     number={c.number}

@@ -1,7 +1,7 @@
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 // internal
-import logo from "@/assets/images/logo/logo_02.png";
+import logo from "@/assets/images/logo/rephera-logo-04.png";
 import media_1 from "@/assets/images/logo/media_09.png";
 import media_2 from "@/assets/images/logo/media_10.png";
 import media_3 from "@/assets/images/logo/media_11.png";
@@ -16,7 +16,7 @@ function BrandIcon({ img, id }: { img: StaticImageData; id: string }) {
     <div
       className={`brand-icon icon_${id} rounded-circle d-flex align-items-center justify-content-center`}
     >
-      <Image src={img} alt="" className="lazy-img" />
+      <Image src={img} alt="" className="lazy-img" width={50} height={50} />
     </div>
   );
 }
@@ -29,14 +29,17 @@ const FeatureTwo = () => {
           <div className="col-lg-5 order-lg-last">
             <div className="wow fadeInRight">
               <div className="title-one">
-                <div className="sub-title">TOP BRAND</div>
-                <h2>Collaboration with Top Brands.</h2>
+                <div className="sub-title">FREELANCE PLATFORM</div>
+                <h2>Redefining the way you work.</h2>
               </div>
               <p className="text-lg mt-40 lg-mt-20 mb-40 lg-mb-30">
-                We collaborate with a number of top tier companies on imagining
-                the future of work, have a look.
+                Our platform connects skilled freelancers with businesses in
+                need of talent. Whether you're seeking your next project or
+                hiring for a critical task, we make it simple, efficient, and
+                rewarding. Join us and experience a new era of work.
               </p>
-              <Link href="/about-us"
+              <Link
+                href="/about-us"
                 className="btn-nine tran3s d-flex align-items-center"
               >
                 <span className="fw-500 me-2">Learn More</span>
@@ -47,7 +50,15 @@ const FeatureTwo = () => {
           <div className="col-lg-7 order-lg-first">
             <div className="big-circle rounded-circle position-relative d-flex align-items-center justify-content-center ms-lg-5 wow fadeInLeft">
               <div className="inner-circle rounded-circle d-flex align-items-center justify-content-center">
-                <Image src={logo} alt="logo" className="lazy-img" />
+                <Image
+                  src={logo}
+                  alt="logo"
+                  className="lazy-img"
+                  style={{
+                    width: "80%",
+                    height: "80%",
+                  }}
+                />
               </div>
               {/*  /.inner-circle  */}
               <BrandIcon id="01" img={media_1} />

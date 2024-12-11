@@ -14,7 +14,7 @@ const HowItWorks = () => {
           data-wow-delay="0.3s"
         >
           <h2 className="text-white">
-            How it{" "}
+            How Rephera{" "}
             <span className="position-relative">
               works{" "}
               <Image

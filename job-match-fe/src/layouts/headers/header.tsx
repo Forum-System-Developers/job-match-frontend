@@ -7,17 +7,10 @@ import logo from "@/assets/images/logo/rephera-logo.png";
 import CategoryDropdown from "./component/category-dropdown";
 import LoginModal from "@/app/components/common/popup/login-modal";
 import useSticky from "@/hooks/use-sticky";
-import {
-  role,
-  isAuthenticated,
-  handleLogout,
-  getUserLocal,
-} from "@/services/auth_service";
+import { role, isAuthenticated, handleLogout } from "@/services/auth_service";
 
 const Header = () => {
   const { sticky } = useSticky();
-  console.log(role());
-
   return (
     <>
       <header
