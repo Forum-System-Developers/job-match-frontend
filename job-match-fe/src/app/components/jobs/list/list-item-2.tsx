@@ -55,7 +55,7 @@ const ListItemTwo = ({ item }: { item: JobAdResponse }) => {
             <span className="fw-500 text-dark">Max Salary</span>{" "}
           </div>
           <div className="job-salary">
-            {item.min_salary} - {item.max_salary}{" "}
+            {item.min_salary} BGN - {item.max_salary} BGN{" "}
           </div>
         </div>
         <div className="col-md-3 col-sm-6">
