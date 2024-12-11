@@ -179,6 +179,7 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
         maxPrice={maxPrice}
         priceValue={priceValue}
         setPriceValue={setPriceValue}
+        items={jobApplications}
       />
       {/* filter modal end */}
     </>

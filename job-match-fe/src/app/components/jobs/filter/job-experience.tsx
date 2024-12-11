@@ -1,18 +1,19 @@
 import React from "react";
 import { setExperience } from "@/redux/features/filterSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { useAds } from "../../company/hooks/useAds";
+import { JobAdResponse } from "@/data/job-ad-data";
 
 export function JobExperienceItems({
   showLength = true,
+  ads,
 }: {
   showLength?: boolean;
+  ads: JobAdResponse[] | [];
 }) {
-  const { ads, loading } = useAds();
-
   const uniqueExperiences = [...new Set(ads.map((job) => job.skill_level))];
   const { experience } = useAppSelector((state) => state.filter);
   const dispatch = useAppDispatch();
+
   return (
     <>
       {uniqueExperiences.map((e, index) => (
@@ -36,12 +37,16 @@ export function JobExperienceItems({
   );
 }
 
-const JobExperience = () => {
+interface JobExperienceProps {
+  ads: JobAdResponse[];
+}
+
+const JobExperience: React.FC<JobExperienceProps> = ({ ads }) => {
   return (
     <>
       <div className="main-body">
         <ul className="style-none filter-input">
-          <JobExperienceItems />
+          <JobExperienceItems ads={ads} />
         </ul>
       </div>
     </>

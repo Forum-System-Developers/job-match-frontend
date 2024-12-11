@@ -4,7 +4,7 @@ import { setCategory } from "@/redux/features/filterSlice";
 import { useAds } from "../../company/hooks/useAds";
 
 const JobCategory = () => {
-  const { ads, loading: companyLoading } = useAds();
+  const { ads, isLoading: companyLoading } = useAds();
 
   const uniqueCategories = [
     ...new Set(ads.flatMap((job) => job.category_name)),

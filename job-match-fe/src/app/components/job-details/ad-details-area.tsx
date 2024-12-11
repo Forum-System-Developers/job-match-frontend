@@ -4,7 +4,7 @@ import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useAd } from "../company/hooks/useAd";
-import NiceSelect from "@/ui/nice-select";
+import NiceSelect, { Option } from "@/ui/nice-select";
 import { sendMatchRequestToJobAd } from "@/services/matching";
 import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
 import { getUserLocal, role } from "@/services/auth_service";
@@ -12,6 +12,9 @@ import Link from "next/link";
 import { useCompany } from "../company/hooks/useCompany";
 
 const JobDetailsV1Area = () => {
+  const [selectedJobApplication, setselectedJobApplication] =
+    useState<Option | null>(null);
+
   const { id } = useParams();
   const { ad } = useAd(id as string);
   const user = getUserLocal();
@@ -163,19 +166,38 @@ const JobDetailsV1Area = () => {
                       Send Match Request
                     </a>
                     {open && (
-                      <div className="match-request-form mt-30">
+                      <div
+                        className="match-request-form mt-30"
+                        style={{
+                          maxWidth: "300px",
+                        }}
+                      >
                         <NiceSelect
                           options={options}
-                          defaultCurrent={0}
+                          defaultCurrent={null}
+                          placeholder="Select Job Ad"
                           onChange={(item) => {
-                            sendMatchRequestToJobAd({
-                              jobAdId: id as string,
-                              jobApplicationId: item.value as string,
-                            });
+                            setselectedJobApplication(item);
                           }}
                           name="Location"
                         />
                       </div>
+                    )}
+                    {selectedJobApplication && (
+                      <button
+                        className="btn-ten fw-500 text-white text-center tran3s mt-30"
+                        onClick={() => {
+                          sendMatchRequestToJobAd({
+                            jobAdId: id as string,
+                            jobApplicationId:
+                              selectedJobApplication.value as string,
+                          });
+
+                          setselectedJobApplication(null);
+                        }}
+                      >
+                        Confirm Match Request
+                      </button>
                     )}
                   </>
                 )}

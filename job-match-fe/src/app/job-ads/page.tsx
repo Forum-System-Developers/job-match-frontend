@@ -24,7 +24,7 @@ const JobListOnePage = () => {
         {/* search breadcrumb end */}
 
         {/* job list three start */}
-        <JobListThree itemsPerPage={8} />
+        <JobListThree itemsPerPage={5} />
         {/* job list three end */}
 
         {/* footer start */}

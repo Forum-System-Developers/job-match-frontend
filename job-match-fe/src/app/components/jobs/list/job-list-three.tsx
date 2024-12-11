@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import slugify from "slugify";
 import FilterArea from "../filter/filter-area";
 import ListItemTwo from "./list-item-2";
@@ -17,7 +17,7 @@ const JobListThree = ({
   itemsPerPage: number;
   grid_style?: boolean;
 }) => {
-  const { ads, loading } = useAds();
+  const { ads, isLoading } = useAds();
 
   let all_jobs = ads;
   const maxPrice = ads.reduce((max, job) => {
@@ -36,9 +36,8 @@ const JobListThree = ({
   const [priceValue, setPriceValue] = useState([0, maxPrice]);
   const [shortValue, setShortValue] = useState("");
 
-  useEffect(() => {
-    // Filter the job_data array based on the selected filters
-    let filteredData = all_jobs
+  const filteredData = useMemo(() => {
+    return all_jobs
       .filter((item) =>
         category.length !== 0
           ? category.some((c) => item.category_name.includes(c))
@@ -63,34 +62,23 @@ const JobListThree = ({
           ? tags.some((t) => item?.requirements?.includes(t))
           : true
       );
-    // .filter((j) => j.salary >= priceValue[0] && j.salary <= priceValue[1]);
+  }, [all_jobs, category, experience, location, tags]);
 
-    // if (shortValue === "price-low-to-high") {
-    //   filteredData = filteredData
-    //     .slice()
-    //     .sort((a, b) => Number(a.salary) - Number(b.salary));
-    // }
+  useEffect(() => {
+    let sortedData = [...filteredData];
 
     if (shortValue === "price-high-to-low") {
-      filteredData = filteredData
-        .slice()
-        .sort((a, b) => Number(b.min_salary) - Number(a.min_salary));
+      sortedData = sortedData.sort(
+        (a, b) => Number(b.min_salary) - Number(a.min_salary)
+      );
     }
+
+    // Apply pagination
     const endOffset = itemOffset + itemsPerPage;
-    setFilterItems(filteredData);
-    setCurrentItems(filteredData.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(filteredData.length / itemsPerPage));
-  }, [
-    itemOffset,
-    itemsPerPage,
-    category,
-    experience,
-    location,
-    tags,
-    all_jobs,
-    // priceValue,
-    shortValue,
-  ]);
+    setFilterItems(sortedData);
+    setCurrentItems(sortedData.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(sortedData.length / itemsPerPage));
+  }, [filteredData, itemOffset, itemsPerPage, shortValue]);
 
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * itemsPerPage) % all_jobs.length;
@@ -101,7 +89,7 @@ const JobListThree = ({
     setShortValue(item.value);
   };
 
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
   return (
@@ -123,6 +111,7 @@ const JobListThree = ({
               priceValue={priceValue}
               setPriceValue={setPriceValue}
               maxPrice={maxPrice}
+              ads={ads}
             />
             {/* filter area end */}
           </div>

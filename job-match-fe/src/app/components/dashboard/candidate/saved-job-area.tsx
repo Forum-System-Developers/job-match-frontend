@@ -12,7 +12,7 @@ type IProps = {
 };
 
 const SavedJobArea = ({ setIsOpenSidebar }: IProps) => {
-  const { ads, loading } = useAds();
+  const { ads, isLoading } = useAds();
 
   let job_data = ads;
 
