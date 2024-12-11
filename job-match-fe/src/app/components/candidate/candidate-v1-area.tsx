@@ -8,6 +8,7 @@ import { useProfessionals } from "./hooks/useProfessionals";
 import { ProfessionalDetails } from "@/data/professional-data";
 import { useAppSelector } from "@/redux/hook";
 import slugify from "slugify";
+import Pagination from "@/ui/pagination";
 
 const CandidateV1Area = ({
   itemsPerPage,
@@ -154,32 +155,31 @@ const CandidateV1Area = ({
                     ))}
                 </div>
 
-                <div className="pt-20 d-sm-flex align-items-center justify-content-between">
-                  <p className="m0 order-sm-last text-center text-sm-start xs-pb-20">
-                    Showing <span className="text-dark fw-500">1 to 20</span> of{" "}
-                    <span className="text-dark fw-500">
-                      {candidate_data.length}
-                    </span>
-                  </p>
-                  <div className="d-flex justify-content-center">
-                    <ul className="pagination-two d-flex align-items-center style-none">
-                      <li className="active">
-                        <a href="#">1</a>
-                      </li>
-                      <li>
-                        <a href="#">2</a>
-                      </li>
-                      <li>
-                        <a href="#">3</a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="bi bi-chevron-right"></i>
-                        </a>
-                      </li>
-                    </ul>
+                {currentItems && (
+                  <div className="pt-30 lg-pt-20 d-sm-flex align-items-center justify-content-between">
+                    <p className="m0 order-sm-last text-center text-sm-start xs-pb-20">
+                      Showing{" "}
+                      <span className="text-dark fw-500">{itemOffset + 1}</span>{" "}
+                      to{" "}
+                      <span className="text-dark fw-500">
+                        {Math.min(
+                          itemOffset + itemsPerPage,
+                          currentItems.length
+                        )}
+                      </span>{" "}
+                      of{" "}
+                      <span className="text-dark fw-500">
+                        {filterItems.length}
+                      </span>
+                    </p>
+                    {filterItems.length > itemsPerPage && (
+                      <Pagination
+                        pageCount={pageCount}
+                        handlePageClick={handlePageClick}
+                      />
+                    )}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
