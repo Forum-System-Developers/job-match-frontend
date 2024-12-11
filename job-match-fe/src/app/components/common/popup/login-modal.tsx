@@ -5,9 +5,7 @@ import Link from "next/link";
 import LoginForm from "../../forms/login-form";
 import google from "@/assets/images/icon/google.png";
 import facebook from "@/assets/images/icon/facebook.png";
-import axiosInstance from "@/services/axiosInstance";
-import SERVER_URL from "@/services/server";
-import { setUser } from "@/services/auth_service";
+import { setGoogleUser, setUser } from "@/services/auth_service";
 
 const LoginModal = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -16,18 +14,11 @@ const LoginModal = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const response = await axiosInstance.get(`/google-auth/login`);
-
-      if (response.status === 200) {
-        localStorage.setItem("role", "professional");
-
-        window.location.href = response.request.responseURL;
-      } else {
-        throw new Error("Failed to initiate login.");
-      }
+      const baseurl = process.env.NEXT_PUBLIC_SERVER_URL;
+      const googleLoginUrl = `${baseurl}/google-auth/login`;
+      window.location.href = googleLoginUrl;
     } catch (error) {
       console.error("Login failed:", error);
-      alert("Login failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
