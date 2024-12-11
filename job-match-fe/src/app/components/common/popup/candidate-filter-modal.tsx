@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import JobPrices from "../../jobs/filter/job-prices";
 import FilterSkills from "../../candidate/filter/filter-skills";
 import FilterCandidateLocation from "../../candidate/filter/filter-location";
-import SelectCandidateExperience from "../../candidate/filter/select-candidate-experience";
-import SelectCandidateQualification from "../../candidate/filter/select-qualification";
 import SelectCandidateType from "../../candidate/filter/select-gender";
+import { IPropsProfessionals } from "../../candidate/filter/candidate-v1-filter-area";
+import { it } from "node:test";
 
-const CandidateFilterModal = () => {
+const CandidateFilterModal = ({ items }: IPropsProfessionals) => {
   const [priceValue, setPriceValue] = useState<number[]>([0, 50000]);
   return (
     <div
@@ -50,7 +50,7 @@ const CandidateFilterModal = () => {
                       <div className="filter-title fw-500 text-dark">
                         Skills
                       </div>
-                      <FilterSkills />
+                      <FilterSkills items={items} />
                     </div>
                   </div>
                   <div className="col-lg-3">
@@ -58,7 +58,7 @@ const CandidateFilterModal = () => {
                       <div className="filter-title fw-500 text-dark">
                         Location
                       </div>
-                      <FilterCandidateLocation />
+                      <FilterCandidateLocation items={items} />
                     </div>
                   </div>
                   <div className="col-lg-3">
