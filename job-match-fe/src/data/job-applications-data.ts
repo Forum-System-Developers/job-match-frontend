@@ -49,7 +49,7 @@ export const createJobApplication = async (
   }
 };
 
-export const getJobApplications = async () => {
+export const getJobApplications = async (): Promise<JobApplication[]> => {
   try {
     const response = await axiosInstance.post(`/job-applications/all`);
     const jobApplications = response.data.detail ?? [];

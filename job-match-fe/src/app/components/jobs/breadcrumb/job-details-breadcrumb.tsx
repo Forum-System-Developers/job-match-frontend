@@ -20,7 +20,7 @@ const JobDetailsBreadcrumb = () => {
                 <h2 className="text-white">{ad?.title}</h2>
               </div>
               <p className="text-lg text-white mt-30 lg-mt-20">
-                Looking for a Professional located in {ad?.city_name}
+                Looking for a Professional located in {ad?.city}
               </p>
             </div>
           </div>

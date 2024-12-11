@@ -1,21 +1,27 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import FilterCompanyLocation from "./filter-company-location";
-import { useCompanies } from "../hooks/useCompanies";
+import { useAppDispatch } from "@/redux/hook";
+import { resetFilter } from "@/redux/features/filterSlice";
 import { CompanyDetails } from "@/data/company-data";
 
 const CompanyV1Filter = ({
   searchTerm,
-  onSearch,
+  // onSearch,
   companies,
 }: {
   searchTerm: string;
-  onSearch: (value: string) => void;
-  companies: Array<CompanyDetails>;
+  // onSearch: (value: string) => void;
+  companies: CompanyDetails[];
 }) => {
+  const dispatch = useAppDispatch();
+
+  const handleReset = () => {
+    dispatch(resetFilter());
+  };
   return (
     <div className="light-bg border-20 ps-4 pe-4 pt-25 pb-30 mt-20">
-      <div className="filter-block bottom-line pb-25">
+      {/* <div className="filter-block bottom-line pb-25">
         <a
           className="filter-title fw-500 text-dark"
           data-bs-toggle="collapse"
@@ -40,7 +46,7 @@ const CompanyV1Filter = ({
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="filter-block bottom-line pb-25 mt-25">
         <a
@@ -59,12 +65,12 @@ const CompanyV1Filter = ({
         </div>
       </div>
 
-      <a
-        href="#"
+      <button
+        onClick={handleReset}
         className="btn-ten fw-500 text-white w-100 text-center tran3s mt-30"
       >
-        Apply Filter
-      </a>
+        Reset Filter
+      </button>
     </div>
   );
 };

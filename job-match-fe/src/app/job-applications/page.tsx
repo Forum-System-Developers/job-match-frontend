@@ -24,7 +24,7 @@ const JobListThreePage = () => {
         {/* search breadcrumb end */}
 
         {/* job list three start */}
-        <JobListV3Area itemsPerPage={8} />
+        <JobListV3Area itemsPerPage={6} />
         {/* job list three end */}
 
         {/* job portal intro start */}

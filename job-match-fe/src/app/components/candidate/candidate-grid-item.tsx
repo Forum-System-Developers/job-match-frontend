@@ -51,16 +51,23 @@ const CandidateGridItem = ({
           {item.first_name} {item.last_name}
         </Link>
       </h4>
-      <ul className="cadidate-skills style-none d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-30 sm-pt-20 pb-10">
-        {item.skills?.slice(0, 3).map((s, i) => (
-          <li key={i}>{s.name}</li>
-        ))}
-        {item.skills?.length > 3 && (
-          <li className="more">
-            {item.skills?.length - item.skills?.slice(0, 3).length}+
-          </li>
-        )}
-      </ul>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+        }}
+      >
+        <ul className="cadidate-skills style-none d-flex flex-wrap align-items-center justify-content-center justify-content-md-between pt-30 sm-pt-20 pb-10">
+          {item.skills?.slice(0, 3).map((s, i) => (
+            <li key={i}>{s.name}</li>
+          ))}
+          {item.skills?.length > 3 && (
+            <li className="more">
+              {item.skills?.length - item.skills?.slice(0, 3).length}+
+            </li>
+          )}
+        </ul>
+      </div>
       <div className="row gx-1">
         <div className="col-md-6">
           <div className="candidate-info mt-10">

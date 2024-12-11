@@ -18,7 +18,7 @@ const JobGridItem = ({
     id,
     company_logo,
     company_name,
-    city_name,
+    city,
     min_salary,
     max_salary,
     title,
@@ -82,7 +82,7 @@ const JobGridItem = ({
       </div>
       <div className="d-flex align-items-center justify-content-between mt-auto">
         <div className="job-location">
-          <Link href={`/job-ad/${id}`}>{city_name}</Link>
+          <Link href={`/job-ad/${id}`}>{city}</Link>
         </div>
         <Link href={`/job-ad/${id}`} className="apply-btn text-center tran3s">
           VIEW

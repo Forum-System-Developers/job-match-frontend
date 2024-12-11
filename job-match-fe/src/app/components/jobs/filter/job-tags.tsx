@@ -1,13 +1,21 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import { setTags } from "@/redux/features/filterSlice";
-import { useAds } from "../../company/hooks/useAds";
+import { JobAdResponse } from "@/data/job-ad-data";
+import { JobApplication } from "@/data/job-applications-data";
 
-const JobTags = () => {
-  const { ads, isLoading } = useAds();
+type IProps = {
+  ads: JobAdResponse[] | JobApplication[];
+};
 
-  const uniqueTags = [...new Set(ads.flatMap((job) => job.requirements))];
+const JobTags = ({ ads }: IProps) => {
+  const uniqueTags = [
+    ...new Set(
+      ads.flatMap((job) => job.skills.map((skill) => skill.name)) // Get the name of each skill
+    ),
+  ];
   const { tags } = useAppSelector((state) => state.filter);
+
   const dispatch = useAppDispatch();
   return (
     <div className="main-body">
@@ -15,11 +23,11 @@ const JobTags = () => {
         {uniqueTags.map((t, i) => (
           <li key={i}>
             <input
-              onChange={() => dispatch(setTags(t as string))}
+              onChange={() => dispatch(setTags(t))}
               type="checkbox"
               name="tags"
               defaultValue={t}
-              checked={tags.includes(t as string)}
+              checked={tags.includes(t)}
             />
             <label>{t}</label>
           </li>

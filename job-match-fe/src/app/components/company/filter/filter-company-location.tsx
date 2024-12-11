@@ -1,16 +1,27 @@
 import React from "react";
 import NiceSelect from "@/ui/nice-select";
 import { CompanyDetails } from "@/data/company-data";
+import { useAppDispatch } from "@/redux/hook";
+import { setLocation } from "@/redux/features/filterSlice";
+import slugify from "slugify";
 
 const FilterCompanyLocation = ({
   companies,
 }: {
-  companies: Array<CompanyDetails>;
+  companies: CompanyDetails[];
 }) => {
   const uniqueLocations = [...new Set(companies.map((c) => c.city))];
-  const handleLocation = (item: { value: string; label: string }) => {};
+  const dispatch = useAppDispatch();
+
+  const handleLocation = (item: { value: string; label: string }) => {
+    dispatch(setLocation(item.value));
+  };
+
   const options = uniqueLocations.map((l) => {
-    return { value: l, label: l };
+    return {
+      value: slugify(l.split(",").join("-").toLowerCase(), "-"),
+      label: l,
+    };
   });
   return (
     <NiceSelect

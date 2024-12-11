@@ -1,15 +1,25 @@
 import NiceSelect from "@/ui/nice-select";
 import React from "react";
-import { useProfessionals } from "../hooks/useProfessionals";
+import slugify from "slugify";
+import { useAppDispatch } from "@/redux/hook";
+import { IPropsProfessionals } from "./candidate-v1-filter-area";
+import { setLocation } from "@/redux/features/filterSlice";
 
-const FilterCandidateLocation = () => {
-  const { professionals, loading } = useProfessionals();
-  const candidate_data = professionals;
+const FilterCandidateLocation = ({ items }: IPropsProfessionals) => {
+  const dispatch = useAppDispatch();
+
+  const candidate_data = items;
+  console.log(candidate_data.map((c) => c.city));
 
   const uniqueLocations = [...new Set(candidate_data.map((c) => c.city))];
-  const handleLocation = (item: { value: string; label: string }) => {};
+  const handleLocation = (item: { value: string; label: string }) => {
+    dispatch(setLocation(item.value));
+  };
   const options = uniqueLocations.map((l) => {
-    return { value: l, label: l };
+    return {
+      value: slugify(l.split(",").join("-").toLowerCase(), "-"),
+      label: l,
+    };
   });
   return (
     <NiceSelect

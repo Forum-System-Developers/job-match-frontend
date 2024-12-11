@@ -8,13 +8,14 @@ import FilterLocation from "../../jobs/filter/job-filter-2/filter-location";
 import FilterExperience from "../../jobs/filter/job-filter-2/filter-experience";
 import { SalaryRangeSlider } from "../../jobs/filter/job-prices";
 import { JobAdResponse } from "@/data/job-ad-data";
+import { JobApplication } from "@/data/job-applications-data";
 
 // prop type
 type IProps = {
   priceValue: number[];
   setPriceValue: React.Dispatch<React.SetStateAction<number[]>>;
   maxPrice: number;
-  items: JobAdResponse[] | any[];
+  items: JobApplication[] | any[];
 };
 
 const JobFilterModal = ({
@@ -70,7 +71,9 @@ const JobFilterModal = ({
 
                 <div className="row">
                   <div className="col-lg-4 col-sm-6">
-                    {isJobAd && <FilterExperience items={items} />}
+                    {isJobAd && (
+                      <FilterExperience items={items as JobAdResponse[]} />
+                    )}
                   </div>
                   <div className="col-lg-4">
                     <div className="filter-block d-xl-flex pb-25">

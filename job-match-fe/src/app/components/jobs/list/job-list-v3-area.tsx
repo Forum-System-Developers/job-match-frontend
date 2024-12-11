@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Pagination from "@/ui/pagination";
 import { useAppSelector } from "@/redux/hook";
 import slugify from "slugify";
@@ -8,9 +8,12 @@ import ListItemThree from "./list-item-3";
 import JobFilterModal from "../../common/popup/job-filter-modal";
 import { JobApplication } from "@/data/job-applications-data";
 import { useJobApplications } from "../hooks/useJobApplications";
+import FilterAreaAds from "../filter/filter-area-ads";
+import FilterAreaApps from "../filter/filter-area-applications";
 
 const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
-  const { jobApplications, loading } = useJobApplications();
+  const { jobApplications, isLoading } = useJobApplications();
+
   let all_jobs = jobApplications;
   const maxPrice = jobApplications.reduce((max, job) => {
     return (job.max_salary ?? 0) > max ? job.max_salary ?? 0 : max;
@@ -27,9 +30,13 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
   const [priceValue, setPriceValue] = useState([0, maxPrice]);
   const [shortValue, setShortValue] = useState("");
 
-  useEffect(() => {
-    // Filter the job_data array based on the selected filters
-    let filteredData = all_jobs
+  const filteredData = useMemo(() => {
+    return jobApplications
+      .filter((l) =>
+        location
+          ? slugify(l.city.split(",").join("-").toLowerCase(), "-") === location
+          : true
+      )
       .filter((item) =>
         category.length !== 0
           ? category.some((c) => item.category_title.includes(c))
@@ -39,44 +46,40 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
         search_key
           ? item.name.toLowerCase().includes(search_key.toLowerCase())
           : true
-      )
-      .filter((l) =>
-        location
-          ? slugify(l.city.split(",").join("-").toLowerCase(), "-") === location
-          : true
       );
-    // .filter(
-    //   (j) =>
-    //     (j.min_salary ?? 0) >= priceValue[0] &&
-    //     (j.max_salary ?? Infinity) <= priceValue[1]
-    // );
+  }, [jobApplications, location, category]);
+  // .filter(
+  //   (j) =>
+  //     (j.min_salary ?? 0) >= priceValue[0] &&
+  //     (j.max_salary ?? Infinity) <= priceValue[1]
+  // );
+  useEffect(() => {
+    let sortedData = [...filteredData];
 
-    if (shortValue === "price-low-to-high") {
-      filteredData = filteredData.slice().sort((a, b) => {
-        const salaryA = a.min_salary ?? 0;
-        const salaryB = b.min_salary ?? 0;
-        return salaryA - salaryB;
-      });
-    }
+    // if (shortValue === "price-low-to-high") {
+    //   sortedData = filteredData.slice().sort((a: any, b: any) => {
+    //     const salaryA = a.min_salary ?? 0;
+    //     const salaryB = b.min_salary ?? 0;
+    //     return salaryA - salaryB;
+    //   });
+    // }
 
-    if (shortValue === "price-high-to-low") {
-      filteredData = filteredData.slice().sort((a, b) => {
-        const salaryA = a.max_salary ?? Infinity;
-        const salaryB = b.max_salary ?? Infinity;
-        return salaryB - salaryA;
-      });
-    }
+    // if (shortValue === "price-high-to-low") {
+    //   sortedData = filteredData.slice().sort((a: any, b: any) => {
+    //     const salaryA = a.max_salary ?? Infinity;
+    //     const salaryB = b.max_salary ?? Infinity;
+    //     return salaryB - salaryA;
+    //   });
+    // }
 
     const endOffset = itemOffset + itemsPerPage;
     setFilterItems(filteredData);
     setCurrentItems(filteredData.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(filteredData.length / itemsPerPage));
   }, [
+    filteredData,
     itemOffset,
     itemsPerPage,
-    category,
-    location,
-    all_jobs,
     priceValue,
     shortValue,
     search_key,
@@ -90,32 +93,39 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
   const handleShort = (item: { value: string; label: string }) => {
     setShortValue(item.value);
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <section className="job-listing-three bg-color pt-90 lg-pt-80 pb-160 xl-pb-150 lg-pb-80">
         <div className="container">
           <div className="row">
-            <div className="col-12">
+            <div className="col-xl-3 col-lg-4">
+              <button
+                type="button"
+                className="filter-btn w-100 pt-2 pb-2 h-auto fw-500 tran3s d-lg-none mb-40"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#filteroffcanvas"
+              >
+                <i className="bi bi-funnel"></i>
+                Filter
+              </button>
+              {/* filter area start */}
+              <FilterAreaApps
+                priceValue={priceValue}
+                setPriceValue={setPriceValue}
+                maxPrice={maxPrice}
+                items={jobApplications}
+              />
+              {/* filter area end */}
+            </div>
+
+            {/* <div className="col-12"> */}
+            <div className="col-xl-9 col-lg-8">
               <div className="job-post-item-wrapper">
                 <div className="upper-filter d-flex justify-content-between align-items-start align-items-sm-center mb-30">
-                  <div className="d-sm-flex align-items-center">
-                    <button
-                      type="button"
-                      className="filter-btn fw-500 tran3s me-3"
-                      data-bs-toggle="modal"
-                      data-bs-target="#filterPopUp"
-                    >
-                      <i className="bi bi-funnel"></i>
-                      Filter
-                    </button>
-                    <div className="total-job-found xs-mt-10">
-                      All{" "}
-                      <span className="text-dark fw-500">
-                        {all_jobs.length}
-                      </span>{" "}
-                      jobs found
-                    </div>
-                  </div>
                   <div className="d-flex align-items-center">
                     <div className="short-filter d-flex align-items-center">
                       <div className="text-dark fw-500 me-2">Sort:</div>
@@ -132,6 +142,7 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
                     </div>
                   </div>
                 </div>
+
                 <div className="wrapper">
                   <div className="row">
                     {currentItems &&
@@ -173,15 +184,6 @@ const JobListV3Area = ({ itemsPerPage }: { itemsPerPage: number }) => {
           </div>
         </div>
       </section>
-
-      {/* filter modal start */}
-      <JobFilterModal
-        maxPrice={maxPrice}
-        priceValue={priceValue}
-        setPriceValue={setPriceValue}
-        items={jobApplications}
-      />
-      {/* filter modal end */}
     </>
   );
 };

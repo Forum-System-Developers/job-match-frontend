@@ -11,14 +11,18 @@ export interface JobAdResponse {
   category_id: string;
   category_name: string;
   city_id: string;
-  city_name: string;
+  city: string;
   title: string;
   description: string;
   min_salary: number | null;
   max_salary: number | null;
   status: "active" | "archived";
   skill_level: string;
-  requirements: string[];
+  skills: {
+    category_id: string;
+    id: string;
+    name: string;
+  }[];
   created_at: string;
   updated_at: string;
 }
@@ -67,14 +71,14 @@ export const getJobAds = async () => {
           category_id: ad.category_id,
           category_name: ad.category_name,
           city_id: ad.city.id,
-          city_name: ad.city.name,
+          city: ad.city.name,
           title: ad.title,
           description: ad.description,
           min_salary: ad.min_salary,
           max_salary: ad.max_salary,
           status: ad.status,
           skill_level: ad.skill_level,
-          requirements: ad.required_skills.map((skill: any) => skill.name),
+          skills: ad.required_skills,
           created_at: ad.created_at,
           updated_at: ad.updated_at,
         };
@@ -104,14 +108,14 @@ export const getJobAd = async (id: string) => {
       category_id: jobAdData.category_id,
       category_name: jobAdData.category_name,
       city_id: jobAdData.city.id,
-      city_name: jobAdData.city.name,
+      city: jobAdData.city.name,
       title: jobAdData.title,
       description: jobAdData.description,
       min_salary: jobAdData.min_salary,
       max_salary: jobAdData.max_salary,
       status: jobAdData.status,
       skill_level: jobAdData.skill_level,
-      requirements: jobAdData.required_skills.map((skill: any) => skill.name),
+      skills: jobAdData.required_skills,
       created_at: jobAdData.created_at,
       updated_at: jobAdData.updated_at,
     };

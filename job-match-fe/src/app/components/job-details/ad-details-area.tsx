@@ -88,8 +88,8 @@ const JobDetailsV1Area = () => {
                   <h4 className="block-title">Skills required:</h4>
                 </div>
                 <ul className="list-type-one style-none mb-15">
-                  {ad?.requirements &&
-                    ad.requirements.map((t, i) => <li key={i}>{t}</li>)}
+                  {ad?.skills &&
+                    ad.skills.map((t, i) => <li key={i}>{t.name}</li>)}
                 </ul>
               </div>
             </div>
@@ -134,7 +134,7 @@ const JobDetailsV1Area = () => {
 
                   <li className="col-xl-7 col-md-4 col-sm-6">
                     <span>Location</span>
-                    <div>{job?.city_name} </div>
+                    <div>{job?.city} </div>
                   </li>
 
                   <li
@@ -146,10 +146,10 @@ const JobDetailsV1Area = () => {
                   </li>
                 </ul>
                 <div className="job-tags d-flex flex-wrap pt-15">
-                  {job?.requirements &&
-                    job?.requirements.map((t, i) => (
+                  {job?.skills &&
+                    job?.skills.map((t, i) => (
                       <a key={i} href="" style={{ cursor: "default" }}>
-                        {t}
+                        {t.name}
                       </a>
                     ))}
                 </div>

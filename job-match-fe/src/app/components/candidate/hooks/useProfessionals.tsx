@@ -14,5 +14,5 @@ export const useProfessionals = () => {
     queryFn: getProfessionals,
   });
 
-  return { professionals, loading: isLoading, error };
+  return { professionals, isLoading, error };
 };
