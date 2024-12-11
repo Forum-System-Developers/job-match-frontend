@@ -9,6 +9,7 @@ export const useProfessional = (id: string) => {
   } = useQuery({
     queryKey: ["professional", id],
     queryFn: () => getProfessional(id),
+    enabled: !!id,
   });
   return { professional, isLoading, error };
 };
