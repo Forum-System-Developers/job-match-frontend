@@ -126,7 +126,6 @@ const JobListThree = ({
                     <div className="text-dark fw-500 me-2">Sort:</div>
                     <NiceSelect
                       options={[
-                        { value: "", label: "Price Sort" },
                         { value: "price-low-to-high", label: "low to high" },
                         { value: "price-high-to-low", label: "High to low" },
                       ]}

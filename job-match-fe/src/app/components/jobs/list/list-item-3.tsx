@@ -8,25 +8,21 @@ import { JobApplication } from "../../../../data/job-applications-data";
 
 const ListItemThree = ({ item }: { item: JobApplication }) => {
   return (
-    <div className="job-list-three d-flex h-100 w-100">
+    <div
+      className="job-list-three d-flex h-100 w-100"
+      style={{
+        padding: "28px",
+      }}
+    >
       <div className="main-wrapper h-100 w-100">
-        {/* <a
-          onClick={() => handleAddWishlist(item)}
-          className={`save-btn text-center rounded-circle tran3s cursor-pointer ${
-            isActive ? "active" : ""
-          }`}
-          title={`${isActive ? "Remove Job" : "Save Job"}`}
-        >
-          <i className="bi bi-bookmark-dash"></i>
-        </a> */}
         <div className="list-header d-flex align-items-center">
           <Link href={`/job-application/${item.id}`} className="logo">
             <Image
               src={item.photo || profile_icon_1}
               alt="logo"
               className="lazy-img m-auto"
-              width={50}
-              height={50}
+              width={35}
+              height={35}
             />
           </Link>
           <div className="info-wrapper">
@@ -41,6 +37,9 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
               <Link
                 href={`/job-application/${item.id}`}
                 className="title fw-500 tran3s"
+                style={{
+                  fontSize: "1.1rem",
+                }}
               >
                 {item.name}
               </Link>
@@ -50,6 +49,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
+                  fontSize: "0.9rem",
                 }}
               >
                 <Link
@@ -73,15 +73,26 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
                 className="style-none d-flex flex-wrap info-data"
                 style={{
                   width: "100%",
+                  fontSize: "0.8rem",
                 }}
               >
                 <li>
                   <div>
-                    <div className="job-salary">
+                    <div
+                      className="job-salary"
+                      style={{
+                        fontSize: "0.8rem",
+                      }}
+                    >
                       <span className="fw-500 text-dark">Min Salary</span> |{" "}
                       {item.min_salary} BGN
                     </div>
-                    <div className="job-salary">
+                    <div
+                      className="job-salary"
+                      style={{
+                        fontSize: "0.8rem",
+                      }}
+                    >
                       <span className="fw-500 text-dark">Max Salary</span> |{" "}
                       {item.max_salary} BGN
                     </div>
@@ -94,25 +105,48 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
         </div>
         <p>{item.description.slice(0, 138)}...</p>
         <div className="d-sm-flex align-items-center justify-content-between mt-auto">
-          <div className="d-flex align-items-center">
-            <Image src={verify} alt="icon" />
-            <span className="fw-500 client-status">Verified Client .</span>
-            {/* <Link
-              href={`/job-application
-              /${item.id}`}
-              className={`job-duration fw-500 ${
-                duration === "Part time" ? "part-time" : ""
-              }`}
-            >
-              {duration}
-            </Link> */}
+          <div>
+            <ul className="cadidate-skills style-none d-flex align-items-center">
+              {item.skills?.slice(0, 3).map((s, i) => (
+                <li
+                  key={i}
+                  style={{
+                    display: "inline-block",
+                    backgroundColor: "#f1f1f1",
+                    padding: "3px",
+                    textAlign: "center",
+                    borderRadius: "25px",
+                    marginRight: "5px",
+                    minWidth: "80px",
+                    fontSize: "0.9rem",
+
+                    width: "100%",
+                  }}
+                >
+                  {s.name}
+                </li>
+              ))}
+              {item.skills?.length > 3 && (
+                <li className="more">
+                  {item.skills?.length - item.skills?.slice(0, 3).length}+
+                </li>
+              )}
+            </ul>
           </div>
-          <Link
-            href={`/job-application/${item.id}`}
-            className="apply-btn text-center tran3s xs-mt-20"
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              width: "100%",
+            }}
           >
-            VIEW
-          </Link>
+            <Link
+              href={`/job-application/${item.id}`}
+              className="apply-btn text-center tran3s xs-mt-20"
+            >
+              VIEW
+            </Link>
+          </div>
         </div>
       </div>
     </div>

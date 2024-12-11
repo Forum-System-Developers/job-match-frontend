@@ -60,20 +60,6 @@ const JobPrices = ({ priceValue, setPriceValue, maxPrice }: IProps) => {
         priceValue={priceValue}
         setPriceValue={setPriceValue}
       />
-      {/* <ul className="style-none d-flex flex-wrap justify-content-between radio-filter mb-5">
-        <li>
-          <input type="radio" name="jobDuration" defaultValue="01" />
-          <label>Weekly</label>
-        </li>
-        <li>
-          <input type="radio" name="jobDuration" defaultValue="02" />
-          <label>Monthly</label>
-        </li>
-        <li>
-          <input type="radio" name="jobDuration" defaultValue="03" />
-          <label>Hourly</label>
-        </li>
-      </ul> */}
     </div>
   );
 };
