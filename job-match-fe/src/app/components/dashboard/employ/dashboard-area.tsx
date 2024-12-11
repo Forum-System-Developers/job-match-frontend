@@ -25,7 +25,8 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
   const user = getUserLocal();
   const { company, isLoading: companyLoading } = useCurrentCompany();
   const { ads, isLoading: adsLoading } = useAdsCompany(user?.id as string);
-  const { matchRequests, isLoading } = useMatchRequestsCompany();
+  const { matchRequests } = useMatchRequestsCompany();
+  const match_requests = matchRequests.length;
 
   const job_items = [...ads.reverse().slice(0, 6)];
   return (
@@ -36,18 +37,27 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
         {/* header end */}
 
         <h2 className="main-title">Dashboard</h2>
-        <div className="row">
+        <div
+          className="row"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           <CardItem
             img={icon_1}
             title="Matches"
             value={`${company?.successful_matches}`}
+            link={null}
           />
-          <CardItem img={icon_2} title="Shortlisted" value="03" />
-          <CardItem img={icon_3} title="Views" value="2.1k" />
+          <CardItem
+            img={icon_3}
+            title="New Requests"
+            value={`${match_requests}`}
+            link={`/dashboard/employ-dashboard/match-requests`}
+          />
           <CardItem
             img={icon_4}
             title="Open Jobs"
             value={`${company?.active_job_ads}`}
+            link={`/dashboard/employ-dashboard/open-jobs`}
           />
         </div>
 
@@ -136,7 +146,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                     >
                       <div className="job-title">
                         <h6 className="mb-5">
-                          <a href="#">{j.title}</a>
+                          <a href={`/job-ad/${j.id}`}>{j.title}</a>
                         </h6>
                         <div className="meta">
                           <span>{j.category_name}</span> . <span>{j.city}</span>
@@ -153,18 +163,12 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                         </button>
                         <ul className="dropdown-menu">
                           <li>
-                            <a className="dropdown-item" href="">
+                            <a
+                              className="dropdown-item"
+                              href={`/job-ad/${j.id}`}
+                              style={{ color: "#3f634d" }}
+                            >
                               View Job
-                            </a>
-                          </li>
-                          <li>
-                            <a className="dropdown-item" href="#">
-                              Archive
-                            </a>
-                          </li>
-                          <li>
-                            <a className="dropdown-item" href="#">
-                              Delete
                             </a>
                           </li>
                         </ul>

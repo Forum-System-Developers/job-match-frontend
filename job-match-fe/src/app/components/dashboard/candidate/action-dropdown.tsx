@@ -13,11 +13,6 @@ const ActionDropdown = ({ id }: { id: string | null }) => {
           <Image src={view} alt="icon" className="lazy-img" /> View
         </a>
       </li>
-      {/* <li>
-        <a className="dropdown-item" href="#">
-          <Image src={share} alt="icon" className="lazy-img" /> Share
-        </a>
-      </li> */}
       <li>
         <a className="dropdown-item" href="">
           <Image src={edit} alt="icon" className="lazy-img" /> Edit

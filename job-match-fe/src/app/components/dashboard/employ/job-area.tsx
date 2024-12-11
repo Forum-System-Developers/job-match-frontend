@@ -53,13 +53,13 @@ const EmployJobArea = ({ setIsOpenSidebar }: IProps) => {
                       <th scope="col">Job Created</th>
                       <th scope="col">Category</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Action</th>
+                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="border-0">
                     {filteredAds && filteredAds.length > 0 ? (
                       filteredAds.map((ad) => (
-                        <EmployJobItem key={ad.id} ad={ad} status={ad.status} />
+                        <EmployJobItem key={ad.id} ad={ad} />
                       ))
                     ) : (
                       <tr>

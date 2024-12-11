@@ -36,14 +36,20 @@ const menu_data: IMenuData[] = [
       },
       {
         id: 3,
-        title: "Wishlist",
+        title: isUserAuthenticated
+          ? role() === "company"
+            ? "Your Job Ads"
+            : "Your Applications"
+          : "Your posts",
         sub_menus: [
           {
-            link: isUserAuthenticated ? "/job-wishlist" : "/register",
-            title: "Job Wishlist",
+            link: isUserAuthenticated
+              ? role() === "company"
+                ? "/dashboard/employ-dashboard/jobs"
+                : "/dashboard/candidate-dashboard/applications"
+              : "/register",
+            title: "View all",
           },
-          // { link: "/job-details-v1", title: "Job Details v-1" },
-          // { link: "/job-details-v2", title: "Job Details v-2" },
         ],
       },
     ],
@@ -61,8 +67,6 @@ const menu_data: IMenuData[] = [
             title: "View all professionals",
             link: isUserAuthenticated ? "/professionals" : "/register",
           },
-          // { title: "Candidates Details v-1", link: "/candidate-profile-v1" },
-          // { title: "Candidates Details v-2", link: "/candidate-profile-v2" },
         ],
       },
       {
@@ -88,17 +92,6 @@ const menu_data: IMenuData[] = [
       },
     ],
   },
-  // {
-  //   id: 4,
-  //   link: "/blog-v1",
-  //   title: "Blog",
-  //   sub_menus: [
-  //     { link: "/blog-v1", title: "Blog Standard" },
-  //     { link: "/blog-v2", title: "Blog Grid" },
-  //     { link: "/blog-v3", title: "Full width" },
-  //     { link: "/blog-details", title: "Blog Details" },
-  //   ],
-  // },
   {
     id: 5,
     link: "/contact",

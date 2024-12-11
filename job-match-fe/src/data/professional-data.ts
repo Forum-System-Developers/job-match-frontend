@@ -30,37 +30,16 @@ export const nav_data: {
     id: 2,
     icon: nav_6,
     icon_active: nav_6_active,
-    link: "/dashboard/candidate-dashboard/active-applications",
+    link: "/dashboard/candidate-dashboard/applications",
     title: "Applications",
   },
-  // {
-  //   id: 4,
-  //   icon: nav_4,
-  //   icon_active: nav_4_active,
-  //   link: "/dashboard/candidate-dashboard/messages",
-  //   title: "Messages",
-  // },
   {
     id: 3,
     icon: nav_3,
     icon_active: nav_3_active,
     link: "/dashboard/candidate-dashboard/match-requests",
     title: "Match Requests",
-    // },
-    // {
-    //   id: 5,
-    //   icon: nav_5,
-    //   icon_active: nav_5_active,
-    //   link: "/dashboard/candidate-dashboard/job-alert",
-    //   title: "Job Alert",
   },
-  // {
-  //   id: 6,
-  //   icon: nav_6,
-  //   icon_active: nav_6_active,
-  //   link: "/dashboard/candidate-dashboard/saved-job",
-  //   title: "Saved Job",
-  // },
 ];
 
 export interface Skills {

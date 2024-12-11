@@ -2,21 +2,26 @@ import React from "react";
 import ActionDropdown from "../candidate/action-dropdown";
 import { JobAdResponse } from "@/data/job-ad-data";
 
-const EmployJobItem = ({
-  ad,
-  status,
-}: {
-  ad: JobAdResponse | null;
-  status: string;
-}) => {
+export const statusClassMapping: Record<string, string> = {
+  pending: "pending",
+  hidden: "pending",
+  active: "active",
+  archived: "expired",
+  private: "expired",
+  expired: "expired",
+};
+
+const EmployJobItem = ({ ad }: { ad: JobAdResponse | null }) => {
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   }).format(new Date(ad?.created_at || Date.now()));
 
+  const statusClass = ad?.status ? statusClassMapping[ad.status] : "active";
+
   return (
-    <tr className={status}>
+    <tr className={statusClass}>
       <td>
         <div className="job-name fw-500">{ad?.title}</div>
         <div className="info1">{ad?.description}</div>
@@ -24,7 +29,7 @@ const EmployJobItem = ({
       <td>{formattedDate}</td>
       <td>{ad?.category_name}</td>
       <td>
-        <div className="job-status text-capitalize">{status}</div>
+        <div className="job-status text-capitalize">{ad?.status}</div>
       </td>
       <td>
         <div className="action-dots float-end">
