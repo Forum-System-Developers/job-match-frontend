@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
 import slugify from "slugify";
-import FilterArea from "../filter/filter-area";
+import FilterAreaAds from "../filter/filter-area-ads";
 import ListItemTwo from "./list-item-2";
 import Pagination from "@/ui/pagination";
 import JobGridItem from "../grid/job-grid-item";
@@ -53,13 +53,12 @@ const JobListThree = ({
       )
       .filter((l) =>
         location
-          ? slugify(l.city_name.split(",").join("-").toLowerCase(), "-") ===
-            location
+          ? slugify(l.city.split(",").join("-").toLowerCase(), "-") === location
           : true
       )
       .filter((item) =>
         tags.length !== 0
-          ? tags.some((t) => item?.requirements?.includes(t))
+          ? tags.some((t) => item?.skills?.some((s) => s.name === t))
           : true
       );
   }, [all_jobs, category, experience, location, tags]);
@@ -106,11 +105,11 @@ const JobListThree = ({
               Filter
             </button>
             {/* filter area start */}
-            <FilterArea
+            <FilterAreaAds
               priceValue={priceValue}
               setPriceValue={setPriceValue}
               maxPrice={maxPrice}
-              ads={ads}
+              items={ads}
             />
             {/* filter area end */}
           </div>

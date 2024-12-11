@@ -243,7 +243,7 @@ export const getAdsCompany = async (
           category_id: ad.category_id,
           category_name: ad.category_name,
           city_id: ad.city.id,
-          city_name: ad.city.name,
+          city: ad.city.name,
           title: ad.title,
           description: ad.description,
           min_salary: ad.min_salary,

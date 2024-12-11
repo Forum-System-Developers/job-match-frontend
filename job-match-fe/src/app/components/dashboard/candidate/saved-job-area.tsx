@@ -69,7 +69,7 @@ const SavedJobArea = ({ setIsOpenSidebar }: IProps) => {
                 </div>
                 <div className="col-xxl-2 col-lg-3 col-md-4 col-sm-6 ms-auto xs-mt-10">
                   <div className="job-location">
-                    <a href="#">{j.city_name}</a>
+                    <a href="#">{j.city}</a>
                   </div>
                   <div className="job-category">
                     <a href="#">{j.category_name}</a>

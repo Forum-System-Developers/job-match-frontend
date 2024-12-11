@@ -139,8 +139,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
                           <a href="#">{j.title}</a>
                         </h6>
                         <div className="meta">
-                          <span>{j.category_name}</span> .{" "}
-                          <span>{j.city_name}</span>
+                          <span>{j.category_name}</span> . <span>{j.city}</span>
                         </div>
                       </div>
                       <div className="job-action">

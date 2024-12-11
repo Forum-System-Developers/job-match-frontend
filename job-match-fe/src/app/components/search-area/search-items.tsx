@@ -25,8 +25,7 @@ const SearchItems = () => {
   };
   const locationMatch = (item: JobAdResponse) => {
     return (
-      slugify(item.city_name.split(",").join("-").toLowerCase(), "-") ===
-      location
+      slugify(item.city.split(",").join("-").toLowerCase(), "-") === location
     );
   };
   const companyMatch = (item: JobAdResponse) => {

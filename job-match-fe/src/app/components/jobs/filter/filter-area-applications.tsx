@@ -8,21 +8,28 @@ import JobPrices from "./job-prices";
 import { useAppDispatch } from "@/redux/hook";
 import { resetFilter } from "@/redux/features/filterSlice";
 import { JobAdResponse } from "@/data/job-ad-data";
+import { JobApplication } from "@/data/job-applications-data";
 
 // prop type
 type IProps = {
   priceValue: number[];
   setPriceValue: React.Dispatch<React.SetStateAction<number[]>>;
   maxPrice: number;
-  ads: JobAdResponse[];
+  items: JobApplication[];
 };
-const FilterArea = ({ priceValue, setPriceValue, maxPrice, ads }: IProps) => {
+const FilterAreaApps = ({
+  priceValue,
+  setPriceValue,
+  maxPrice,
+  items,
+}: IProps) => {
   const dispatch = useAppDispatch();
   // handleReset
   const handleReset = () => {
     dispatch(resetFilter());
     setPriceValue([0, maxPrice]);
   };
+
   return (
     <div
       className="filter-area-tab offcanvas offcanvas-start"
@@ -34,8 +41,21 @@ const FilterArea = ({ priceValue, setPriceValue, maxPrice, ads }: IProps) => {
         data-bs-dismiss="offcanvas"
         aria-label="Close"
       ></button>
-      <div className="main-title fw-500 text-dark">Filter By</div>
-      <div className="light-bg border-20 ps-4 pe-4 pt-25 pb-30 mt-20">
+      <div
+        className="main-title fw-500 text-dark"
+        style={{
+          backgroundColor: "#eff6f3",
+        }}
+      >
+        Filter By
+      </div>
+      <div
+        className="light-bg border-20 ps-4 pe-4 pt-25 pb-30 mt-20"
+        style={{
+          marginTop: "0px",
+          borderRadius: "0px",
+        }}
+      >
         <div className="filter-block bottom-line pb-25">
           <a
             className="filter-title fw-500 text-dark"
@@ -48,26 +68,11 @@ const FilterArea = ({ priceValue, setPriceValue, maxPrice, ads }: IProps) => {
           </a>
           <div className="collapse show" id="collapseLocation">
             <div className="main-body">
-              <JobLocations items={ads} />
+              <JobLocations items={items} />
             </div>
           </div>
         </div>
-        {/* <!-- /.filter-block --> */}
-        {/* <!-- /.filter-block --> */}
-        <div className="filter-block bottom-line pb-25 mt-25">
-          <a
-            className="filter-title fw-500 text-dark"
-            data-bs-toggle="collapse"
-            href="#collapseExp"
-            role="button"
-            aria-expanded="false"
-          >
-            Experience
-          </a>
-          <div className="collapse show" id="collapseExp">
-            <JobExperience ads={ads} />
-          </div>
-        </div>
+
         {/* <!-- /.filter-block --> */}
         <div className="filter-block bottom-line pb-25 mt-25">
           <a
@@ -114,7 +119,7 @@ const FilterArea = ({ priceValue, setPriceValue, maxPrice, ads }: IProps) => {
             Skills
           </a>
           <div className="collapse" id="collapseTag">
-            <JobTags ads={ads} />
+            <JobTags ads={items} />
           </div>
         </div>
         {/* <!-- /.filter-block --> */}
@@ -130,4 +135,4 @@ const FilterArea = ({ priceValue, setPriceValue, maxPrice, ads }: IProps) => {
   );
 };
 
-export default FilterArea;
+export default FilterAreaApps;
