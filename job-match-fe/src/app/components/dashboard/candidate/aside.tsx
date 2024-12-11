@@ -154,7 +154,7 @@ const CandidateAside = ({ isOpenSidebar, setIsOpenSidebar }: IProps) => {
           </div>
 
           <a
-            href="#"
+            href=""
             className="d-flex w-100 align-items-center logout-btn"
             onClick={handleLogout}
           >

@@ -1,7 +1,6 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
-import Image, { StaticImageData } from "next/image";
-import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
+import React from "react";
+
 import { CardItem } from "../common/card-item";
 import icon_1 from "@/assets/dashboard/images/icon/icon_12.svg";
 import icon_2 from "@/assets/dashboard/images/icon/icon_13.svg";
@@ -13,6 +12,7 @@ import {
   useMatchedApplicationsProfessional,
 } from "../../jobs/hooks/useJobApplications";
 import { useCurrentProfessional } from "./hooks/useCurrentProfessional";
+import { useMatchRequests } from "@/app/components/dashboard/candidate/hooks/useMatchRequests";
 
 // props type
 type IProps = {
@@ -28,6 +28,9 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
     useJobApplicationsProfessional(userId as string);
   const { matchedApplications, isLoading: matchedLoading } =
     useMatchedApplicationsProfessional(userId as string);
+  const { requests, isLoading: requestsLoading } = useMatchRequests();
+
+  const match_requests = requests.length;
 
   if (professionalLoading || jobLoading || matchedLoading) {
     return <div>Loading...</div>;
@@ -52,15 +55,22 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
         {/* header end */}
 
         <h2 className="main-title">Dashboard</h2>
-        <div className="row">
+        <div
+          className="row"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
           <CardItem
             img={icon_1}
             title="Applications"
             value={`${active_application_count}`}
             link={null}
           />
-          <CardItem img={icon_2} title="Shortlisted" value="03" link={null} />
-          <CardItem img={icon_3} title="Views" value="2.1k" link={null} />
+          <CardItem
+            img={icon_3}
+            title="New Requests"
+            value={`${match_requests}`}
+            link={`/dashboard/candidate-dashboard/match-requests`}
+          />
           <CardItem
             img={icon_4}
             title="Sent Requests"
