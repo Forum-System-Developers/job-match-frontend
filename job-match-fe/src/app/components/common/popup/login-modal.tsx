@@ -54,7 +54,14 @@ const LoginModal = () => {
                 <span className="pe-3 ps-3">OR</span>
                 <div className="line"></div>
               </div>
-              <div className="row">
+              <div
+                className="row"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <div className="col-md-6">
                   <a
                     href="#"
