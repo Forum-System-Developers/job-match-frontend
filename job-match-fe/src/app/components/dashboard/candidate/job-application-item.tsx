@@ -43,23 +43,6 @@ const JobApplicationItem = ({
                 <Image src={view} alt="icon" className="lazy-img" /> View
               </a>
             </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                <Image
-                  src={share}
-                  alt="icon"
-                  className="lazy-img"
-                  style={{ width: "15px", height: "15px" }}
-                />{" "}
-                Accept
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                <Image src={delete_icon} alt="icon" className="lazy-img" />{" "}
-                Reject
-              </a>
-            </li>
           </ul>
         </div>
       </td>

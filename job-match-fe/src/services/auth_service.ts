@@ -123,10 +123,10 @@ export const currentUser = async (): Promise<UserDetails> => {
 export const handleLogout = async () => {
   try {
     await axiosInstance.post(`/auth/logout`);
+    removeLocalStorage("user");
     setTimeout(() => {
       window.location.href = "/";
     }, 500);
-    removeLocalStorage("user");
   } catch (error) {
     throw new Error("Error logging out");
   }

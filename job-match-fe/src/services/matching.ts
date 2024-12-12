@@ -72,3 +72,39 @@ export const rejectMatchRequestFromAd = async (
     return null;
   }
 };
+
+export const acceptMatchRequestFromApplication = async (
+  adId: string,
+  applicationId: string
+) => {
+  try {
+    const response = await axiosInstance.put(
+      `/job-ads/${adId}/${applicationId}/match-response`,
+      {
+        accept_request: true,
+      }
+    );
+    return response.data.detail;
+  } catch (error) {
+    console.error("Error accepting match request:", error);
+    return null;
+  }
+};
+
+export const rejectMatchRequestFromApplication = async (
+  adId: string,
+  applicationId: string
+) => {
+  try {
+    const response = await axiosInstance.put(
+      `/job-ads/${adId}/${applicationId}/match-response`,
+      {
+        accept_request: false,
+      }
+    );
+    return response.data.detail;
+  } catch (error) {
+    console.error("Error rejecting match request:", error);
+    return null;
+  }
+};
