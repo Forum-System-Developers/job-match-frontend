@@ -50,15 +50,12 @@ const CategorySection = () => {
               className="card-style-one text-center mt-20 wow fadeInUp"
               data-wow-delay={`0.1${i + 1}s`}
             >
-              <Link
-                href="/job-grid-v2"
-                className={`bg wrapper ${i === 0 ? "active" : ""}`}
-              >
+              <div className={`bg wrapper ${i === 0 ? "active" : ""}`}>
                 <div className="icon d-flex align-items-center justify-content-center">
                   <Image src={item.icon} alt="icon" className="lazy-img" />
                 </div>
                 <div className="title fw-500">{item.title}</div>
-              </Link>
+              </div>
             </div>
           ))}
         </div>

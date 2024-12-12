@@ -33,7 +33,7 @@ const DashboardHeader = ({ setIsOpenSidebar }: IProps) => {
 
         <div>
           <Link
-            href="/dashboard/candidate-dashboard/new-application"
+            href="/dashboard/candidate-dashboard/submit-application"
             className="job-post-btn tran3s"
           >
             Create New
