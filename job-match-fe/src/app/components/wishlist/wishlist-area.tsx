@@ -58,7 +58,7 @@ const WishlistArea = () => {
                     jobType === "list" ? "show" : ""
                   }`}
                 >
-                  {wishlist?.map((job) => (
+                  {wishlist?.map((job: any) => (
                     <ListItemTwo key={job.id} item={job} />
                   ))}
                 </div>
@@ -69,7 +69,7 @@ const WishlistArea = () => {
                   }`}
                 >
                   <div className="row">
-                    {wishlist?.map((job) => (
+                    {wishlist?.map((job: any) => (
                       <div key={job.id} className="col-sm-6 mb-30">
                         <JobGridItem item={job} />
                       </div>

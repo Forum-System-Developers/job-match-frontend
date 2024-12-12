@@ -58,7 +58,6 @@ const CategorySection = () => {
                   <Image src={item.icon} alt="icon" className="lazy-img" />
                 </div>
                 <div className="title fw-500">{item.title}</div>
-                <div className="total-job">{item.count} Jobs</div>
               </Link>
             </div>
           ))}

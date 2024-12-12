@@ -31,7 +31,7 @@ const AboutUsPage = () => {
         {/* text feature area end */}
 
         {/* feature one start */}
-        <FeatureOne />
+        {/* <FeatureOne /> */}
         {/* feature one end */}
 
         {/* how works start */}
