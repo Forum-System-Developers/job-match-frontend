@@ -66,8 +66,7 @@ const LoginForm = () => {
         window.location.href = "/";
         reset();
       } catch (error) {
-        console.error("Login failed:", error);
-        alert(`Login failed: ${error}`);
+        throw new Error("Error logging in.");
       } finally {
         setIsSubmitting(false);
       }

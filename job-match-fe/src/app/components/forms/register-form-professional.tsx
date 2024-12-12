@@ -86,8 +86,7 @@ const ProfessionalRegisterForm = () => {
       setFormData({});
       window.location.href = "/";
     } catch (error) {
-      console.error("Professional registration failed:", error);
-      alert("Professional registration failed. Please try again.");
+      throw new Error("Error registering professional");
     } finally {
       setIsSubmitting(false);
     }

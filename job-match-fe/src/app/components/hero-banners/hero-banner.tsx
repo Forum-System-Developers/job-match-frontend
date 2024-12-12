@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import Image from "next/image";
 // internal
 import shape_1 from "@/assets/images/shape/shape_01.svg";
@@ -8,42 +8,29 @@ import shape_3 from "@/assets/images/shape/shape_03.svg";
 import main_img from "@/assets/images/assets/img_01.jpg";
 import SearchForm from "../forms/search-form";
 import {
-  currentUser,
   getUserLocal,
-  handleLogout,
-  isAuthenticated,
+  currentUser,
   setGoogleUser,
+  UserDetails,
 } from "@/services/auth_service";
-import { get } from "http";
-import { Axios, AxiosError } from "axios";
-import { removeLocalStorage } from "@/utils/localstorage";
 
 const HeroBanner = () => {
+  const [loggedUser, setUser] = useState<UserDetails | null>(null);
   const user = getUserLocal();
 
-  const verifyUser = async () => {
+  const fetchUser = async () => {
     try {
       const user = await currentUser();
-      if (user && !isAuthenticated()) {
-        setGoogleUser(user.id);
-      }
+      setUser(user);
+      setGoogleUser(user.id);
     } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response?.status === 401) {
-        if (isAuthenticated()) {
-          removeLocalStorage("user");
-          window.location.reload();
-          return;
-        } else {
-          throw new Error("Error verifying user");
-        }
-      }
+      setUser(null);
     }
   };
 
   useEffect(() => {
     if (!user) {
-      verifyUser();
+      fetchUser();
     }
   }, [user]);
 

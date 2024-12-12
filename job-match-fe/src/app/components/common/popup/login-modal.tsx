@@ -18,7 +18,7 @@ const LoginModal = () => {
       const googleLoginUrl = `${baseurl}/google-auth/login`;
       window.location.href = googleLoginUrl;
     } catch (error) {
-      console.error("Login failed:", error);
+      throw new Error("Error logging in with Google");
     } finally {
       setIsSubmitting(false);
     }
