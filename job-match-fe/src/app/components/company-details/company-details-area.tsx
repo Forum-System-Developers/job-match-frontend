@@ -24,22 +24,27 @@ const CompanyDetailsArea = () => {
           <div className="row">
             <div className="col-xxl-3 col-xl-4 order-xl-last">
               <div className="job-company-info ms-xl-5 ms-xxl-0 lg-mb-50">
-                <Image
-                  src={company?.logo || profile_icon_1}
-                  alt="logo"
-                  className="lazy-img m-auto logo"
-                  height={35}
-                  width={35}
-                  style={{
-                    width: "50%",
-                    height: "50%",
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                  }}
-                />
-                <div className="text-md text-dark text-center mt-15 mb-20 lg-mb-10">
-                  {company?.name}
-                </div>
+                <Link
+                  href={`/company/${company?.id}`}
+                  style={{ cursor: "pointer" }}
+                >
+                  <Image
+                    src={company?.logo || profile_icon_1}
+                    alt="logo"
+                    className="lazy-img m-auto logo"
+                    height={35}
+                    width={35}
+                    style={{
+                      width: "50%",
+                      height: "50%",
+                      objectFit: "cover",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <div className="text-md text-dark text-center mt-15 mb-20 lg-mb-10">
+                    {company?.name}
+                  </div>
+                </Link>
                 {company?.website_url && (
                   <div className="text-center">
                     <Link
@@ -64,14 +69,11 @@ const CompanyDetailsArea = () => {
                         <a href="#">{company?.email}</a>
                       </div>
                     </li>
-                    <li className="col-12">
-                      <span>Founded: </span>
-                      <div>13 Jan, 1997</div>
-                    </li>
+
                     <li className="col-12">
                       <span>Phone:</span>
                       <div>
-                        <a href="#">{company?.phone_number}</a>{" "}
+                        <a href="">{company?.phone_number}</a>{" "}
                       </div>
                     </li>
                     <li className="col-12">
@@ -90,10 +92,10 @@ const CompanyDetailsArea = () => {
                         </a>
                       </div>
                     </li>
-                    <li className="col-12">
+                    {/* <li className="col-12">
                       <span>Category: </span>
                       <div>Technology, Product, Agency</div>
-                    </li>
+                    </li> */}
                     {/* <li className="col-12">
                       <span>Social: </span>
                       <div>
@@ -125,34 +127,15 @@ const CompanyDetailsArea = () => {
             <div className="col-xxl-9 col-xl-8 order-xl-first">
               <div className="details-post-data me-xxl-5 pe-xxl-4">
                 <h3>Company Description</h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Mauris vitae ultricies leo integer malesuada nunc vel risus
-                  commodo. Vulputate odio ut enim blandit. Nibh ipsum consequat
-                  nisl vel pretium lectus quam.
-                </p>
-                <p>
-                  {" "}
-                  Nulla at volutpat diam ut. Lobortis feugiat vivamus at augue
-                  eget arcu. Urna condimentum mattis pellentesque id nibh tortor
-                  id aliquet. Dignissim cras tincidunt lobortis feugiat. Est sit
-                  amet facilisis magna etiam tempor. Eu augue ut lectus arcu
-                  bibendum at varius vel pharetra. Vel facilisis volutpat est
-                  velit egestas dui id. Ut pharetra sit amet aliquam. Elit at
-                  imperdiet dui accumsan sit amet nulla facilisi morbi. Tellus
-                  in metus vulputate eu scelerisque felis imperdiet proin. Magna
-                  fringilla urna porttitor rhoncus. Et odio pellentesque diam
-                  volutpat. Congue eu consequat ac felis donec et odio
-                  pellentesque diam. Accumsan in nisl nisi scelerisque eu
-                  ultrices vitae auctor eu.{" "}
-                </p>
-                <p>
-                  Felis eget velit aliquet sagittis id. Massa placerat duis
-                  ultricies lacus sed turpis tincidunt id. Vel eros donec ac
-                  odio tempor orci dapibus ultrices. Ipsum consequat nisl vel
-                  pretium lectus quam. Dignissim sodales ut eu sem.{" "}
-                </p>
+                {company?.description ? (
+                  company.description
+                    .split(/\n+/)
+                    .map((paragraph, index) => (
+                      <p key={index}>{paragraph.trim()}</p>
+                    ))
+                ) : (
+                  <p>No description provided</p>
+                )}
                 {company?.website_url && (
                   <>
                     <h3>Intro</h3>

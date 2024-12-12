@@ -32,7 +32,7 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
 
   const match_requests = requests.length;
 
-  if (professionalLoading || jobLoading || matchedLoading) {
+  if (professionalLoading || jobLoading || matchedLoading || requestsLoading) {
     return <div>Loading...</div>;
   }
 
@@ -63,7 +63,7 @@ const DashboardArea = ({ setIsOpenSidebar }: IProps) => {
             img={icon_1}
             title="Applications"
             value={`${active_application_count}`}
-            link={null}
+            link={`/dashboard/candidate-dashboard/applications`}
           />
           <CardItem
             img={icon_3}
