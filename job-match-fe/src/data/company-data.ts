@@ -138,7 +138,14 @@ export const uploadLogo = async (file: File) => {
 
 export const getAllCompanies = async (): Promise<CompanyDetails[]> => {
   try {
-    const response = await axiosInstance.get(`/companies/`);
+    const limit = 50;
+    const offset = 0;
+    const response = await axiosInstance.get(`/companies/`, {
+      params: {
+        limit: limit,
+        offset: offset,
+      },
+    });
     const companiesData: CompanyDetails[] = response.data.detail ?? [];
 
     const companies: CompanyDetails[] = await Promise.all(

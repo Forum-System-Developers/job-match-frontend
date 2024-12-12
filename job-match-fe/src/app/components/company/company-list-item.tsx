@@ -20,8 +20,8 @@ const CompanyListItem = ({ item }: { item: CompanyDetails }) => {
                 src={item.logo || profile_icon_1}
                 alt="image"
                 className="lazy-img rounded-circle"
-                height={55}
-                width={55}
+                height={25}
+                width={25}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -45,6 +45,9 @@ const CompanyListItem = ({ item }: { item: CompanyDetails }) => {
                     pathname: `/company/${item.id}`,
                   }}
                   className="company-name tran3s"
+                  style={{
+                    fontSize: "1.2rem",
+                  }}
                 >
                   {item.name}
                 </Link>
@@ -83,15 +86,22 @@ const CompanyListItem = ({ item }: { item: CompanyDetails }) => {
             >
               {item.active_job_ads} open jobs
             </Link>
-            <Link
-              href={{
-                pathname: `/company/${item.id}`,
-              }}
-              className="save-btn text-center rounded-circle tran3s"
-              title="Save Job"
-            >
-              <i className="bi bi-bookmark-dash"></i>
-            </Link>
+            <div className="btn-group d-flex align-items-center justify-content-md-end lg-mt-20">
+              <Link
+                href={{
+                  pathname: `/company/${item.id}`,
+                }}
+                className="apply-btn text-center tran3s xs-mt-20"
+                style={{
+                  border: "1px solid #f1f1f1",
+                  padding: "5px 20px",
+                  borderRadius: "50px",
+                  backgroundColor: "#f1f1f1",
+                }}
+              >
+                view
+              </Link>
+            </div>
           </div>
         </div>
       </div>

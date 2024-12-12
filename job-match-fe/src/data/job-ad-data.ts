@@ -51,11 +51,16 @@ export const createJobAd = async (jobAd: JobAdCreate) => {
 
 export const getJobAds = async () => {
   try {
-    const response = await axiosInstance.post(`/job-ads/all`, {
-      params: {
-        job_ad_status: "active",
-      },
-    });
+    const limit = 50;
+    const offset = 0;
+    const response = await axiosInstance.post(
+      `/job-ads/all?limit=${limit}&offset=${offset}`,
+      {
+        params: {
+          job_ad_status: "active",
+        },
+      }
+    );
     const jobAdsData = response.data.detail ?? [];
 
     const Ads: JobAdResponse[] = await Promise.all(
