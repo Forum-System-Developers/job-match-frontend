@@ -23,13 +23,7 @@ const JobGridItem = ({
     max_salary,
     title,
   } = item || {};
-  const { wishlist } = useAppSelector((state) => state.wishlist);
-  const isActive = wishlist.some((p: any) => p.id === id);
-  const dispatch = useAppDispatch();
-  // handle add wishlist
-  const handleAddWishlist = (item: JobAdResponse) => {
-    dispatch(add_to_wishlist(item));
-  };
+
   return (
     <div
       className={`job-list-two ${style_2 ? "style-two" : ""} position-relative`}
@@ -58,16 +52,6 @@ const JobGridItem = ({
           {company_name}
         </Link>
       </div>
-
-      <a
-        onClick={() => handleAddWishlist(item)}
-        className={`save-btn text-center rounded-circle tran3s cursor-pointer ${
-          isActive ? "active" : ""
-        }`}
-        title={`${isActive ? "Remove Job" : "Save Job"}`}
-      >
-        <i className="bi bi-bookmark-dash"></i>
-      </a>
 
       <div>
         <Link href={`/job-ad/${id}`} className="title fw-500 tran3s">

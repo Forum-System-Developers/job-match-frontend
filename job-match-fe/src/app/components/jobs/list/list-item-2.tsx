@@ -8,13 +8,6 @@ import { add_to_wishlist } from "@/redux/features/wishlist";
 import { JobAdResponse } from "@/data/job-ad-data";
 
 const ListItemTwo = ({ item }: { item: JobAdResponse }) => {
-  const { wishlist } = useAppSelector((state) => state.wishlist);
-  const isActive = wishlist.some((p: any) => p.id === item.id);
-  const dispatch = useAppDispatch();
-  // handle add wishlist
-  const handleAddWishlist = (item: JobAdResponse) => {
-    dispatch(add_to_wishlist(item));
-  };
   return (
     <div className="job-list-one style-two position-relative border-style mb-20">
       <div className="row justify-content-between align-items-center">
@@ -60,15 +53,6 @@ const ListItemTwo = ({ item }: { item: JobAdResponse }) => {
         </div>
         <div className="col-md-3 col-sm-6">
           <div className="btn-group d-flex align-items-center justify-content-sm-end xs-mt-20">
-            <a
-              onClick={() => handleAddWishlist(item)}
-              className={`save-btn text-center rounded-circle tran3s me-3 cursor-pointer ${
-                isActive ? "active" : ""
-              }`}
-              title={`${isActive ? "Remove Job" : "Save Job"}`}
-            >
-              <i className="bi bi-bookmark-dash"></i>
-            </a>
             <Link
               href={`/job-ad/${item.id}`}
               className="apply-btn text-center tran3s"
