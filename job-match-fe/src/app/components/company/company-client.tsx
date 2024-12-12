@@ -114,7 +114,7 @@ const CompanyV2Client = ({
                 <div className="d-flex align-items-center">
                   <div className="short-filter d-flex align-items-center">
                     <div className="text-dark fw-500 me-2">Sort:</div>
-                    <ShortSelect />
+                    {/* <ShortSelect /> */}
                   </div>
                   <button
                     onClick={() => setJobType("list")}
