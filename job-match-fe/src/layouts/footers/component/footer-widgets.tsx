@@ -20,9 +20,9 @@ export function WidgetOne({
         <li>
           <Link href="/candidates-v1">Candidates</Link>
         </li>
-        <li>
+        {/* <li>
           <Link href="/pricing">Pricing</Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
@@ -45,12 +45,12 @@ export function WidgetTwo({
         {/* <li>
           <Link href="/blog-v2">Blogs</Link>
         </li> */}
-        <li>
+        {/* <li>
           <Link href="/faq">FAQ’s</Link>
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           <Link href="/contact">Contact</Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
@@ -67,18 +67,18 @@ export function WidgetThree({
     <div className={`${cls} mb-20`}>
       <h5 className={`footer-title ${style_2 ? "text-white" : ""}`}>Support</h5>
       <ul className="footer-nav-link style-none">
-        <li>
+        {/* <li>
           <Link href="/contact">Terms of use</Link>
-        </li>
+        </li> */}
         <li>
-          <Link href="/contact">Terms & conditions</Link>
+          <Link href="/contact">Contact</Link>
         </li>
-        <li>
+        {/* <li>
           <Link href="/contact">Privacy</Link>
         </li>
         <li>
           <Link href="/contact">Cookie policy</Link>
-        </li>
+        </li> */}
       </ul>
     </div>
   );

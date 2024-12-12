@@ -12,7 +12,7 @@ import { JobAdResponse } from "@/data/job-ad-data";
 
 const JobListThree = ({
   itemsPerPage,
-  grid_style = false,
+  grid_style = true,
 }: {
   itemsPerPage: number;
   grid_style?: boolean;
@@ -152,16 +152,6 @@ const JobListThree = ({
                   </button>
                 </div>
               </div>
-              <div
-                className={`accordion-box list-style ${
-                  jobType === "list" ? "show" : ""
-                }`}
-              >
-                {currentItems &&
-                  currentItems.map((job) => (
-                    <ListItemTwo key={job.id} item={job} />
-                  ))}
-              </div>
 
               <div
                 className={`accordion-box grid-style ${
@@ -178,6 +168,16 @@ const JobListThree = ({
                 </div>
               </div>
 
+              <div
+                className={`accordion-box list-style ${
+                  jobType === "list" ? "show" : ""
+                }`}
+              >
+                {currentItems &&
+                  currentItems.map((job) => (
+                    <ListItemTwo key={job.id} item={job} />
+                  ))}
+              </div>
               {currentItems && (
                 <div className="pt-30 lg-pt-20 d-sm-flex align-items-center justify-content-between">
                   <p className="m0 order-sm-last text-center text-sm-start xs-pb-20">

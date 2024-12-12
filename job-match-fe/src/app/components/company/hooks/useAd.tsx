@@ -1,25 +1,16 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getJobAd, JobAdResponse } from "@/data/job-ad-data";
 
 export const useAd = (id: string) => {
-  const [ad, setAd] = useState<JobAdResponse | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const {
+    data: ad = null,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["job_ad_by_id", id],
+    queryFn: async () => getJobAd(id),
+    enabled: !!id,
+  });
 
-  const fetchAd = async () => {
-    setLoading(true);
-    try {
-      const ad = await getJobAd(id);
-      setAd(ad);
-    } catch (error) {
-      console.error("Error fetching ad:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAd();
-  }, []);
-
-  return { ad, loading };
+  return { ad, isLoading, error };
 };

@@ -6,7 +6,9 @@ import share from "@/assets/dashboard/images/icon/icons8-accept.svg";
 import delete_icon from "@/assets/dashboard/images/icon/icon_21.svg";
 import {
   acceptMatchRequestFromAd,
+  acceptMatchRequestFromApplication,
   rejectMatchRequestFromAd,
+  rejectMatchRequestFromApplication,
 } from "@/services/matching";
 
 const JobRequestItem = ({ request }: { request: MatchRequestApplication }) => {
@@ -14,7 +16,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestApplication }) => {
 
   const handleAccept = async () => {
     try {
-      await acceptMatchRequestFromAd(
+      await acceptMatchRequestFromApplication(
         request.job_ad_id,
         request.job_application_id
       );
@@ -26,7 +28,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestApplication }) => {
 
   const handleReject = async () => {
     try {
-      await rejectMatchRequestFromAd(
+      await rejectMatchRequestFromApplication(
         request.job_ad_id,
         request.job_application_id
       );

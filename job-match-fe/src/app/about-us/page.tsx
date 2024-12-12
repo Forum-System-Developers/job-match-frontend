@@ -39,7 +39,7 @@ const AboutUsPage = () => {
         {/* how works end */}
 
         {/* feedback one start */}
-        <FeedbackOne about_p={true} />
+        {/* <FeedbackOne about_p={true} />   */}
         {/* feedback one end */}
 
         {/* job portal intro start */}

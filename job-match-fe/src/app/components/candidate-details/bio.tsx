@@ -12,10 +12,7 @@ const CandidateBio = ({
         <span>Location: </span>
         <div>{professional?.city} </div>
       </li>
-      <li>
-        <span>Age: </span>
-        <div>28</div>
-      </li>
+
       <li>
         <span>Email: </span>
         <div>
@@ -26,7 +23,7 @@ const CandidateBio = ({
         <span>Active applications count: </span>
         <div>{professional?.active_application_count}</div>
       </li>
-      <li>
+      {/* <li>
         <span>Social:</span>
         <div>
           <a href="#" className="me-3">
@@ -42,7 +39,7 @@ const CandidateBio = ({
             <i className="bi bi-linkedin"></i>
           </a>
         </div>
-      </li>
+      </li> */}
     </ul>
   );
 };

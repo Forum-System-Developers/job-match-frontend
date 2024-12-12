@@ -73,30 +73,7 @@ const EmployJobArea = ({ setIsOpenSidebar }: IProps) => {
           </div>
         </div>
 
-        <div className="dash-pagination d-flex justify-content-end mt-30">
-          <ul className="style-none d-flex align-items-center">
-            <li>
-              <a href="#" className="active">
-                1
-              </a>
-            </li>
-            <li>
-              <a href="#">2</a>
-            </li>
-            <li>
-              <a href="#">3</a>
-            </li>
-            <li>..</li>
-            <li>
-              <a href="#">7</a>
-            </li>
-            <li>
-              <a href="#">
-                <i className="bi bi-chevron-right"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
+        <div className="dash-pagination d-flex justify-content-end mt-30"></div>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ const EmployDashboardArea = ({ setIsOpenSidebar }: IProps) => {
   );
   const match_requests = matchRequests.length;
 
-  const job_items = [...ads.reverse().slice(0, 6)];
+  const job_items = [...ads.reverse().slice(0, 5)];
   return (
     <div className="dashboard-body">
       <div className="position-relative">

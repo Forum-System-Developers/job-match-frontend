@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardHeader from "./dashboard-header";
 import ShortSelect from "../../common/short-select";
 import { useJobApplicationsProfessional } from "../../jobs/hooks/useJobApplications";
@@ -12,6 +12,7 @@ type IProps = {
 };
 
 const ActiveApplicationsArea = ({ setIsOpenSidebar }: IProps) => {
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
   const user = getUserLocal();
   const { jobApplications, isLoading: JobAppLoading } =
     useJobApplicationsProfessional(user?.id as string);
@@ -19,6 +20,12 @@ const ActiveApplicationsArea = ({ setIsOpenSidebar }: IProps) => {
   if (JobAppLoading) {
     return <div>Loading...</div>;
   }
+
+  const filteredApps = selectedStatus
+    ? jobApplications.filter(
+        (app) => app.status === selectedStatus.toLowerCase()
+      )
+    : jobApplications;
 
   return (
     <div className="dashboard-body">
@@ -31,7 +38,9 @@ const ActiveApplicationsArea = ({ setIsOpenSidebar }: IProps) => {
           <h2 className="main-title m0">Active Applications</h2>
           <div className="short-filter d-flex align-items-center">
             <div className="text-dark fw-500 me-2">Sort by:</div>
-            <ShortSelect />
+            <ShortSelect
+              onStatusChange={(status) => setSelectedStatus(status)}
+            />
           </div>
         </div>
 
@@ -49,41 +58,24 @@ const ActiveApplicationsArea = ({ setIsOpenSidebar }: IProps) => {
                 </tr>
               </thead>
               <tbody className="border-0">
-                {jobApplications?.map((application: JobApplication) => (
-                  <JobApplicationItem
-                    key={application.id}
-                    application={application}
-                  />
-                ))}
+                {filteredApps && filteredApps.length > 0 ? (
+                  filteredApps?.map((application: JobApplication) => (
+                    <JobApplicationItem
+                      key={application.id}
+                      application={application}
+                    />
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={5}>No applications found</td>
+                  </tr>
+                )}{" "}
               </tbody>
             </table>
           </div>
         </div>
 
-        <div className="dash-pagination d-flex justify-content-end mt-30">
-          <ul className="style-none d-flex align-items-center">
-            <li>
-              <a href="#" className="active">
-                1
-              </a>
-            </li>
-            <li>
-              <a href="#">2</a>
-            </li>
-            <li>
-              <a href="#">3</a>
-            </li>
-            <li>..</li>
-            <li>
-              <a href="#">7</a>
-            </li>
-            <li>
-              <a href="#">
-                <i className="bi bi-chevron-right"></i>
-              </a>
-            </li>
-          </ul>
-        </div>
+        <div className="dash-pagination d-flex justify-content-end mt-30"></div>
       </div>
     </div>
   );

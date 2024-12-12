@@ -54,7 +54,14 @@ const LoginModal = () => {
                 <span className="pe-3 ps-3">OR</span>
                 <div className="line"></div>
               </div>
-              <div className="row">
+              <div
+                className="row"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <div className="col-md-6">
                   <a
                     href="#"
@@ -63,15 +70,6 @@ const LoginModal = () => {
                   >
                     <Image src={google} alt="google-img" />
                     <span className="ps-2">Login with Google</span>
-                  </a>
-                </div>
-                <div className="col-md-6">
-                  <a
-                    href="#"
-                    className="social-use-btn d-flex align-items-center justify-content-center tran3s w-100 mt-10"
-                  >
-                    <Image src={facebook} alt="facebook-img" />
-                    <span className="ps-2">Login with Facebook</span>
                   </a>
                 </div>
               </div>

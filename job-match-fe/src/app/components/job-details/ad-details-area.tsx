@@ -4,6 +4,7 @@ import profile_icon_1 from "@/assets/dashboard/images/icon/icon_23.svg";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useAd } from "../company/hooks/useAd";
+import { JobAdResponse } from "@/data/job-ad-data";
 import NiceSelect, { Option } from "@/ui/nice-select";
 import { sendMatchRequestToJobAd } from "@/services/matching";
 import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
@@ -16,12 +17,14 @@ const JobDetailsV1Area = () => {
     useState<Option | null>(null);
 
   const { id } = useParams();
-  const { ad } = useAd(id as string);
+  const { ad, isLoading } = useAd(id as string);
   const user = getUserLocal();
-  const { jobApplications } = useJobApplicationsProfessional(
-    user?.id as string
+  const { jobApplications, isLoading: JobApplicationsLoading } =
+    useJobApplicationsProfessional(user?.id as string);
+
+  const { company, isLoading: CompanyLoading } = useCompany(
+    ad?.company_id as string
   );
-  const { company } = useCompany(ad?.company_id as string);
   const [open, setOpen] = useState(false);
   const job = ad;
 
@@ -30,6 +33,10 @@ const JobDetailsV1Area = () => {
       value: application.id,
       label: application.name,
     })) || [];
+
+  if (isLoading || JobApplicationsLoading || CompanyLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <section className="job-details pt-100 lg-pt-80 pb-130 lg-pb-80">

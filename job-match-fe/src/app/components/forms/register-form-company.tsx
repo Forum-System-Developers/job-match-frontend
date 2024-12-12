@@ -231,18 +231,7 @@ const CompanyRegisterForm = () => {
             </div>
           </div>
         </div>
-        <div className="col-12">
-          <div className="agreement-checkbox d-flex justify-content-between align-items-center">
-            <div>
-              <input type="checkbox" name="remember" />
-              <label htmlFor="remember">
-                By hitting the Register button, you agree to the{" "}
-                <a href="#">Terms conditions</a> &{" "}
-                <a href="#">Privacy Policy</a>
-              </label>
-            </div>
-          </div>
-        </div>
+
         <div className="col-12">
           <button
             type="submit"
