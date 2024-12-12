@@ -23,6 +23,7 @@ const HeroBanner = () => {
       const user = await currentUser();
       setUser(user);
       setGoogleUser(user.id);
+      window.location.reload();
     } catch (error) {
       setUser(null);
     }
