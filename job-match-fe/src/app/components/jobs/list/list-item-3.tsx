@@ -114,14 +114,16 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
                   style={{
                     display: "inline-block",
                     backgroundColor: "#f1f1f1",
-                    padding: "3px",
+                    padding: "10px",
                     textAlign: "center",
                     borderRadius: "25px",
                     marginRight: "5px",
                     minWidth: "80px",
+                    width: "100px" /* Set a fixed width for uniformity */,
                     fontSize: "0.9rem",
-
-                    width: "100%",
+                    whiteSpace: "nowrap" /* Prevent text wrapping */,
+                    overflow: "hidden" /* Hide overflowing text */,
+                    textOverflow: "ellipsis",
                   }}
                 >
                   {s.name}
@@ -129,7 +131,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
               ))}
               {item.skills?.length > 3 && (
                 <li className="more">
-                  {item.skills?.length - item.skills?.slice(0, 3).length}+
+                  {item.skills?.length - item.skills?.slice(0, 2).length}+
                 </li>
               )}
             </ul>

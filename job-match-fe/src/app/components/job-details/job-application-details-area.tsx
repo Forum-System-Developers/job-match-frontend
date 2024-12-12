@@ -30,6 +30,8 @@ const JobDetailsV2Area = () => {
     label: ad.title,
   }));
 
+  const skills = jobApplication?.skills.flatMap((group) => group).slice(0, 4);
+
   return (
     <section className="job-details style-two pt-100 lg-pt-80 pb-130 lg-pb-80">
       <div className="container">
@@ -56,7 +58,7 @@ const JobDetailsV2Area = () => {
                 <div
                   className="bg-wrapper bg-white text-center"
                   style={{
-                    width: "150px",
+                    width: "180px",
                     maxHeight: "270px",
                   }}
                 >
@@ -67,7 +69,7 @@ const JobDetailsV2Area = () => {
                   />
                   <span>Skills</span>
                   <div className="job-tags d-flex flex-wrap pt-15">
-                    {jobApplication?.skills.map((skill, i) => (
+                    {skills?.slice(0, 2).map((skill, i) => (
                       <div
                         key={i}
                         style={{
@@ -75,7 +77,7 @@ const JobDetailsV2Area = () => {
                           width: "100%",
                         }}
                       >
-                        {skill.name}
+                        {skill.name} <br />
                       </div>
                     ))}
                   </div>
@@ -100,6 +102,7 @@ const JobDetailsV2Area = () => {
                   style={{
                     width: "150px",
                     maxHeight: "270px",
+                    textAlign: "center",
                   }}
                 >
                   <Image
