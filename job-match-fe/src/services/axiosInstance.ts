@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
         );
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        console.error("Token refresh failed:", refreshError);
+        throw refreshError;
       }
     }
 

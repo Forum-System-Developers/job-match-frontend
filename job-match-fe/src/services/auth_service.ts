@@ -1,6 +1,8 @@
 import CryptoJS from "crypto-js";
 import SERVER_URL from "@/services/server";
 import axiosInstance from "@/services/axiosInstance";
+import { error } from "console";
+import { AxiosError } from "axios";
 
 export type IFormData = {
   username: string;
@@ -25,6 +27,9 @@ const decryptData = (data: string) => {
 };
 
 export const setUser = async (): Promise<boolean> => {
+  if (typeof window === "undefined") {
+    return false;
+  }
   try {
     const user = await currentUser();
     if (!user) {
@@ -73,10 +78,19 @@ export const login = async (data: IFormData): Promise<boolean> => {
 };
 
 export const role = (): string => {
-  if (typeof window !== "undefined") {
+  if (typeof window === "undefined") {
     const user = localStorage.getItem("user");
-    const decrypted = user ? JSON.parse(decryptData(user)) : "";
-    return decrypted.role;
+
+    if (user) {
+      try {
+        const decrypted = JSON.parse(decryptData(user));
+        return decrypted.role;
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        return "";
+      }
+    }
+    return "";
   }
   return "";
 };
@@ -109,12 +123,13 @@ export const currentUser = async (): Promise<UserDetails> => {
   if (typeof window !== "undefined") {
     try {
       const response = await axiosInstance.get(`/auth/me`);
+
       const userId = response.data.detail.id;
       const role: string = response.data.detail.role;
       const user = { id: userId, role: role };
       return user;
-    } catch (error) {
-      console.error("An error occurred:", error);
+    } catch (error: any) {
+      throw error;
     }
   }
   return { id: "", role: "" };
