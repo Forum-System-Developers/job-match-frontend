@@ -9,43 +9,43 @@ import main_img from "@/assets/images/assets/img_01.jpg";
 import SearchForm from "../forms/search-form";
 import {
   currentUser,
+  getUserLocal,
   handleLogout,
   isAuthenticated,
   setGoogleUser,
 } from "@/services/auth_service";
+import { get } from "http";
+import { Axios, AxiosError } from "axios";
+import { removeLocalStorage } from "@/utils/localstorage";
 
 const HeroBanner = () => {
+  const user = getUserLocal();
+
   const verifyUser = async () => {
     try {
       const user = await currentUser();
-
-      if (user) {
+      if (user && !isAuthenticated()) {
+        setGoogleUser(user.id);
+      }
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response?.status === 401) {
         if (isAuthenticated()) {
-          return user;
+          removeLocalStorage("user");
+          window.location.reload();
+          return;
         } else {
-          setGoogleUser(user.id);
+          throw new Error("Error verifying user");
         }
-      } else {
-        console.warn("No user found.");
       }
-    } catch (error: any) {
-      const errorMessage =
-        error?.response?.status === 401
-          ? "User is unauthorized, logging out."
-          : `An error occurred: ${error.message || error}`;
-
-      if (error?.response?.status === 401 && isAuthenticated()) {
-        localStorage.removeItem("user");
-        window.location.reload();
-      }
-      // Log the error message to the console
-      throw new Error(errorMessage);
     }
   };
 
   useEffect(() => {
-    verifyUser();
-  }, []);
+    if (!user) {
+      verifyUser();
+    }
+  }, [user]);
 
   return (
     <div className="hero-banner-one position-relative">

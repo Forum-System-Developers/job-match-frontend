@@ -9,7 +9,7 @@ import { JobAdResponse } from "@/data/job-ad-data";
 
 const ListItemTwo = ({ item }: { item: JobAdResponse }) => {
   const { wishlist } = useAppSelector((state) => state.wishlist);
-  const isActive = wishlist.some((p) => p.id === item.id);
+  const isActive = wishlist.some((p: any) => p.id === item.id);
   const dispatch = useAppDispatch();
   // handle add wishlist
   const handleAddWishlist = (item: JobAdResponse) => {

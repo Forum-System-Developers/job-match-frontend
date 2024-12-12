@@ -6,7 +6,7 @@ import { JobAdResponse } from "@/data/job-ad-data";
 // Check if the cookie exists
 const wishlistData = getLocalStorage("wishlist_items");
 let initialWishlistState: {
-  wishlist: JobAdResponse[];
+  wishlist: any;
 } = {
   wishlist: [],
 };

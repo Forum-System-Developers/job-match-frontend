@@ -24,7 +24,7 @@ const JobGridItem = ({
     title,
   } = item || {};
   const { wishlist } = useAppSelector((state) => state.wishlist);
-  const isActive = wishlist.some((p) => p.id === id);
+  const isActive = wishlist.some((p: any) => p.id === id);
   const dispatch = useAppDispatch();
   // handle add wishlist
   const handleAddWishlist = (item: JobAdResponse) => {

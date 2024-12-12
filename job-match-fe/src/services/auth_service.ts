@@ -1,8 +1,12 @@
 import CryptoJS from "crypto-js";
 import SERVER_URL from "@/services/server";
 import axiosInstance from "@/services/axiosInstance";
-import { error } from "console";
 import { AxiosError } from "axios";
+import {
+  getLocalStorage,
+  removeLocalStorage,
+  setLocalStorage,
+} from "@/utils/localstorage";
 
 export type IFormData = {
   username: string;
@@ -12,7 +16,7 @@ export type IFormData = {
 const encryptData = (data: string) => {
   const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
   if (!secretKey) {
-    throw new Error("Secret key is not provided.");
+    throw new Error("Secret key is not defined");
   }
   return CryptoJS.AES.encrypt(data, secretKey).toString();
 };
@@ -20,45 +24,38 @@ const encryptData = (data: string) => {
 const decryptData = (data: string) => {
   const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY;
   if (!secretKey) {
-    throw new Error("Secret key is not provided.");
+    throw new Error("Secret key is not defined");
   }
   const bytes = CryptoJS.AES.decrypt(data, secretKey);
   return bytes.toString(CryptoJS.enc.Utf8);
 };
 
 export const setUser = async (): Promise<boolean> => {
-  if (typeof window === "undefined") {
-    return false;
-  }
-  try {
-    const user = await currentUser();
-    if (!user) {
-      throw new Error("Failed to fetch user details.");
-    }
-    const encrypted = encryptData(JSON.stringify(user));
-    localStorage.setItem("user", encrypted);
-    return true;
-  } catch (error) {
-    throw new Error(
-      `Failed to set role due to an error: ${(error as any).message}`
-    );
-  }
-};
-
-export const setGoogleUser = (id: string): boolean => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
     try {
-      const user = { id: id, role: "professional" };
+      const user = await currentUser();
+      if (!user) {
+        throw new Error("Error getting user");
+      }
       const encrypted = encryptData(JSON.stringify(user));
-      localStorage.setItem("user", encrypted);
+      setLocalStorage("user", encrypted);
       return true;
     } catch (error) {
-      throw new Error(
-        `Failed to set role due to an error: ${(error as any).message}`
-      );
+      throw new Error("Error setting user");
     }
   }
   return false;
+};
+
+export const setGoogleUser = (id: string): boolean => {
+  try {
+    const user = { id: id, role: "professional" };
+    const encrypted = encryptData(JSON.stringify(user));
+    setLocalStorage("user", encrypted);
+    return true;
+  } catch (error) {
+    throw new Error("Error setting user");
+  }
 };
 
 export const login = async (data: IFormData): Promise<boolean> => {
@@ -68,39 +65,31 @@ export const login = async (data: IFormData): Promise<boolean> => {
     });
     const roleSet = await setUser();
     if (!roleSet) {
-      throw new Error("Role was not set in localStorage after login.");
+      throw new Error("Error setting role");
     }
     return true;
   } catch (error) {
-    alert(`Login or role setting failed: ${error}`);
-    return false;
+    throw new Error("Error logging in");
   }
 };
 
 export const role = (): string => {
-  if (typeof window === "undefined") {
-    const user = localStorage.getItem("user");
+  const user = getLocalStorage("user");
 
-    if (user) {
-      try {
-        const decrypted = JSON.parse(decryptData(user));
-        return decrypted.role;
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        return "";
-      }
+  if (user) {
+    try {
+      const decrypted = JSON.parse(decryptData(user));
+      return decrypted.role;
+    } catch (error) {
+      throw new Error("Error getting role");
     }
-    return "";
   }
   return "";
 };
 
 export const isAuthenticated = (): boolean => {
-  if (typeof window !== "undefined") {
-    if (localStorage.getItem("user")) {
-      return true;
-    }
-    return false;
+  if (getLocalStorage("role")) {
+    return true;
   }
   return false;
 };
@@ -111,38 +100,57 @@ export interface UserDetails {
 }
 
 export const getUserLocal = (): UserDetails | null => {
-  if (typeof window !== "undefined") {
-    const user_info = localStorage.getItem("user");
-    const user = user_info ? JSON.parse(decryptData(user_info)) : null;
-    return user;
-  }
-  return null;
+  const user_info = getLocalStorage("user");
+  const user = user_info ? JSON.parse(decryptData(user_info)) : null;
+  return user;
 };
 
 export const currentUser = async (): Promise<UserDetails> => {
-  if (typeof window !== "undefined") {
-    try {
-      const response = await axiosInstance.get(`/auth/me`);
+  try {
+    const response = await axiosInstance.get(`/auth/me`);
 
-      const userId = response.data.detail.id;
-      const role: string = response.data.detail.role;
-      const user = { id: userId, role: role };
-      return user;
-    } catch (error: any) {
-      throw error;
-    }
+    const userId = response.data.detail.id;
+    const role: string = response.data.detail.role;
+    const user = { id: userId, role: role };
+    return user;
+  } catch (error: any) {
+    throw new Error("Error getting user");
   }
-  return { id: "", role: "" };
 };
 
 export const handleLogout = async () => {
   try {
     await axiosInstance.post(`/auth/logout`);
-    localStorage.removeItem("user");
     setTimeout(() => {
       window.location.href = "/";
     }, 500);
+    removeLocalStorage("role");
   } catch (error) {
-    console.error("Logout failed:", error);
+    throw new Error("Error logging out");
+  }
+};
+
+export const getUser = async (): Promise<UserDetails | null> => {
+  try {
+    const response = await axiosInstance.get(`/auth/me`);
+    const userId = response.data.detail.id;
+    const role: string = response.data.detail.role;
+    const user = { id: userId, role: role };
+    return user;
+  } catch (error) {
+    throw new Error("Error getting user");
+  }
+};
+
+export const setRole = async (): Promise<boolean> => {
+  try {
+    const user = await getUser();
+    if (!user) {
+      throw new Error("Error getting user");
+    }
+    setLocalStorage("role", user.role);
+    return true;
+  } catch (error) {
+    throw new Error("Error setting role");
   }
 };

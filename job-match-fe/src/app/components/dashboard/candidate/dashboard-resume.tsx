@@ -40,14 +40,14 @@ const DashboardResume = ({ setIsOpenSidebar }: IProps) => {
     })) || [];
 
   const handleAddSkill = (skill: string) => {
-    if (!skills.some((s) => s.name === skill)) {
-      setSkills([...skills, { name: skill }]);
+    if (!skills.some((s) => s === skill)) {
+      setSkills([...skills, skill]);
       setAvailableSkills(availableSkills.filter((s) => s !== skill));
     }
   };
 
   const handleRemoveSkill = (skill: string) => {
-    setSkills(skills.filter((s) => s.name !== skill));
+    setSkills(skills.filter((s) => s !== skill));
     setAvailableSkills([...availableSkills, skill]);
   };
 
@@ -67,7 +67,7 @@ const DashboardResume = ({ setIsOpenSidebar }: IProps) => {
         skills: skills,
       };
 
-      await createJobApplication(jobAppData);
+      // await createJobApplication(jobAppData);
       window.location.reload();
     } catch (error) {
       throw new Error("Error updating profile:" + error);

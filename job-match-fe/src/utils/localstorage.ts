@@ -1,21 +1,25 @@
 import { JobAdResponse } from "@/data/job-ad-data";
 
-export const setLocalStorage = (name: string, items: JobAdResponse[]) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem(name, JSON.stringify(items));
+export const setLocalStorage = (name: string, item: any) => {
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    localStorage.setItem(name, item);
   }
 };
 
 export const getLocalStorage = (name: string) => {
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
     const data = localStorage.getItem(name);
     if (data) {
-      return JSON.parse(data);
+      return data;
     } else {
-      localStorage.setItem(name, JSON.stringify([]));
-      return [];
+      return null;
     }
-  } else {
-    return [];
+  }
+  return null;
+};
+
+export const removeLocalStorage = (name: string) => {
+  if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
+    localStorage.removeItem(name);
   }
 };
