@@ -65,15 +65,6 @@ const LoginModal = () => {
                     <span className="ps-2">Login with Google</span>
                   </a>
                 </div>
-                <div className="col-md-6">
-                  <a
-                    href="#"
-                    className="social-use-btn d-flex align-items-center justify-content-center tran3s w-100 mt-10"
-                  >
-                    <Image src={facebook} alt="facebook-img" />
-                    <span className="ps-2">Login with Facebook</span>
-                  </a>
-                </div>
               </div>
               <p className="text-center mt-10">
                 Do not have an account?{" "}

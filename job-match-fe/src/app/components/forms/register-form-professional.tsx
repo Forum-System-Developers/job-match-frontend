@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Checkbox } from "@nextui-org/react";
 import icon from "@/assets/images/icon/icon_60.svg";
 import axiosInstance from "@/services/axiosInstance";
-import SERVER_URL from "@/services/server";
+import google from "@/assets/images/icon/google.png";
 
 // form data type
 type IFormData = {
@@ -212,17 +212,6 @@ const ProfessionalRegisterForm = () => {
         </div>
 
         <div className="col-12">
-          <div className="agreement-checkbox d-flex justify-content-between align-items-center">
-            <input
-              type="checkbox"
-              checked={formData.status === "active"}
-              onChange={handleCheckboxChange}
-            />
-            <label>Active Status</label>
-          </div>
-        </div>
-
-        <div className="col-12">
           <button
             type="submit"
             className="btn-eleven fw-500 tran3s d-block mt-20"
@@ -230,6 +219,30 @@ const ProfessionalRegisterForm = () => {
           >
             {isSubmitting ? "Submitting..." : "Register"}
           </button>
+        </div>
+
+        <div className="d-flex align-items-center mt-30 mb-10">
+          <div className="line"></div>
+          <span className="pe-3 ps-3">OR</span>
+          <div className="line"></div>
+        </div>
+        <div
+          className="row"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div className="col-sm-6">
+            <a
+              href="#"
+              className="social-use-btn d-flex align-items-center justify-content-center tran3s w-100 mt-10"
+            >
+              <Image src={google} alt="google-img" />
+              <span className="ps-2">Signup with Google</span>
+            </a>
+          </div>
         </div>
       </div>
     </form>
