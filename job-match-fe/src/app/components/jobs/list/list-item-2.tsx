@@ -18,11 +18,11 @@ const ListItemTwo = ({ item }: { item: JobAdResponse }) => {
                 src={item.company_logo ? item.company_logo : profile_icon_1}
                 alt="logo"
                 className="lazy-img m-auto"
-                height={35}
-                width={35}
+                height={25}
+                width={25}
                 style={{
-                  width: "50%",
-                  height: "50%",
+                  width: "80%",
+                  height: "80%",
                   objectFit: "cover",
                   borderRadius: "50%",
                 }}
@@ -32,11 +32,23 @@ const ListItemTwo = ({ item }: { item: JobAdResponse }) => {
               <Link
                 href={`/company/${item.company_id}`}
                 className="job-duration fw-500"
+                style={{
+                  fontSize: "1.1rem",
+                  fontWeight: 450,
+                  color: "#31795a",
+                }}
               >
                 {item.company_name}
               </Link>
-
-              <Link href={`/job-ad/${item.id}`} className="title fw-500 tran3s">
+              <Link
+                href={`/job-ad/${item.id}`}
+                className="title fw-500 tran3s"
+                style={{
+                  fontSize: "1rem",
+                  fontWeight: 400,
+                  color: "#212529",
+                }}
+              >
                 {item.title.slice(0, 22)} {item.title.length > 20 ? ".." : ""}
               </Link>
             </div>

@@ -23,6 +23,7 @@ const ListItemThree = ({ item }: { item: JobApplication }) => {
               className="lazy-img m-auto"
               width={35}
               height={35}
+              style={{}}
             />
           </Link>
           <div className="info-wrapper">
