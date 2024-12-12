@@ -68,7 +68,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestApplication }) => {
             <li>
               <a
                 className="dropdown-item"
-                href="#"
+                href=""
                 onClick={(e) => {
                   e.preventDefault(), handleAccept();
                 }}
@@ -85,7 +85,7 @@ const JobRequestItem = ({ request }: { request: MatchRequestApplication }) => {
             <li>
               <a
                 className="dropdown-item"
-                href="#"
+                href=""
                 onClick={(e) => {
                   e.preventDefault(), handleReject();
                 }}
