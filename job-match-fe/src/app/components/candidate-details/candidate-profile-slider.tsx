@@ -10,7 +10,11 @@ import ApplicationGridItem from "../job-application/grid/application-grid-item";
 import { useParams } from "next/navigation";
 import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications";
 
-const CandidateProfileSlider = () => {
+const CandidateProfileSlider = ({
+  candidateId,
+}: {
+  candidateId: string | null;
+}) => {
   // slider setting
   const slider_setting = {
     dots: true,
@@ -37,8 +41,9 @@ const CandidateProfileSlider = () => {
     ],
   };
 
-  const { id } = useParams();
-  const { jobApplications } = useJobApplicationsProfessional(id as string);
+  const { jobApplications } = useJobApplicationsProfessional(
+    candidateId as string
+  );
   return (
     <Slider {...slider_setting} className="candidate-portfolio-slider">
       {jobApplications?.map((item, i) => (

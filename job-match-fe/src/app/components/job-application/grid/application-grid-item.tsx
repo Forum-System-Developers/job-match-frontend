@@ -83,6 +83,36 @@ const ApplicationGridItem = ({
         <span className="fw-500 text-dark">Description</span>
         <div className="job-salary">{description.slice(0, 138)}...</div>{" "}
       </div>
+      <div style={{ padding: "10px 0px" }}>
+        <ul className="cadidate-skills style-none d-flex align-items-center">
+          {item.skills?.slice(0, 3).map((s, i) => (
+            <li
+              key={i}
+              style={{
+                display: "inline-block",
+                backgroundColor: "#f1f1f1",
+                padding: "10px",
+                textAlign: "center",
+                borderRadius: "25px",
+                marginRight: "5px",
+                minWidth: "80px",
+                width: "100px" /* Set a fixed width for uniformity */,
+                fontSize: "0.9rem",
+                whiteSpace: "nowrap" /* Prevent text wrapping */,
+                overflow: "hidden" /* Hide overflowing text */,
+                textOverflow: "ellipsis",
+              }}
+            >
+              {s.name}
+            </li>
+          ))}
+          {item.skills?.length > 3 && (
+            <li className="more">
+              {item.skills?.length - item.skills?.slice(0, 2).length}+
+            </li>
+          )}
+        </ul>
+      </div>
       <div className="d-flex align-items-center justify-content-between mt-auto">
         <Link href={`/job-ad/${id}`} className="apply-btn text-center tran3s">
           VIEW

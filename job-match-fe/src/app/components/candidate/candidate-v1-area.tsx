@@ -100,30 +100,7 @@ const CandidateV1Area = ({
                     </span>{" "}
                     candidates found
                   </div>
-                  <div className="d-flex align-items-center">
-                    <div className="short-filter d-flex align-items-center">
-                      <div className="text-dark fw-500 me-2">Sort:</div>
-                      <ShortSelect />
-                    </div>
-                    <button
-                      onClick={() => setJobType("list")}
-                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 list-btn ${
-                        jobType === "grid" ? "active" : ""
-                      }`}
-                      title="Active List"
-                    >
-                      <i className="bi bi-list"></i>
-                    </button>
-                    <button
-                      onClick={() => setJobType("grid")}
-                      className={`style-changer-btn text-center rounded-circle tran3s ms-2 grid-btn ${
-                        jobType === "list" ? "active" : ""
-                      }`}
-                      title="Active Grid"
-                    >
-                      <i className="bi bi-grid"></i>
-                    </button>
-                  </div>
+                  <div className="d-flex align-items-center"></div>
                 </div>
 
                 <div
@@ -142,17 +119,6 @@ const CandidateV1Area = ({
                         </div>
                       ))}
                   </div>
-                </div>
-
-                <div
-                  className={`accordion-box list-style ${
-                    jobType === "list" ? "show" : ""
-                  }`}
-                >
-                  {currentItems &&
-                    currentItems.map((item) => (
-                      <CandidateListItem key={item.id} item={item} />
-                    ))}
                 </div>
 
                 {currentItems && (

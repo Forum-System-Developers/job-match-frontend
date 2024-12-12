@@ -79,14 +79,6 @@ const CandidateListItem = ({
                   href={{
                     pathname: `/candidate/${item.id}`,
                   }}
-                  className="save-btn text-center rounded-circle tran3s mt-10"
-                >
-                  <i className="bi bi-heart"></i>
-                </Link>
-                <Link
-                  href={{
-                    pathname: `/candidate/${item.id}`,
-                  }}
                   className="profile-btn tran3s ms-md-2 mt-10 sm-mt-20"
                 >
                   View Profile

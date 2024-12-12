@@ -17,14 +17,6 @@ const CandidateGridItem = ({
         false ? "favourite" : ""
       } text-center ${style_2 ? "border-0" : ""} grid-layout mb-25`}
     >
-      <Link
-        href={{
-          pathname: `/candidate/${item.id}`,
-        }}
-        className="save-btn tran3s"
-      >
-        <i className="bi bi-heart"></i>
-      </Link>
       <div className="cadidate-avatar online position-relative d-block m-auto">
         <Link
           href={{

@@ -128,15 +128,12 @@ export const getPhoto = async (id: string): Promise<string | null> => {
       if (error.response?.status === 404) {
         return null;
       }
-      console.error(
-        "Error fetching photo:",
-        error.response?.status,
-        error.message
+      throw new Error(
+        `Error fetching photo: ${error.response?.status} ${error.message}`
       );
     } else {
-      console.error("Unexpected error:", error);
+      throw new Error(`Error fetching photo: ${error}`);
     }
-
     return null;
   }
 };
@@ -165,6 +162,7 @@ export const getProfessional = async (
 ): Promise<ProfessionalDetails | null> => {
   try {
     const { data } = await axiosInstance.get(`/professionals/${id}`);
+    const photoUrl = await getPhoto(id);
     const {
       user_id,
       first_name,
@@ -184,7 +182,7 @@ export const getProfessional = async (
       first_name,
       last_name,
       description,
-      photo,
+      photo: photoUrl,
       city,
       email,
       status,
