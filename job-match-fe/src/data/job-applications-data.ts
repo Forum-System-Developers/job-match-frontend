@@ -51,7 +51,11 @@ export const createJobApplication = async (
 
 export const getJobApplications = async (): Promise<JobApplication[]> => {
   try {
-    const response = await axiosInstance.post(`/job-applications/all`);
+    const limit = 50;
+    const offset = 0;
+    const response = await axiosInstance.post(
+      `/job-applications/all?limit=${limit}&offset=${offset}`
+    );
     const jobApplications = response.data.detail ?? [];
 
     const applications: JobApplication[] = await Promise.all(

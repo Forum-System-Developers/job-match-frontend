@@ -360,7 +360,11 @@ export const getMatchedApplicationsForProfessional = async (id: string) => {
 
 export const getProfessionals = async () => {
   try {
-    const response = await axiosInstance.post(`/professionals/all`);
+    const limit = 50;
+    const offset = 0;
+    const response = await axiosInstance.post(
+      `/professionals/all?limit=${limit}&offset=${offset}`
+    );
     const professionalsData = response.data.detail ?? [];
 
     const professionals: ProfessionalDetails[] = await Promise.all(
