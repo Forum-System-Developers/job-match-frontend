@@ -1,4 +1,3 @@
-const SERVER_URL = "https://api.rephera.com/api/v1";
-// const SERVER_URL = "http://localhost:8000/api/v1";
+const SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
 export default SERVER_URL;

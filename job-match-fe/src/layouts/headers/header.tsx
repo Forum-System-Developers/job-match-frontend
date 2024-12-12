@@ -11,13 +11,6 @@ import { role, isAuthenticated, handleLogout } from "@/services/auth_service";
 
 const Header = () => {
   const { sticky } = useSticky();
-  const [auth, setAuth] = React.useState(false);
-  const [userRole, setUserRole] = React.useState("");
-
-  useEffect(() => {
-    setAuth(isAuthenticated());
-    setUserRole(role());
-  }, []);
 
   return (
     <>
@@ -45,7 +38,7 @@ const Header = () => {
                 </Link>
               </div>
               <div className="right-widget ms-auto order-lg-3">
-                {!auth ? (
+                {!isAuthenticated() ? (
                   <ul className="d-flex align-items-center style-none">
                     <li className="d-none d-md-block">
                       <Link href="/register" className="job-post-btn tran3s">
@@ -71,7 +64,7 @@ const Header = () => {
                 ) : (
                   <ul className="d-flex align-items-center style-none">
                     <li className="d-none d-md-block">
-                      {userRole === "company" ? (
+                      {role() === "company" ? (
                         <Link
                           href="/dashboard/employ-dashboard/submit-job"
                           className="job-post-btn tran3s"

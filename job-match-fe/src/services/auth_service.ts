@@ -75,6 +75,7 @@ export const login = async (data: IFormData): Promise<boolean> => {
 
 export const role = (): string => {
   const user = getLocalStorage("user");
+  console.log(user);
 
   if (user) {
     try {
@@ -88,7 +89,7 @@ export const role = (): string => {
 };
 
 export const isAuthenticated = (): boolean => {
-  if (getLocalStorage("role")) {
+  if (getLocalStorage("user")) {
     return true;
   }
   return false;
