@@ -7,6 +7,7 @@ import {
   removeLocalStorage,
   setLocalStorage,
 } from "@/utils/localstorage";
+import { get } from "http";
 
 export type IFormData = {
   username: string;
@@ -75,7 +76,6 @@ export const login = async (data: IFormData): Promise<boolean> => {
 
 export const role = (): string => {
   const user = getLocalStorage("user");
-  console.log(user);
 
   if (user) {
     try {
@@ -90,6 +90,7 @@ export const role = (): string => {
 
 export const isAuthenticated = (): boolean => {
   if (getLocalStorage("user")) {
+    console.log(getLocalStorage("user"));
     return true;
   }
   return false;
@@ -109,7 +110,7 @@ export const getUserLocal = (): UserDetails | null => {
 export const currentUser = async (): Promise<UserDetails> => {
   try {
     const response = await axiosInstance.get(`/auth/me`);
-
+    console.log(response);
     const userId = response.data.detail.id;
     const role: string = response.data.detail.role;
     const user = { id: userId, role: role };
@@ -125,7 +126,7 @@ export const handleLogout = async () => {
     setTimeout(() => {
       window.location.href = "/";
     }, 500);
-    removeLocalStorage("role");
+    removeLocalStorage("user");
   } catch (error) {
     throw new Error("Error logging out");
   }
