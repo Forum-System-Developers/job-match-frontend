@@ -85,8 +85,8 @@ const menu_data: IMenuData[] = [
         title: "Essential",
         sub_menus: [
           { title: "About Us", link: "/about-us" },
-          { title: "Pricing", link: "/pricing" },
-          { title: "FAQ", link: "/faq" },
+          // { title: "Pricing", link: "/pricing" },
+          // { title: "FAQ", link: "/faq" },
           { title: "Register", link: "/register" },
         ],
       },

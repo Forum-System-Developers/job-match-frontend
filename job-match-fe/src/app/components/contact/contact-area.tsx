@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import icon_1 from '@/assets/images/icon/icon_57.svg';
-import icon_2 from '@/assets/images/icon/icon_58.svg';
-import icon_3 from '@/assets/images/icon/icon_59.svg';
+import icon_1 from "@/assets/images/icon/icon_57.svg";
+import icon_2 from "@/assets/images/icon/icon_58.svg";
+import icon_3 from "@/assets/images/icon/icon_59.svg";
 import ContactForm from "../forms/contact-form";
 
 const ContactArea = () => {
@@ -23,8 +23,8 @@ const ContactArea = () => {
                     </div>
                     <h5 className="title">Our Address</h5>
                     <p>
-                      Bass Hill Plaza Medical Centre <br />
-                      Sydney, Australia
+                      Telerik Academy <br />
+                      Sofia, Bulgaria
                     </p>
                   </div>
                 </div>
@@ -35,10 +35,11 @@ const ContactArea = () => {
                     </div>
                     <h5 className="title">Contact Info</h5>
                     <p>
-                      Open a chat or give us call at <br />
-                      <a href="tel:310.841.5500" className="call">
-                        310.841.5500
-                      </a>
+                      Our phone number
+                      <br />
+                      {/* <a href="tel:000.000.0000" className="call">
+                        Our phone number
+                      </a> */}
                     </p>
                   </div>
                 </div>
@@ -49,10 +50,8 @@ const ContactArea = () => {
                     </div>
                     <h5 className="title">Live Support</h5>
                     <p>
-                      live chat service <br />
-                      <a href="#" className="webaddress">
-                        www.jobilivechat.com
-                      </a>
+                      In Teams <br />
+                      <a href="#" className="webaddress"></a>
                     </p>
                   </div>
                 </div>

@@ -3,12 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 // internal
 import logo from "@/assets/rephera-logo-02.gif";
-import logo_2 from "@/assets/images/logo/logo_04.png";
-import logo_w from "@/assets/images/logo/logo_06.png";
 import shape from "@/assets/images/shape/shape_28.svg";
 import { WidgetOne, WidgetThree, WidgetTwo } from "./component/footer-widgets";
 import SocialLinks from "./component/social-links";
-import { auto } from "@popperjs/core";
 
 const FooterOne = ({
   bottom_bg,
@@ -77,15 +74,15 @@ const FooterOne = ({
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-4 order-lg-3 mb-15">
-              <ul className="style-none d-flex order-lg-last justify-content-center justify-content-lg-end social-icon">
+              {/* <ul className="style-none d-flex order-lg-last justify-content-center justify-content-lg-end social-icon">
                 <SocialLinks />
-              </ul>
+              </ul> */}
             </div>
             <div className="col-lg-4 order-lg-1 mb-15">
               <ul className="d-flex style-none bottom-nav justify-content-center justify-content-lg-start">
-                <li>
+                {/* <li>
                   <Link href="/contact">Privacy & Terms.</Link>
-                </li>
+                </li> */}
                 <li>
                   <Link href="/contact"> Contact Us</Link>
                 </li>

@@ -16,26 +16,23 @@ const JobPortalIntro = ({ top_border = false }: { top_border?: boolean }) => {
                 className="text-center text-lg-start wow fadeInUp"
                 data-wow-delay="0.3s"
               >
-                <h2>
-                  Discover the perfect platform where talented freelancers meet
-                  businesses seeking skilled professionals. .
-                </h2>
+                <h2>Professionals and companies are looking for each other</h2>
                 <p className="text-md m0 md-pb-20">
                   Whether you're looking for your next assignment or the right
-                  expert to complete your project, we've got you covered..
+                  expert to complete your project, we've got you covered.
                 </p>
               </div>
             </div>
             <div className="col-lg-5">
               <ul className="btn-group style-none d-flex flex-wrap justify-content-center justify-content-lg-end">
                 <li className="me-2">
-                  <Link href="/job-list-v1" className="btn-three">
+                  <Link href="/job-ads" className="btn-three">
                     Looking for job?
                   </Link>
                 </li>
                 <li className="ms-2">
-                  <Link href="/register" className="btn-four">
-                    Post a job
+                  <Link href="/professionals" className="btn-four">
+                    Find a pro
                   </Link>
                 </li>
               </ul>
