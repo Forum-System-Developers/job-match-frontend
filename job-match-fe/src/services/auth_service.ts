@@ -90,7 +90,6 @@ export const role = (): string => {
 
 export const isAuthenticated = (): boolean => {
   if (getLocalStorage("user")) {
-    console.log(getLocalStorage("user"));
     return true;
   }
   return false;
@@ -110,7 +109,6 @@ export const getUserLocal = (): UserDetails | null => {
 export const currentUser = async (): Promise<UserDetails> => {
   try {
     const response = await axiosInstance.get(`/auth/me`);
-    console.log(response);
     const userId = response.data.detail.id;
     const role: string = response.data.detail.role;
     const user = { id: userId, role: role };
