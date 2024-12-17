@@ -1,12 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import DashboardHeader from "../candidate/dashboard-header";
-import StateSelect from "../candidate/state-select";
 import CitySelect from "../candidate/city-select";
-import CountrySelect from "../candidate/country-select";
-import EmployExperience from "../employ/employ-experience";
-import icon from "@/assets/dashboard/images/icon/icon_16.svg";
 import NiceSelect from "@/ui/nice-select";
 import { useCategories } from "@/hooks/use-categories";
 import {
@@ -21,7 +16,6 @@ type IProps = {
 };
 
 const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
-  const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [applicationStatus, setApplicationStatus] =
@@ -31,7 +25,7 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
   const [isMain, setIsMain] = useState<boolean>(false);
   const [minSalary, setMinSalary] = useState<number>(1);
   const [maxSalary, setMaxSalary] = useState<number>(1);
-  const [skills, setSkills] = useState<{ name: string }[]>([]);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [availableSkills, setAvailableSkills] = useState<string[]>([]);
 
   const { categories, isLoading: CategoriesLoading } = useCategories();
@@ -42,14 +36,15 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
     })) || [];
 
   const handleAddSkill = (skill: string) => {
-    const skillObject = { name: skill };
-    if (!skills.some((s) => s.name === skill)) {
-      setSkills([...skills, skillObject]);
+    if (!selectedSkills.includes(skill)) {
+      setSelectedSkills([...selectedSkills, skill]);
+      setAvailableSkills([...availableSkills.filter((s) => s !== skill)]);
     }
   };
 
   const handleRemoveSkill = (skill: string) => {
-    setSkills(skills.filter((s) => s.name !== skill));
+    setSelectedSkills(selectedSkills.filter((s) => s !== skill));
+
     setAvailableSkills([...availableSkills, skill]);
   };
 
@@ -66,7 +61,7 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
         city: city,
         min_salary: minSalary,
         max_salary: maxSalary,
-        skills: skills,
+        skills: selectedSkills.map((skill) => ({ name: skill })),
       };
 
       await createJobApplication(jobAppData);
@@ -81,9 +76,10 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
       try {
         let fetchedSkills = await getSkillsCategory(categoryId);
         fetchedSkills = fetchedSkills.map((skill: any) => skill.name);
+        console.log(fetchedSkills);
         setAvailableSkills(fetchedSkills);
       } catch (error) {
-        console.error("Failed to fetch skills:", error);
+        throw new Error("Failed to fetch skills:" + error);
       }
     };
 
@@ -184,13 +180,13 @@ const SubmitJobArea = ({ setIsOpenSidebar }: IProps) => {
                 borderRadius: "6px",
               }}
             >
-              {skills.map((skill) => (
+              {selectedSkills.map((skill) => (
                 <button
-                  key={skill.name}
+                  key={skill}
                   className="skill-button"
-                  onClick={() => handleRemoveSkill(skill.name)}
+                  onClick={() => handleRemoveSkill(skill)}
                 >
-                  {skill.name} <span className="remove-icon">×</span>
+                  {skill} <span className="remove-icon">×</span>
                 </button>
               ))}
             </div>
