@@ -24,13 +24,19 @@ const Skills = ({ itemId }: { itemId: string }) => {
     fetchSkills();
   }, [itemId]);
 
+  const displayedSkills = skills.slice(0, 8);
+  const extraSkillsCount = skills.length - 8;
+
   return (
     <ul className="style-none skill-tags d-flex flex-wrap pb-25">
-      {skills?.map((skill) => (
-        <li>{skill.name}</li>
+      {displayedSkills.map((skill) => (
+        <li key={skill.id} className="skill-tag">
+          {skill.name}
+        </li>
       ))}
-
-      {/* <li className="more">3+</li> */}
+      {extraSkillsCount > 0 && (
+        <li key={1} className="more">{`+${extraSkillsCount}`}</li>
+      )}
     </ul>
   );
 };
