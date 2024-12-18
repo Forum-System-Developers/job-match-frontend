@@ -24,6 +24,7 @@ const JobDetailsV2Area = () => {
   const [open, setOpen] = useState(false);
   const user = getUserLocal();
   const { ads } = useAdsCompany(user?.id as string);
+  const [result, setResult] = useState<string | "">("");
 
   const options = ads.map((ad) => ({
     value: ad.id,
@@ -31,6 +32,25 @@ const JobDetailsV2Area = () => {
   }));
 
   const skills = jobApplication?.skills.flatMap((group) => group).slice(0, 4);
+
+  const handleSendMatchRequest = async ({
+    jobAdId,
+    jobApplicationId,
+  }: {
+    jobAdId: string;
+    jobApplicationId: string;
+  }) => {
+    try {
+      const result = await sendMatchRequestToJobApplication({
+        jobAdId,
+        jobApplicationId,
+      });
+      setResult(result.message);
+    } catch (error) {
+      setResult("Match request already sent");
+      throw new Error("Error sending match request:" + error);
+    }
+  };
 
   return (
     <section className="job-details style-two pt-100 lg-pt-80 pb-130 lg-pb-80">
@@ -203,19 +223,35 @@ const JobDetailsV2Area = () => {
                     </div>
                   )}
                   {selectedJobAd && (
-                    <button
-                      className="btn-ten fw-500 text-white text-center tran3s mt-30"
-                      onClick={() => {
-                        sendMatchRequestToJobApplication({
-                          jobAdId: selectedJobAd.value as string,
-                          jobApplicationId: id as string,
-                        });
-
-                        setSelectedJobAd(null);
-                      }}
-                    >
-                      Confirm Match Request
-                    </button>
+                    <>
+                      {result && (
+                        <div
+                          style={{
+                            color:
+                              result === "Match request already sent"
+                                ? "red"
+                                : "green",
+                            textAlign: "left",
+                            marginTop: "1%",
+                            padding: "10px",
+                            fontWeight: "450",
+                          }}
+                        >
+                          {result}
+                        </div>
+                      )}
+                      <button
+                        className="btn-ten fw-500 text-white text-center tran3s mt-30"
+                        onClick={() => {
+                          handleSendMatchRequest({
+                            jobAdId: selectedJobAd.value as string,
+                            jobApplicationId: id as string,
+                          });
+                        }}
+                      >
+                        Confirm Match Request
+                      </button>
+                    </>
                   )}
                 </>
               )}
