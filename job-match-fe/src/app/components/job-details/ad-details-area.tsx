@@ -11,10 +11,13 @@ import { useJobApplicationsProfessional } from "../jobs/hooks/useJobApplications
 import { getUserLocal, role } from "@/services/auth_service";
 import Link from "next/link";
 import { useCompany } from "../company/hooks/useCompany";
+import { set } from "react-hook-form";
 
 const JobDetailsV1Area = () => {
   const [selectedJobApplication, setselectedJobApplication] =
     useState<Option | null>(null);
+  const [open, setOpen] = useState(false);
+  const [result, setResult] = useState<string | "">("");
 
   const { id } = useParams();
   const { ad, isLoading } = useAd(id as string);
@@ -25,7 +28,6 @@ const JobDetailsV1Area = () => {
   const { company, isLoading: CompanyLoading } = useCompany(
     ad?.company_id as string
   );
-  const [open, setOpen] = useState(false);
   const job = ad;
 
   const options =
@@ -33,6 +35,25 @@ const JobDetailsV1Area = () => {
       value: application.id,
       label: application.name,
     })) || [];
+
+  const handleSendMatchRequest = async ({
+    jobAdId,
+    jobApplicationId,
+  }: {
+    jobAdId: string;
+    jobApplicationId: string;
+  }) => {
+    try {
+      const result = await sendMatchRequestToJobAd({
+        jobAdId,
+        jobApplicationId,
+      });
+      setResult(result.message);
+    } catch (error) {
+      setResult("Match request already sent");
+      throw new Error("Error sending match request:" + error);
+    }
+  };
 
   if (isLoading || JobApplicationsLoading || CompanyLoading) {
     return <div>Loading...</div>;
@@ -191,20 +212,36 @@ const JobDetailsV1Area = () => {
                       </div>
                     )}
                     {selectedJobApplication && (
-                      <button
-                        className="btn-ten fw-500 text-white text-center tran3s mt-30"
-                        onClick={() => {
-                          sendMatchRequestToJobAd({
-                            jobAdId: id as string,
-                            jobApplicationId:
-                              selectedJobApplication.value as string,
-                          });
-
-                          setselectedJobApplication(null);
-                        }}
-                      >
-                        Confirm Match Request
-                      </button>
+                      <>
+                        {result && (
+                          <div
+                            style={{
+                              color:
+                                result === "Match request already sent"
+                                  ? "red"
+                                  : "green",
+                              textAlign: "left",
+                              marginTop: "1%",
+                              padding: "10px",
+                              fontWeight: "450",
+                            }}
+                          >
+                            {result}
+                          </div>
+                        )}
+                        <button
+                          className="btn-ten fw-500 text-white text-center tran3s mt-30"
+                          onClick={() => {
+                            handleSendMatchRequest({
+                              jobAdId: id as string,
+                              jobApplicationId:
+                                selectedJobApplication.value as string,
+                            });
+                          }}
+                        >
+                          Confirm Match Request
+                        </button>
+                      </>
                     )}
                   </>
                 )}
