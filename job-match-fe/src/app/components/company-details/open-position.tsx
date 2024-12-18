@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
-import ListItemTwo from "../jobs/list/list-item-2";
 import { useParams } from "next/navigation";
 import { useAdsCompany } from "../company/hooks/useAds";
+import OpenPositions from "../jobs/list/list-item-company-open";
 
 const OpenPosition = () => {
   const { id } = useParams();
@@ -31,7 +31,7 @@ const OpenPosition = () => {
         </div>
         <div className="mt-50">
           {job_items.map((item) => (
-            <ListItemTwo key={item.id} item={item} />
+            <OpenPositions key={item.id} item={item} />
           ))}
         </div>
       </div>
