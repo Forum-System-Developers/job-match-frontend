@@ -26,8 +26,10 @@ const Skills = ({ itemId }: { itemId: string }) => {
 
   return (
     <ul className="style-none skill-tags d-flex flex-wrap pb-25">
-      {skills?.map((skill) => (
-        <li>{skill.name}</li>
+      {skills?.map((skill, index) => (
+        <li key={index} className="skill-tag">
+          {skill.name}
+        </li>
       ))}
 
       {/* <li className="more">3+</li> */}

@@ -7,7 +7,7 @@ import { JobApplication } from "@/data/job-applications-data";
 
 const ApplicationGridItem = ({
   item,
-  style_2 = true,
+  style_2 = false,
 }: {
   item: JobApplication;
   style_2?: boolean;
@@ -20,69 +20,63 @@ const ApplicationGridItem = ({
       className={`job-list-two ${style_2 ? "style-two" : ""} position-relative`}
       style={{
         minWidth: "400px",
-        maxHeight: "500px",
+        minHeight: "fit-content",
+        border: "1px solid #f1f1f1",
+        padding: "10%",
       }}
     >
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
           justifyContent: "space-between",
           width: "100%",
           alignItems: "center",
         }}
       >
-        <Link href={`/job-ad/${id}`} className="logo">
-          <Image
-            src={photo || profile_icon_1}
-            alt="logo"
-            className="lazy-img m-auto"
-            height={35}
-            width={35}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              borderRadius: "50%",
-            }}
-          />
-        </Link>
         <Link
           href={`/job-ad/${id}`}
           className="title fw-500 tran3s"
           style={{
-            marginTop: "7%",
+            marginTop: "10%",
             fontSize: "1rem",
-            padding: "0px",
+            padding: "1%",
             minWidth: "fit-content",
             fontWeight: 500,
-            textAlign: "right",
+            textAlign: "left",
           }}
         >
-          {first_name} {last_name}
+          <span
+            style={{
+              fontSize: "1.1rem",
+            }}
+          >
+            {name}
+          </span>
         </Link>
-        <div
-          className="job-location"
-          style={{
-            textAlign: "right",
-          }}
-        >
-          <Link href={`/job-ad/${id}`}>{city}</Link>
-        </div>
       </div>
       <div
+        className="job-location"
         style={{
-          marginTop: "0px",
+          textAlign: "right",
+          padding: "10px",
         }}
       >
-        <Link href={`/job-ad/${id}`} className="job-duration fw-500">
-          {name}
-        </Link>
+        <span
+          className="fw-500 text-dark"
+          style={{
+            fontSize: "1rem",
+            color: "#333",
+          }}
+        >
+          {city}
+        </span>
       </div>
       <div className="job-salary">
         <span className="fw-500 text-dark">Description</span>
         <div className="job-salary">{description.slice(0, 138)}...</div>{" "}
       </div>
+
       <div style={{ padding: "10px 0px" }}>
         <ul className="cadidate-skills style-none d-flex align-items-center">
           {item.skills?.slice(0, 3).map((s, i) => (
@@ -96,10 +90,10 @@ const ApplicationGridItem = ({
                 borderRadius: "25px",
                 marginRight: "5px",
                 minWidth: "80px",
-                width: "100px" /* Set a fixed width for uniformity */,
+                width: "100px",
                 fontSize: "0.9rem",
-                whiteSpace: "nowrap" /* Prevent text wrapping */,
-                overflow: "hidden" /* Hide overflowing text */,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
                 textOverflow: "ellipsis",
               }}
             >

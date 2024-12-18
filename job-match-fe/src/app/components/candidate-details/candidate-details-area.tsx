@@ -62,7 +62,6 @@ const CandidateDetailsArea = () => {
                     <p>No description provided</p>
                   )}
                 </div>
-
                 <div className="inner-card border-style mb-75 lg-mb-50">
                   <h3 className="title">Skills</h3>
                   {/* skill area */}
@@ -72,16 +71,7 @@ const CandidateDetailsArea = () => {
                 {/* <div className="inner-card border-style mb-60 lg-mb-50">
                   <h3 className="title">Work Experience</h3>
                   <WorkExperience />
-                </div> */}
-                <div
-                  className="inner-card border-style mb-60 lg-mb-50"
-                  style={{
-                    padding: "10%",
-                  }}
-                >
-                  <h3 className="title">Active Aplications</h3>
-                  <CandidateProfileSlider candidateId={id as string | null} />
-                </div>
+                </div> */}{" "}
               </div>
             </div>
             <div className="col-xxl-3 col-lg-4">
@@ -117,17 +107,20 @@ const CandidateDetailsArea = () => {
                   >
                     Download CV
                   </a>
-                  {error && <p className="text-danger">{error}</p>}
+                  {error && (
+                    <div
+                      style={{
+                        color: "red",
+                        textAlign: "left",
+                        marginTop: "1%",
+                        padding: "10px",
+                        fontWeight: "450",
+                      }}
+                    >
+                      {error}
+                    </div>
+                  )}
                 </div>
-                {/* <h4 className="sidebar-title">Location</h4>
-                <div className="map-area mb-60 md-mb-40">
-                  <div className="gmap_canvas h-100 w-100">
-                    <iframe
-                      className="gmap_iframe h-100 w-100"
-                      src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=bass hill plaza medical centre&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                    ></iframe>
-                  </div>
-                </div> */}
                 {/* <h4 className="sidebar-title">
                   Email {professional?.first_name}.
                 </h4>
@@ -137,6 +130,18 @@ const CandidateDetailsArea = () => {
                   </p>
                   <EmailSendForm />
                 </div> */}
+              </div>
+            </div>
+            <div className="candidates-profile-details me-xxl-5 pe-xxl-4">
+              <div
+                className="inner-card border-style mb-60 lg-mb-50"
+                style={{
+                  padding: "10%",
+                }}
+              >
+                <h3 className="title">Active Aplications</h3>
+
+                <CandidateProfileSlider candidateId={id as string | null} />
               </div>
             </div>
           </div>
