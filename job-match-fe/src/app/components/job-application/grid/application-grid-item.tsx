@@ -35,7 +35,7 @@ const ApplicationGridItem = ({
         }}
       >
         <Link
-          href={`/job-ad/${id}`}
+          href={`/job-application/${id}`}
           className="title fw-500 tran3s"
           style={{
             marginTop: "10%",
@@ -108,7 +108,10 @@ const ApplicationGridItem = ({
         </ul>
       </div>
       <div className="d-flex align-items-center justify-content-between mt-auto">
-        <Link href={`/job-ad/${id}`} className="apply-btn text-center tran3s">
+        <Link
+          href={`/job-application/${id}`}
+          className="apply-btn text-center tran3s"
+        >
           VIEW
         </Link>
       </div>
