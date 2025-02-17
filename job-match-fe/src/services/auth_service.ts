@@ -3,10 +3,10 @@ import SERVER_URL from "@/services/server";
 import axiosInstance from "@/services/axiosInstance";
 import { AxiosError } from "axios";
 import {
-  getLocalStorage,
-  removeLocalStorage,
-  setLocalStorage,
-} from "@/utils/localstorage";
+  getSessionStorage,
+  removeSessionStorage,
+  setSessionStorage,
+} from "@/utils/sessionStorage";
 import { get } from "http";
 
 export type IFormData = {
@@ -39,7 +39,7 @@ export const setUser = async (): Promise<boolean> => {
         throw new Error("Error getting user");
       }
       const encrypted = encryptData(JSON.stringify(user));
-      setLocalStorage("user", encrypted);
+      setSessionStorage("user", encrypted);
       return true;
     } catch (error) {
       throw new Error("Error setting user");
@@ -52,7 +52,7 @@ export const setGoogleUser = (id: string): boolean => {
   try {
     const user = { id: id, role: "professional" };
     const encrypted = encryptData(JSON.stringify(user));
-    setLocalStorage("user", encrypted);
+    setSessionStorage("user", encrypted);
     return true;
   } catch (error) {
     throw new Error("Error setting user");
@@ -75,7 +75,7 @@ export const login = async (data: IFormData): Promise<boolean> => {
 };
 
 export const role = (): string => {
-  const user = getLocalStorage("user");
+  const user = getSessionStorage("user");
 
   if (user) {
     try {
@@ -89,7 +89,7 @@ export const role = (): string => {
 };
 
 export const isAuthenticated = (): boolean => {
-  if (getLocalStorage("user")) {
+  if (getSessionStorage("user")) {
     return true;
   }
   return false;
@@ -101,7 +101,7 @@ export interface UserDetails {
 }
 
 export const getUserLocal = (): UserDetails | null => {
-  const user_info = getLocalStorage("user");
+  const user_info = getSessionStorage("user");
   const user = user_info ? JSON.parse(decryptData(user_info)) : null;
   return user;
 };
@@ -121,7 +121,7 @@ export const currentUser = async (): Promise<UserDetails> => {
 export const handleLogout = async () => {
   try {
     await axiosInstance.post(`/auth/logout`);
-    removeLocalStorage("user");
+    removeSessionStorage("user");
     setTimeout(() => {
       window.location.href = "/";
     }, 500);
@@ -148,7 +148,7 @@ export const setRole = async (): Promise<boolean> => {
     if (!user) {
       throw new Error("Error getting user");
     }
-    setLocalStorage("role", user.role);
+    setSessionStorage("role", user.role);
     return true;
   } catch (error) {
     throw new Error("Error setting role");
