@@ -113,21 +113,13 @@ const LoginForm = () => {
             </div>
           </div>
         </div>
-        <div className="col-12">
-          <div className="agreement-checkbox d-flex justify-content-between align-items-center">
-            <div>
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Keep me logged in</label>
-            </div>
-            <a href="#">Forget Password?</a>
-          </div>
-        </div>
+
         <div className="col-12">
           <button
             type="submit"
             className="btn-eleven fw-500 tran3s d-block mt-20"
           >
-            Login
+            {!isSubmitting ? "Login" : "Logging in..."}
           </button>
         </div>
       </div>
